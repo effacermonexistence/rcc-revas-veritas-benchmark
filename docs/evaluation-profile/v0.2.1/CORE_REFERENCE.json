@@ -1,0 +1,11 @@
+{
+  "common_contract_version": "0.3-review",
+  "publication_revision": "0.3.1-docs",
+  "repository": "effacermonexistence/omaragi-reliability-replay",
+  "path": "partner-kit/v0.3/CORE_CONTRACT.md",
+  "publication_commit": "aeed640a54d8956e32a6234d78b5f4314c6e96e2",
+  "sha256": "eb3bbeee9f343680c15bd05c97c53bed311b769079c5823a3e078dca47bc0ddb",
+  "hash_profile": "sha256/raw-bytes",
+  "commit_status": "PINNED_DOCUMENTATION_COMMIT_NOT_RUNTIME",
+  "url": "https://github.com/effacermonexistence/omaragi-reliability-replay/blob/aeed640a54d8956e32a6234d78b5f4314c6e96e2/partner-kit/v0.3/CORE_CONTRACT.md"
+}

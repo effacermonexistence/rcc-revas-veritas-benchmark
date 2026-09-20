@@ -1,0 +1,37 @@
+{
+  "artifact_type": "veritas_scoped_evaluation_profile",
+  "document_version": "0.2.1-docs-review",
+  "role": "DOCUMENTATION_PROPOSAL",
+  "common_core_ref": "CORE_REFERENCE.json",
+  "proposal_owner": "Ben Bae / OmarAGI",
+  "arms": {
+    "A": "RCC_REVAS",
+    "B": "SAME_RCC_REVAS_PLUS_CURRENT_VERITAS_FULL_TREATMENT"
+  },
+  "veritas_entry_boundary": "POST /v1/decide",
+  "veritas_candidate_revision": "ae64fb3c9ad06f227ac4f7d0d8ece468ff1940f5",
+  "existing_benchmark_reference_revision": "13d97aff4600a38494c85e1731827686f2cac93b",
+  "runtime": {
+    "canonical_rcc_executable_commit": null,
+    "verified_entrypoint": null,
+    "source_manifest": null,
+    "runtime_input_transform": null,
+    "support_matrix": null,
+    "exact_downstream_stop_point": null,
+    "environment_manifest": null,
+    "reason": "This documentation publication does not supply or freeze the runnable evaluation surface."
+  },
+  "state": {
+    "owner_authorized_document_publication": true,
+    "partner_accepted_this_revision": false,
+    "joint_runtime_frozen": false,
+    "new_rcc_entrypoint_verified": false,
+    "clean_run_executed_by_this_publication": false,
+    "deployment_authorized": false
+  },
+  "separate_lanes": [
+    "VERITAS standalone external benchmark",
+    "independent reproduction"
+  ],
+  "ground_truth_visible_to_runtime": false
+}
