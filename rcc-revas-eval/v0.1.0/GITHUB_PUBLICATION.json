@@ -1,0 +1,14 @@
+{
+  "schema_version": "rcc-revas.github-publication.v1",
+  "canonical_source_commit": "4f6996329ec49c4968545e0c0235d463225d88b3",
+  "canonical_source_tree": "b76dfbbe77fcce048421fd9b6dce13b672f1c737",
+  "canonical_source_path": "rcc-revas-eval/v0.1.0",
+  "verified_entrypoint": "python -m rcc_revas_eval evaluate",
+  "local_source_commit_preserved_in_release_metadata": "8692c48bc4f93b56ab019004c27b7c6fd9c8fe62",
+  "source_archive_sha256": "5d2f323188e80ff4ced5f9119755b6b298bcc7082e29bc92272fdc11f77ac2ac",
+  "publication_repository": "effacermonexistence/rcc-revas-veritas-benchmark",
+  "publication_branch": "main",
+  "joint_contract_frozen": false,
+  "native_veritas_joint_run_completed": false,
+  "note": "This file is a publication pointer. The canonical executable bytes are those in canonical_source_commit."
+}
