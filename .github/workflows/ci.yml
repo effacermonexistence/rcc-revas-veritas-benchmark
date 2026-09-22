@@ -28,4 +28,4 @@ jobs:
         run: python -m pytest -q tests
       - name: Run all canonical RCC runtime tests with their native runner
         working-directory: rcc-revas-eval/v0.1.0/runtime
-        run: python -m unittest discover -s tests -v
+        run: python -m unittest discover -s tests -t . -v
