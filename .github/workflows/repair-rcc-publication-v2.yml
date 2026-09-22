@@ -1,42 +1,71 @@
-name: Repair RCC canonical publication v2
+name: Verify corrected RCC canonical publication
 
 on:
   push:
     branches: [main]
     paths:
+      - rcc-revas-eval/**
+      - scripts/verify_rcc_publication.py
+      - .github/workflows/repair-rcc-publication-v2.yml
+  pull_request:
+    paths:
+      - rcc-revas-eval/**
+      - scripts/verify_rcc_publication.py
       - .github/workflows/repair-rcc-publication-v2.yml
   workflow_dispatch:
 
 permissions:
-  contents: write
-
-concurrency:
-  group: rcc-publication-repair-v2
-  cancel-in-progress: false
+  contents: read
 
 jobs:
-  restore-verified-source:
-    if: github.repository == 'effacermonexistence/rcc-revas-veritas-benchmark'
+  fresh-checkout-verification:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.13']
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout verifier and current publication
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          persist-credentials: false
+      - name: Fresh checkout of exact corrected publication
+        uses: actions/checkout@v4
+        with:
+          repository: effacermonexistence/rcc-revas-veritas-benchmark
+          ref: 805cd5ff17e431cf50a3dafa7f78a60a704613b9
+          path: published
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-      - name: Install optional schema-test dependency
-        run: python -m pip install jsonschema==4.25.1
-      - name: Recover exact bytes, validate original tree and tests, publish, read back
-        id: repair
-        env:
-          RCC_ARCHIVE_TRANSPORT_URL: 'https://sdmntprwestus2.oaiusercontent.com/files/00000000-7cb0-81f8-bee0-9c7b889b25f7/raw?se=2026-09-22T07%3A09%3A51Z&sp=r&sv=2026-02-06&sr=b&scid=ee8ea561-0ea3-5073-b255-ef34ac1adf85&skoid=456594af-533f-44ef-9bdc-35ea2f9daee5&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-22T02%3A08%3A20Z&ske=2026-09-23T02%3A08%3A20Z&sks=b&skv=2026-02-06&sig=H/aXbNNv4pdVOrxV1BIDl/G91FO32XQoADGtIGMrNOw%3D'
-        run: python scripts/repair_rcc_publication_v2.py
-      - name: Retain actual repair and reproduction evidence
+          python-version: ${{ matrix.python }}
+      - name: Install optional test and build dependencies
+        run: python -m pip install jsonschema==4.25.1 setuptools==80.9.0 wheel==0.45.1
+      - name: Ensure current publication still matches the fixed artifact
+        run: |
+          set -euo pipefail
+          cmp rcc-revas-eval/v0.1.0/source/rcc-revas-eval-v0.1.0-source.tar.gz published/rcc-revas-eval/v0.1.0/source/rcc-revas-eval-v0.1.0-source.tar.gz
+          test "$(git rev-parse HEAD:rcc-revas-eval/v0.1.0/runtime)" = ab477cff7924b922b0885fb665e5ca0d6e42868a
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('rcc-revas-eval/v0.1.0')
+          pin=json.loads((p/'CANONICAL_PIN.json').read_text())
+          publication=json.loads((p/'GITHUB_PUBLICATION.json').read_text())
+          assert publication['canonical_source_commit']=='805cd5ff17e431cf50a3dafa7f78a60a704613b9'
+          assert pin['source_archive_sha256']==publication['source_archive_sha256']=='4c736357ab93a8f4b5027b94c20340b973c760de1a0027df30bb53d3d10f47d8'
+          PY
+      - name: Verify remote bytes, negative controls, original tree, 160 tests and installed wheel
+        run: python scripts/verify_rcc_publication.py --checkout published --output-dir '${{ runner.temp }}/rcc-verification'
+      - name: Upload actual post-publication evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: rcc-publication-repair-v2-evidence
-          path: ${{ runner.temp }}/rcc-repair-${{ github.run_id }}/
+          name: rcc-post-publication-verification-python-${{ matrix.python }}
+          include-hidden-files: true
+          path: |
+            ${{ runner.temp }}/rcc-verification/
+            !${{ runner.temp }}/rcc-verification/venv/**
+            !${{ runner.temp }}/rcc-verification/wheel-source/**
           if-no-files-found: error
