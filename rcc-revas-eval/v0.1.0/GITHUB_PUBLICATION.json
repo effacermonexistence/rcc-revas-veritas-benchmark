@@ -1,0 +1,16 @@
+{
+  "schema_version": "rcc-revas.github-publication.v1",
+  "canonical_source_commit": "805cd5ff17e431cf50a3dafa7f78a60a704613b9",
+  "canonical_source_tree": "d8007c2e6251b6a981f61f4d7035cfa6f7bbb1ac",
+  "canonical_source_path": "rcc-revas-eval/v0.1.0",
+  "verified_entrypoint": "python -m rcc_revas_eval evaluate",
+  "local_source_commit_preserved_in_release_metadata": "8692c48bc4f93b56ab019004c27b7c6fd9c8fe62",
+  "source_git_tree": "ab477cff7924b922b0885fb665e5ca0d6e42868a",
+  "source_archive_sha256": "4c736357ab93a8f4b5027b94c20340b973c760de1a0027df30bb53d3d10f47d8",
+  "publication_repository": "effacermonexistence/rcc-revas-veritas-benchmark",
+  "publication_branch": "main",
+  "supersedes_publication_commit": "4f6996329ec49c4968545e0c0235d463225d88b3",
+  "publication_revision": 2,
+  "joint_contract_frozen": false,
+  "native_veritas_joint_run_completed": false
+}
