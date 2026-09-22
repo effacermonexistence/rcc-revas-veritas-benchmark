@@ -1,0 +1,27 @@
+{
+  "schema_version": "rcc-revas.github-canonical-pin.v1",
+  "status": "PUBLISHED_CANONICAL_BOUNDED_UPSTREAM_EXECUTABLE",
+  "package": "rcc-revas-eval",
+  "version": "0.1.0",
+  "owner": "OmarAGI",
+  "local_canonical_source_commit": "8692c48bc4f93b56ab019004c27b7c6fd9c8fe62",
+  "verified_entrypoint": "python -m rcc_revas_eval evaluate",
+  "source_archive_path": "rcc-revas-eval/v0.1.0/source/rcc-revas-eval-v0.1.0-source.tar.gz",
+  "source_archive_sha256": "5d2f323188e80ff4ced5f9119755b6b298bcc7082e29bc92272fdc11f77ac2ac",
+  "validation": {
+    "tests_passed": 160,
+    "tests_failed": 0,
+    "development_cases_executed": 34,
+    "development_case_errors": 0,
+    "partner_fixtures_executed": 36,
+    "partner_fixture_replay_verified": 36,
+    "preserved_partner_label_divergences": [
+      "GOV-H06",
+      "GOV-H07",
+      "GOV-D08"
+    ]
+  },
+  "joint_contract_frozen": false,
+  "native_veritas_joint_run_completed": false,
+  "claim_boundary": "Bounded upstream executable published for independent verification; joint treatment delta not yet measured."
+}
