@@ -122,9 +122,19 @@ def main():
         command('installed-preflight', [py, '-m', 'rcc_revas_eval', 'preflight', '--manifest', str(source / 'evaluation_manifest.json')], out)
         command('installed-takeshi', [py, '-m', 'rcc_revas_eval', 'evaluate', '--manifest', str(source / 'evaluation_manifest.json'), '--input', str(reproduction / 'takeshi-registration/runtime_inputs.jsonl'), '--plan', str(reproduction / 'takeshi-registration/preregistration.json'), '--output-dir', str(out / 'installed-run')], out)
         command('installed-replay', [py, '-m', 'rcc_revas_eval', 'verify-artifacts', '--manifest', str(source / 'evaluation_manifest.json'), '--run-dir', str(out / 'installed-run')], out)
-        deterministic = ['rcc_results.jsonl', 'handoff_results.jsonl', 'execution_receipts.jsonl']
+        deterministic = ['rcc_results.jsonl', 'handoff_results.jsonl']
         deterministic += [p.relative_to(reproduction / 'takeshi-run').as_posix() for p in (reproduction / 'takeshi-run/objects').glob('*.json')]
         require(all((reproduction / 'takeshi-run' / p).read_bytes() == (out / 'installed-run' / p).read_bytes() for p in deterministic), 'INSTALLED_RESULT_MISMATCH')
+        # Elapsed nanoseconds are measurements, not deterministic content. Preserve both raw receipts.
+        source_receipts = [json.loads(line) for line in (reproduction / 'takeshi-run/execution_receipts.jsonl').read_text().splitlines()]
+        installed_receipts = [json.loads(line) for line in (out / 'installed-run/execution_receipts.jsonl').read_text().splitlines()]
+        require(len(source_receipts) == len(installed_receipts) == 36, 'RECEIPT_COUNT_MISMATCH')
+        time_fields = {'runtime_elapsed_ns', 'handoff_elapsed_ns'}
+        for left, right in zip(source_receipts, installed_receipts):
+            require(all(type(row.get(k)) is int and row[k] >= 0 for row in (left, right) for k in time_fields), 'INVALID_ELAPSED_MEASUREMENT')
+            require({k: v for k, v in left.items() if k not in time_fields} == {k: v for k, v in right.items() if k not in time_fields}, 'EXECUTION_RECEIPT_SEMANTICS_MISMATCH')
+        report.update(execution_receipt_semantic_matches=36, measured_latency_preserved=True,
+                      nondeterministic_receipt_fields=sorted(time_fields))
         require(all(sha((source / p).read_bytes()) == h for p, h in members.items()), 'SOURCE_CHANGED_AFTER_TESTS')
         command('checkout-unchanged', ['git', 'diff', '--exit-code'], checkout)
         report.update(status='PASS', wheel_source_modules_matched=len(modules), installed_deterministic_files_matched=len(deterministic))
