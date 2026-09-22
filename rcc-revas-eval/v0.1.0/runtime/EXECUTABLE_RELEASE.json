@@ -1,0 +1,27 @@
+{
+  "email_sent": false,
+  "exact_commit_record": "distribution/CANONICAL_PIN.json; Git HEAD of distributed bundle",
+  "fixed_findings": [
+    "F01",
+    "F02",
+    "F03",
+    "F04",
+    "F05",
+    "F06",
+    "F07"
+  ],
+  "fixture_source_provenance": "fixtures/takeshi/SOURCE_PROVENANCE.json",
+  "github_pushed": false,
+  "joint_contract_frozen": false,
+  "native_veritas_runtime_executed_in_this_release_validation": false,
+  "one_command_reproduction": "python scripts/reproduce_canonical.py --output-dir <new-directory>",
+  "package": "rcc-revas-eval",
+  "rcc_scope": "synthetic structured subset; not full private production runtime",
+  "schema_version": "rcc-revas.executable-release.v1",
+  "source_manifest": "source_manifest.json",
+  "status": "CANONICAL_BOUNDED_UPSTREAM_EXECUTABLE_LOCAL_RELEASE",
+  "support_matrix": "docs/SUPPORT_MATRIX.json",
+  "validation_record": "distribution/evidence/REPRODUCTION.json",
+  "verified_entrypoint": "python -m rcc_revas_eval evaluate",
+  "version": "0.1.0"
+}

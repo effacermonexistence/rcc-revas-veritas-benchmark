@@ -1,0 +1,51 @@
+{
+  "policy_id": "rcc-structured-evaluation-policy",
+  "version": "1.0.0",
+  "synthetic_only": true,
+  "supported_kinds": [
+    "factual_claim",
+    "bounded_inference",
+    "candidate_replacement",
+    "protected_action"
+  ],
+  "allowed_uses": {
+    "factual_claim": [
+      "supported_structured_claims_with_provenance"
+    ],
+    "bounded_inference": [
+      "bounded_inference_with_explicit_inference_label"
+    ],
+    "candidate_replacement": [
+      "verified_structured_candidate_replacement"
+    ],
+    "protected_action": [
+      "downstream_governance_review_only"
+    ]
+  },
+  "protected_action_profiles": {
+    "saas_permission_change": [
+      "authority:conditional",
+      "approval:conditional",
+      "state:current",
+      "policy:current"
+    ],
+    "aml_kyc_account_activation": [
+      "authority:conditional",
+      "approval:conditional",
+      "state:current",
+      "policy:current"
+    ],
+    "document_write": [
+      "authority:conditional",
+      "approval:conditional",
+      "state:current",
+      "policy:current"
+    ],
+    "*": [
+      "authority:conditional",
+      "approval:conditional",
+      "state:current",
+      "policy:current"
+    ]
+  }
+}

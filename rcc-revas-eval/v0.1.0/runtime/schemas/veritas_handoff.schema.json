@@ -1,0 +1,124 @@
+{
+  "type": "object",
+  "properties": {
+    "artifact_type": {
+      "const": "rcc_revas_to_veritas_handoff"
+    },
+    "artifact_version": {
+      "const": "0.2.0"
+    },
+    "field_contract_version": {
+      "const": "0.2.0"
+    },
+    "source_artifact": {
+      "type": "object"
+    },
+    "lineage": {
+      "type": "object"
+    },
+    "measurement_evidence": {
+      "type": "null"
+    },
+    "rcc_revas": {
+      "type": "object"
+    },
+    "candidate": {
+      "type": "object",
+      "properties": {
+        "selected_output_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 10000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "selected_output_hash": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 10000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hash_profile": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10000
+        },
+        "candidate_type": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 10000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "typed_action": {
+          "anyOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "selected_output_ref",
+        "selected_output_hash",
+        "hash_profile",
+        "candidate_type",
+        "typed_action"
+      ],
+      "additionalProperties": false
+    },
+    "adapter_provenance": {
+      "type": "object"
+    },
+    "boundary_assertions": {
+      "type": "object",
+      "additionalProperties": {
+        "const": false
+      }
+    },
+    "unresolved_veritas_requirements": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 10000
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "artifact_type",
+    "artifact_version",
+    "field_contract_version",
+    "source_artifact",
+    "lineage",
+    "measurement_evidence",
+    "rcc_revas",
+    "candidate",
+    "adapter_provenance",
+    "boundary_assertions",
+    "unresolved_veritas_requirements"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "veritas_handoff.schema.json"
+}

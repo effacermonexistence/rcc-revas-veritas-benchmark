@@ -1,49 +1,35 @@
-# RCC/REVAS canonical runnable v0.1.0
+# RCC/REVAS canonical runnable v0.1.0 — corrected publication
 
-This directory publishes OmarAGI's bounded RCC/REVAS executable package for the RCC/REVAS × VERITAS paired-clean-evaluation track.
+Publication revision 2. Runtime source commit: `8692c48bc4f93b56ab019004c27b7c6fd9c8fe62`.
 
-Canonical executable source is the pinned source archive in `source/`.
-It is the exact source tree validated locally before publication.
+Source Git tree: `ab477cff7924b922b0885fb665e5ca0d6e42868a`. All 67 original source files are unchanged.
 
-## Canonical runtime identity
+Archive: `source/rcc-revas-eval-v0.1.0-source.tar.gz`
 
-- package: `rcc-revas-eval`
-- version: `0.1.0`
-- local canonical source commit: `8692c48bc4f93b56ab019004c27b7c6fd9c8fe62`
-- verified entrypoint: `python -m rcc_revas_eval evaluate`
-- source archive SHA-256: `5d2f323188e80ff4ced5f9119755b6b298bcc7082e29bc92272fdc11f77ac2ac`
-- Python: 3.11+
+Archive SHA-256: `4c736357ab93a8f4b5027b94c20340b973c760de1a0027df30bb53d3d10f47d8` (109796 bytes).
 
-## Validation completed before publication
+The same source is also directly inspectable in `runtime/`.
 
-- 160 unit/regression/transport tests passed.
-- 34/34 development cases executed with zero runtime errors.
-- All 36 frozen partner fixtures executed and replay-verified.
-- Original partner labels were not retuned.
-- Three partner-label semantic divergences are intentionally preserved: GOV-H06, GOV-H07, GOV-D08.
-- Clean-wheel deterministic outputs matched source-run outputs byte-for-byte for the checked deterministic artifact set.
+## Reproduce from the archive
 
-## Scope boundary
-
-This is a bounded upstream executable for independent partner review. It is not:
-- a claim that the joint Paired Clean Evaluation Contract v1.0 is already frozen;
-- a claim that VERITAS native runtime has already consumed this pin;
-- a full export of private production RCC;
-- an external-effect or production-readiness claim.
-
-The next step is partner-side independent verification of this exact pin and entrypoint, followed by joint contract freeze and the paired run.
-
-## Reproduce
-
-Extract the source archive, then from its root run:
+From this package directory, using Python 3.11+:
 
 ```bash
+sha256sum --check SHA256SUMS.txt
+mkdir extracted
+tar -xzf source/rcc-revas-eval-v0.1.0-source.tar.gz -C extracted
+cd extracted
+python -m rcc_revas_eval evaluate --help
 python -m rcc_revas_eval preflight --manifest evaluation_manifest.json
-python scripts/reproduce_canonical.py --output-dir output/canonical-review
+python scripts/reproduce_canonical.py --output-dir ../reproduction-new
 ```
 
-For the executable entrypoint used by the paired evaluation:
+Alternatively `cd runtime` and run the same Python commands; no archive is needed for inspection. For all optional JSON-schema tests, install `jsonschema`; the runtime itself has no third-party dependencies. A new reproduction output directory is required.
 
-```bash
-python -m rcc_revas_eval evaluate --manifest evaluation_manifest.json --input <runtime_inputs.jsonl> --plan <preregistration.json> --output-dir <output-dir>
-```
+Verified entrypoint: `python -m rcc_revas_eval evaluate`. Detailed manifest/input/plan arguments and the complete execution path are documented in `runtime/README.md`.
+
+## Validation
+
+See `PUBLICATION_VALIDATION.json` for the actual publisher CI run and `SOURCE_FILES.sha256.json` for every source file digest. 160 tests passed and all 36 original partner fixtures executed/replayed. The three original label divergences GOV-H06, GOV-H07 and GOV-D08 are preserved. These are not native joint VERITAS results.
+
+This correction supersedes publication `4f6996329ec49c4968545e0c0235d463225d88b3`. See `PUBLICATION_CORRECTION.md`. The subsequent `GITHUB_PUBLICATION.json` records the corrected immutable publication pin.

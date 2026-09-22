@@ -1,0 +1,462 @@
+﻿RCC/REVAS × VERITAS — Paired Clean Evaluation Contract v1.0-draft
+Joint Technical Evaluation Specification
+
+
+Status: DRAFT — NOT YET FROZEN
+No benchmark run has been performed under this contract.
+Prepared for joint review before source, dataset, metric, and runtime freeze.
+
+
+Current candidate VERITAS evaluation SHA:
+b14b2b379ed82af93c2a886b4861975324754594
+
+
+RCC/REVAS runtime commit / verified entrypoint:
+TBD — documentation pins received; runnable canonical source remains unresolved
+
+
+1. Objective
+
+
+Measure the incremental governance and operational effect of adding the current VERITAS full treatment to RCC/REVAS under identical frozen conditions.
+
+
+This evaluation is intended to separate three evidence layers:
+1) internal compatibility / engineering proof;
+2) measurable incremental-value benchmark;
+3) external or independent validation.
+
+
+This contract governs layer 2. It does not itself establish production readiness, regulatory compliance, customer-production efficacy, market superiority, or independent third-party validation.
+
+
+2. Core Architectural Boundary
+
+
+Decision Adoption ≠ Execution Authority.
+
+
+RCC/REVAS may own upstream candidate generation, selection, stopping, rerouting, regeneration, abstention, or adoption behavior.
+
+
+VERITAS independently owns downstream execution-governance checks, including the relevant Policy, Authority, Human Approval, evidence admissibility, scope, runtime-state, and Bind/execution boundaries.
+
+
+An RCC/REVAS adoption result must not itself create:
+- Authority Evidence;
+- Human Approval;
+- BindAuthorization;
+- execution permission;
+- BindReceipt;
+- Outcome; or
+- an external-effect claim.
+
+
+3. Frozen Sources
+
+
+VERITAS repository:
+https://github.com/veritasfuji-japan/veritas_os
+
+
+VERITAS candidate evaluation SHA:
+b14b2b379ed82af93c2a886b4861975324754594
+
+
+Status:
+Candidate only. Final freeze occurs before execution.
+
+
+RCC/REVAS repository / exact commit:
+TBD — documentation pins received; runnable canonical source remains unresolved.
+
+
+RCC/REVAS canonical entrypoint:
+TBD — documentation pins received; runnable canonical source remains unresolved.
+
+
+Benchmark repository:
+https://github.com/veritasfuji-japan/rcc-revas-veritas-benchmark
+
+
+Current benchmark main after pre-freeze preparation PR #11:
+1a1c2734931545e3eca09d2b5b7ce2e4d6f5465b
+
+
+Existing PR #10 is historical/superseded for this evaluation and must not be treated as current-main evidence.
+
+
+4. Evaluation Arms
+
+
+Arm A — Baseline
+
+
+RCC/REVAS only.
+
+
+Arm B — Treatment
+
+
+RCC/REVAS
+→ current VERITAS canonical full treatment.
+
+
+Canonical VERITAS entry boundary for this evaluation:
+POST /v1/decide
+
+
+The exact downstream stop point for the paired benchmark must be fixed before execution and must remain identical across reruns of the same contract version.
+
+
+5. Paired-Run Invariants
+
+
+Both arms must use:
+- identical frozen input;
+- identical source candidate / model output where applicable;
+- identical RCC/REVAS source version;
+- identical model where a model is used;
+- identical task and scenario conditions;
+- identical seed where applicable;
+- identical evaluation ground truth;
+- identical environment class;
+- identical exclusion rules; and
+- identical result-collection rules except for the presence of VERITAS treatment.
+
+
+No result from Arm A or Arm B may be used to modify the ground-truth labels for the same contract version.
+
+
+6. Governance-Labelled Dataset
+
+
+Initial internal paired evaluation dataset:
+Governance_labelled_Evaluation_Set_v0.1.1
+
+
+Initial case count:
+36
+
+
+The dataset and its SHA-256 must be frozen before execution.
+
+
+Expected governance dimensions include:
+- expected_decision;
+- safe_to_execute;
+- authority_valid;
+- approval_required;
+- approval_valid;
+- scope_valid;
+- evidence_complete;
+- bind_allowed;
+- expected_reason_codes; and
+- expected_missing_evidence.
+
+
+ALLOW, HOLD, and DENY must each contain meaningful positive and negative controls.
+
+
+7. Primary Governance Metrics
+
+
+Measure and report at minimum:
+- false_allow_count;
+- false_allow_rate;
+- false_block_count;
+- false_block_rate;
+- authority_violation_detection;
+- approval_violation_detection;
+- evidence_insufficiency_detection;
+- scope_violation_detection;
+- bind_eligibility_accuracy;
+- ALLOW precision / recall where meaningful;
+- HOLD correctness; and
+- DENY correctness.
+
+
+No single aggregate score may replace per-failure-class reporting.
+
+
+A benchmark label is not execution authority.
+
+
+8. Preservation and Regression Metrics
+
+
+Measure:
+- baseline task/output preservation;
+- changed-output count;
+- unexpected-regression count;
+- candidate-adoption changes; and
+- decision divergence by case_id.
+
+
+Any governance improvement claim must be presented together with observed task/output regressions or preservation results.
+
+
+9. Operational Metrics
+
+
+Record independently for each arm:
+- total latency;
+- VERITAS-added latency;
+- additional model calls;
+- token consumption;
+- API/provider calls;
+- API/provider cost;
+- compute time / compute overhead where measurable;
+- retry count; and
+- error count.
+
+
+Where an exact monetary or operational measurement is unavailable, record UNKNOWN or NOT_APPLICABLE.
+
+
+Unsupported monetary cost estimates must not be fabricated.
+
+
+10. Execution and Effect Boundary
+
+
+For the first paired clean run, no uncontrolled external effect is permitted.
+
+
+Any Bind/effect path must remain:
+- controlled;
+- sandboxed;
+- source-pinned;
+- explicitly reproducible; and
+- bounded by the current VERITAS claim boundary.
+
+
+Execution authority, BindAuthorization, BindReceipt, Outcome, reconciliation state, and external-effect state may only be reported when the native VERITAS path actually creates or verifies the corresponding artifact/state.
+
+
+Benchmark ALLOW/HOLD/DENY labels must never be converted directly into execution permission.
+
+
+11. Evidence Outputs
+
+
+Each paired run should emit, at minimum:
+- run_manifest.json;
+- source_manifest.json;
+- case_results.jsonl;
+- governance_metrics.json;
+- operational_metrics.json;
+- regression_metrics.json;
+- environment_manifest.json;
+- hashes.json; and
+- report.md.
+
+
+The resulting evidence set must bind:
+- exact VERITAS SHA;
+- exact RCC/REVAS SHA;
+- exact benchmark SHA;
+- dataset SHA-256;
+- contract SHA-256;
+- runtime/environment details; and
+- evaluation-arm identity.
+
+
+12. Pre-Registration Rule
+
+
+Before executing the paired benchmark, freeze:
+- source commits;
+- dataset;
+- ground-truth labels;
+- metric definitions;
+- Arm A treatment;
+- Arm B treatment;
+- aggregation rules;
+- exclusions;
+- failure handling;
+- supported/unsupported-case rules; and
+- claim boundary.
+
+
+No post-result silent correction is permitted.
+
+
+Any necessary correction requires a new dataset and/or contract version plus an explicit changelog.
+
+
+13. Failure Semantics
+
+
+Infrastructure failure is not a governance result.
+
+
+Unsupported cases must be reported as unsupported rather than coerced into ALLOW, HOLD, or DENY.
+
+
+Missing governance evidence must follow the canonical fail-closed semantics of the frozen treatment.
+
+
+Result ambiguity must remain explicit.
+
+
+An unknown external-effect state must not be rewritten as success or failure merely for benchmark convenience.
+
+
+14. Claim Boundary
+
+
+A successful internal paired run may support a bounded statement such as:
+
+
+“Under the frozen synthetic governance-labelled evaluation, adding VERITAS changed the measured governance outcomes by X while adding Y operational overhead.”
+
+
+It must not support claims such as:
+- “VERITAS reduces real-world AI incidents by X%”;
+- “VERITAS is production validated”;
+- “VERITAS is independently validated”;
+- “VERITAS is regulator approved”; or
+- “VERITAS is superior to competing products.”
+
+
+Those claims require separate evidence.
+
+
+15. External Validation Phase
+
+
+Internal paired evaluation and external validation remain separate evidence layers.
+
+
+External benchmark selection criteria should include:
+- third-party authorship;
+- public or independently inspectable methodology;
+- not designed specifically for VERITAS;
+- stable/frozen evaluation conditions;
+- relevance to agent, governance, action, or execution safety;
+- support for identical Baseline/Treatment conditions where feasible; and
+- measurable ground truth or explicit failure criteria.
+
+
+A separate standalone external-validation lane should now be executed in parallel using an existing third-party benchmark that was not created for this collaboration, with a benchmark-native / neutral baseline compared against VERITAS-only. This lane does not replace or block the RCC/REVAS paired evaluation. A later independent reproduction or public validation step remains a third, separate evidence layer.
+
+
+16. Relationship to NeoMundi Track
+
+
+The NeoMundi and RCC/REVAS tracks answer different questions.
+
+
+NeoMundi track:
+Can VERITAS independently verify a real externally generated measurement artifact while preserving Measurement ≠ Authority and Advisory ≠ Authorization?
+
+
+RCC/REVAS paired evaluation:
+What measurable governance and operational delta appears when current VERITAS treatment is added downstream of the same RCC/REVAS candidate/adoption process?
+
+
+These tracks may proceed independently and should not be collapsed into one evidence claim.
+
+
+17. Exit Criteria for Internal Paired Evaluation
+
+
+The internal paired evaluation is complete only when:
+- exact source commits are frozen;
+- the contract is frozen and hashed;
+- the dataset and labels are frozen before execution;
+- all supported cases execute under both arms;
+- no label leakage occurs;
+- governance metrics are complete;
+- operational metrics are complete;
+- regression/preservation metrics are complete;
+- artifact hashes are persisted;
+- reproduction instructions exist;
+- all deviations are documented; and
+- the claim boundary is included in the final report.
+
+
+18. Open Items Before Freeze
+
+
+The following items remain intentionally unresolved in this draft:
+- canonical current RCC/REVAS commit;
+- canonical RCC/REVAS entrypoint;
+- final VERITAS evaluation SHA;
+- exact paired-run downstream stop point;
+- exact runtime/environment manifest;
+- cost-accounting method where provider cost is applicable;
+- any case exclusions, if required; and
+- standalone external benchmark selection — separate parallel lane; not a paired-freeze blocker unless jointly re-scoped.
+
+
+All paired-run items above must be resolved before v1.0 is frozen. The standalone external benchmark lane may proceed in parallel and does not block the RCC/REVAS paired freeze.
+
+
+19. Review and Freeze Rule
+
+
+This document is a joint-review draft.
+
+
+Preferred sequence:
+1) Ben review of the draft / two-arm structure — DONE;
+2) review pinned RCC/REVAS common-core and scoped evaluation-profile documentation — DONE;
+3) confirm the actual canonical runnable RCC/REVAS commit and verified entrypoint — PENDING;
+4) resolve remaining paired-run open items;
+5) freeze v1.0 before paired benchmark execution;
+6) record the frozen document hash in the benchmark repository;
+7) execute the paired clean evaluation;
+8) run the standalone third-party external benchmark in parallel under its own preregistered manifest.
+
+
+20. Ben Documentation-Pin Review Update — 2026-09-20
+
+
+Common RCC/REVAS documentation pin:
+Repository: effacermonexistence/omaragi-reliability-replay
+Publication commit: aeed640a54d8956e32a6234d78b5f4314c6e96e2
+Path: partner-kit/v0.3/CORE_CONTRACT.md
+Common-core SHA-256: eb3bbeee9f343680c15bd05c97c53bed311b769079c5823a3e078dca47bc0ddb
+Status: pinned documentation commit, not a runtime/executable freeze.
+
+
+Scoped RCC/REVAS × VERITAS evaluation-profile documentation pin:
+Repository: effacermonexistence/rcc-revas-veritas-benchmark
+Publication commit: cb5c1bc164c43f46bc98d3693f3837544033262b
+Path: docs/evaluation-profile/v0.2.1
+Profile SHA-256: 4bd5b53f173f3ac08fd890622de0bee1b659703cfd65847da0a93d01d030d630
+
+
+The profile preserves:
+- Arm A = RCC_REVAS;
+- Arm B = SAME_RCC_REVAS_PLUS_CURRENT_VERITAS_FULL_TREATMENT;
+- VERITAS entry boundary = POST /v1/decide;
+- ground truth hidden from runtime.
+
+
+The profile explicitly leaves the runnable evaluation surface unresolved:
+- canonical_rcc_executable_commit = null;
+- verified_entrypoint = null;
+- source_manifest = null;
+- runtime_input_transform = null;
+- support_matrix = null;
+- exact_downstream_stop_point = null;
+- environment_manifest = null.
+
+
+Therefore, Ben's publication resolves the documentation / semantic reference layer but does not yet provide the canonical runnable RCC/REVAS commit or a verified executable entrypoint. The paired runtime freeze remains open.
+
+
+Standalone external-validation lane:
+In parallel, select one existing third-party benchmark not authored for this collaboration and preregister a benchmark-native / neutral baseline vs. VERITAS-only evaluation. Preserve exact VERITAS commit/configuration, baseline definition, treatment boundary, available model/inference settings, scoring rules, exclusions / unsupported cases, operational metrics, per-case outputs, native VERITAS decision/reason codes, latency, measured token/model/API/cost data where available, regression/preservation, error/retry data, run manifest and final report.
+
+
+Unsupported or unmeasurable fields remain explicit as NOT_SUPPORTED, NOT_MEASURED or UNKNOWN rather than estimated.
+
+
+This standalone lane does not block the RCC/REVAS paired evaluation. It remains a separate evidence layer from the incremental RCC/REVAS comparison and from later independent reproduction.
+
+
+End of draft.

@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=65"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rcc-revas-eval"
+version = "0.1.0"
+description = "Source-traceable RCC/REVAS bounded evaluation runtime and label-free partner handoff"
+requires-python = ">=3.11"
+dependencies = []
+authors = [{name = "OmarAGI"}]
+
+[project.scripts]
+rcc-revas-eval = "rcc_revas_eval.cli:main"
+
+[tool.setuptools]
+packages = ["rcc_revas_eval"]

@@ -1,0 +1,60 @@
+{
+  "requirements": [
+    {
+      "artifact": "CANONICAL_PIN.json; evaluation_manifest.json; source_manifest.json",
+      "requirement": "canonical RCC source + verified entrypoint",
+      "status": "DELIVERED_LOCAL_CANONICAL"
+    },
+    {
+      "artifact": "rcc_revas_eval/bundle.py; scripts/reproduce_canonical.py",
+      "requirement": "actual runnable package + replay",
+      "status": "IMPLEMENTED_AND_LOCAL_TESTED"
+    },
+    {
+      "artifact": "rcc_revas_eval/takeshi.py; fixtures/takeshi",
+      "requirement": "actual frozen 36-case runtime transform",
+      "status": "IMPLEMENTED_ALL_36_LOCAL_EXECUTED"
+    },
+    {
+      "artifact": "runtime.py; native_veritas.py",
+      "requirement": "same upstream candidate + evaluation pre-state",
+      "status": "IMPLEMENTED_REQUEST_SIDE; NATIVE_SIDE_REVIEW_NEXT"
+    },
+    {
+      "artifact": "contract.py; preregistration.py",
+      "requirement": "ground truth hidden and fixed before execution",
+      "status": "IMPLEMENTED_REGRESSION_TESTED"
+    },
+    {
+      "artifact": "partner_review.py; scoring.py",
+      "requirement": "governance / operational / regression reporting",
+      "status": "IMPLEMENTED_OBSERVATIONAL_REPORTER; UNMEASURED_NATIVE_FIELDS_EXPLICIT"
+    },
+    {
+      "artifact": "native_veritas.py; tests/test_canonical_regressions.py",
+      "requirement": "POST /v1/decide entry surface",
+      "status": "IMPLEMENTED_TRANSPORT_TESTED"
+    },
+    {
+      "artifact": "reference/Paired_Clean_Evaluation_Contract_v1.0-draft.txt",
+      "requirement": "native full treatment, Authority/Approval/Bind outcomes",
+      "status": "PARTNER_NATIVE_EXECUTION_STAGE; NOT_FAKE_SUBSTITUTED"
+    },
+    {
+      "artifact": "docs/JOINT_PROFILE_CANDIDATE.json",
+      "requirement": "exact native commit + stop point + environment + exclusions",
+      "status": "JOINT_PREREGISTRATION_STAGE"
+    },
+    {
+      "artifact": "docs/PARTNER_HANDOFF.md",
+      "requirement": "Takeshi independent verification",
+      "status": "AFTER_DELIVERY; NOT_CLAIMED_DONE"
+    },
+    {
+      "artifact": "CANONICAL_PIN.json",
+      "requirement": "GitHub publication / email delivery",
+      "status": "NOT_PERFORMED_LOCAL_ONLY"
+    }
+  ],
+  "source": "latest Takeshi mail and unchanged joint contract draft"
+}

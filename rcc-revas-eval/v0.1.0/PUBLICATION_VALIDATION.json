@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "kind": "PUBLISHER_CI_VERIFICATION_NOT_PARTNER_VERIFICATION",
+  "source_commit": "8692c48bc4f93b56ab019004c27b7c6fd9c8fe62",
+  "source_git_tree": "ab477cff7924b922b0885fb665e5ca0d6e42868a",
+  "archive_sha256": "4c736357ab93a8f4b5027b94c20340b973c760de1a0027df30bb53d3d10f47d8",
+  "archive_bytes": 109796,
+  "source_files": 67,
+  "original_source_tree_match": true,
+  "runtime_code_changed": false,
+  "tests_passed": 160,
+  "tests_failed": 0,
+  "reproduction_stages_passed": 13,
+  "partner_fixtures_executed": 36,
+  "partner_fixture_errors": 0,
+  "partner_label_matches": 33,
+  "preserved_partner_label_divergences": [
+    "GOV-H06",
+    "GOV-H07",
+    "GOV-D08"
+  ],
+  "native_VERITAS_executed": false,
+  "joint_contract_frozen": false,
+  "python": "3.11.16 (main, Aug 13 2026, 02:46:14) [GCC 13.3.0]",
+  "workflow_run_id": "35697924381",
+  "workflow_commit": "125b1a9e1d9e01f08455ce7a13a2909a8dd91d02",
+  "workflow_url": "https://github.com/effacermonexistence/rcc-revas-veritas-benchmark/actions/runs/35697924381"
+}

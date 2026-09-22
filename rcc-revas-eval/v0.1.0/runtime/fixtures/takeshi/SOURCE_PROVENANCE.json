@@ -1,0 +1,11 @@
+{
+  "repository": "veritasfuji-japan/rcc-revas-veritas-benchmark",
+  "commit": "1a1c2734931545e3eca09d2b5b7ce2e4d6f5465b",
+  "path": "fixtures/Governance_labelled_Evaluation_Set_v0.1.1.jsonl",
+  "git_blob_sha1": "426eda32bda6ba767a42f4c2e0f979483f76f46a",
+  "sha256": "db47a629686ed29ee3c46f403935b97f82add9646dd9331591cbdf7a408f34d7",
+  "bytes": 114884,
+  "case_count": 36,
+  "retrieval": "GitHub connector fetch_blob; lossless transcription checked against exact Git blob identity",
+  "raw_byte_identity_verified": true
+}

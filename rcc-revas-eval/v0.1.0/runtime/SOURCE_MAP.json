@@ -1,0 +1,654 @@
+{
+  "functions": [
+    {
+      "callable": "rcc_revas_eval.bundle._write",
+      "end_line": 16,
+      "file_sha256": "50a0e0f1ed6227be07dcf8fb1fbf483dc0c2f46b0e48fe97d37ae8ae422dbe12",
+      "path": "rcc_revas_eval/bundle.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 13
+    },
+    {
+      "callable": "rcc_revas_eval.bundle.create_run",
+      "end_line": 118,
+      "file_sha256": "50a0e0f1ed6227be07dcf8fb1fbf483dc0c2f46b0e48fe97d37ae8ae422dbe12",
+      "path": "rcc_revas_eval/bundle.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 19
+    },
+    {
+      "callable": "rcc_revas_eval.bundle._read_optional_jsonl",
+      "end_line": 123,
+      "file_sha256": "50a0e0f1ed6227be07dcf8fb1fbf483dc0c2f46b0e48fe97d37ae8ae422dbe12",
+      "path": "rcc_revas_eval/bundle.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 121
+    },
+    {
+      "callable": "rcc_revas_eval.bundle.verify_run",
+      "end_line": 209,
+      "file_sha256": "50a0e0f1ed6227be07dcf8fb1fbf483dc0c2f46b0e48fe97d37ae8ae422dbe12",
+      "path": "rcc_revas_eval/bundle.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 126
+    },
+    {
+      "callable": "rcc_revas_eval.cli.parser",
+      "end_line": 86,
+      "file_sha256": "af19f77bd8cb620591d2abedb5622b0ca04543c6383e186b63dc3cb71193a892",
+      "path": "rcc_revas_eval/cli.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 17
+    },
+    {
+      "callable": "rcc_revas_eval.cli.main",
+      "end_line": 139,
+      "file_sha256": "af19f77bd8cb620591d2abedb5622b0ca04543c6383e186b63dc3cb71193a892",
+      "path": "rcc_revas_eval/cli.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 89
+    },
+    {
+      "callable": "rcc_revas_eval.contract.reject_evaluation_only_keys",
+      "end_line": 42,
+      "file_sha256": "52463c3777e259abfd77247e883732b490505a28881d10a825519a5a63f948cb",
+      "path": "rcc_revas_eval/contract.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 27
+    },
+    {
+      "callable": "rcc_revas_eval.contract.binding",
+      "end_line": 49,
+      "file_sha256": "52463c3777e259abfd77247e883732b490505a28881d10a825519a5a63f948cb",
+      "path": "rcc_revas_eval/contract.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 44
+    },
+    {
+      "callable": "rcc_revas_eval.contract.action",
+      "end_line": 59,
+      "file_sha256": "52463c3777e259abfd77247e883732b490505a28881d10a825519a5a63f948cb",
+      "path": "rcc_revas_eval/contract.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 51
+    },
+    {
+      "callable": "rcc_revas_eval.contract.check_input",
+      "end_line": 143,
+      "file_sha256": "52463c3777e259abfd77247e883732b490505a28881d10a825519a5a63f948cb",
+      "path": "rcc_revas_eval/contract.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 61
+    },
+    {
+      "callable": "rcc_revas_eval.evidence.sign_payload",
+      "end_line": 15,
+      "file_sha256": "889e28911280c79263138655202174cb4a226ce92bf670df21a748c22c9724eb",
+      "path": "rcc_revas_eval/evidence.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 14
+    },
+    {
+      "callable": "rcc_revas_eval.evidence.inspect_evidence",
+      "end_line": 59,
+      "file_sha256": "889e28911280c79263138655202174cb4a226ce92bf670df21a748c22c9724eb",
+      "path": "rcc_revas_eval/evidence.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 17
+    },
+    {
+      "callable": "rcc_revas_eval.evidence.observe",
+      "end_line": 73,
+      "file_sha256": "889e28911280c79263138655202174cb4a226ce92bf670df21a748c22c9724eb",
+      "path": "rcc_revas_eval/evidence.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 61
+    },
+    {
+      "callable": "rcc_revas_eval.handoff.make_handoff",
+      "end_line": 90,
+      "file_sha256": "4104c730552dbdac91e41dd837bea974395c2cc6aaa0b1a7210b04f055ae5156",
+      "path": "rcc_revas_eval/handoff.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 15
+    },
+    {
+      "callable": "rcc_revas_eval.handoff.verify_handoff",
+      "end_line": 97,
+      "file_sha256": "4104c730552dbdac91e41dd837bea974395c2cc6aaa0b1a7210b04f055ae5156",
+      "path": "rcc_revas_eval/handoff.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 93
+    },
+    {
+      "callable": "rcc_revas_eval.integrity.require",
+      "end_line": 25,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 23
+    },
+    {
+      "callable": "rcc_revas_eval.integrity.validate_json",
+      "end_line": 50,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 27
+    },
+    {
+      "callable": "rcc_revas_eval.integrity.canonical",
+      "end_line": 55,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 52
+    },
+    {
+      "callable": "rcc_revas_eval.integrity.raw_sha",
+      "end_line": 58,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 57
+    },
+    {
+      "callable": "rcc_revas_eval.integrity.digest",
+      "end_line": 62,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 60
+    },
+    {
+      "callable": "rcc_revas_eval.integrity._pairs",
+      "end_line": 69,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 64
+    },
+    {
+      "callable": "rcc_revas_eval.integrity._nonfinite",
+      "end_line": 72,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 71
+    },
+    {
+      "callable": "rcc_revas_eval.integrity.loads",
+      "end_line": 83,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 74
+    },
+    {
+      "callable": "rcc_revas_eval.integrity.read_json",
+      "end_line": 88,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 85
+    },
+    {
+      "callable": "rcc_revas_eval.integrity.write_json",
+      "end_line": 96,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 90
+    },
+    {
+      "callable": "rcc_revas_eval.integrity.jsonl_bytes",
+      "end_line": 99,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 98
+    },
+    {
+      "callable": "rcc_revas_eval.integrity.read_jsonl",
+      "end_line": 111,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 101
+    },
+    {
+      "callable": "rcc_revas_eval.integrity.safe_path",
+      "end_line": 126,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 113
+    },
+    {
+      "callable": "rcc_revas_eval.integrity.timestamp",
+      "end_line": 134,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 128
+    },
+    {
+      "callable": "rcc_revas_eval.integrity.now",
+      "end_line": 137,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 136
+    },
+    {
+      "callable": "rcc_revas_eval.integrity.exact_keys",
+      "end_line": 144,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 139
+    },
+    {
+      "callable": "rcc_revas_eval.integrity.text",
+      "end_line": 148,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 146
+    },
+    {
+      "callable": "rcc_revas_eval.integrity.strings",
+      "end_line": 154,
+      "file_sha256": "4b3508aa36b00fff89dd08abfeb0d2ef93cb6857dcbc172e2484250efbcb9fc1",
+      "path": "rcc_revas_eval/integrity.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 150
+    },
+    {
+      "callable": "rcc_revas_eval.native_veritas._bundle_object",
+      "end_line": 40,
+      "file_sha256": "ed6ccb9dabe7109810115cafaca6692cd9ad8ed63fc86cb5f4d2696a1218ebb3",
+      "path": "rcc_revas_eval/native_veritas.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 31
+    },
+    {
+      "callable": "rcc_revas_eval.native_veritas.build_decide_request",
+      "end_line": 123,
+      "file_sha256": "ed6ccb9dabe7109810115cafaca6692cd9ad8ed63fc86cb5f4d2696a1218ebb3",
+      "path": "rcc_revas_eval/native_veritas.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 43
+    },
+    {
+      "callable": "rcc_revas_eval.native_veritas._echo_from_response",
+      "end_line": 131,
+      "file_sha256": "ed6ccb9dabe7109810115cafaca6692cd9ad8ed63fc86cb5f4d2696a1218ebb3",
+      "path": "rcc_revas_eval/native_veritas.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 126
+    },
+    {
+      "callable": "rcc_revas_eval.native_veritas.verify_response_echo",
+      "end_line": 144,
+      "file_sha256": "ed6ccb9dabe7109810115cafaca6692cd9ad8ed63fc86cb5f4d2696a1218ebb3",
+      "path": "rcc_revas_eval/native_veritas.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 134
+    },
+    {
+      "callable": "rcc_revas_eval.native_veritas.response_diagnostics",
+      "end_line": 183,
+      "file_sha256": "ed6ccb9dabe7109810115cafaca6692cd9ad8ed63fc86cb5f4d2696a1218ebb3",
+      "path": "rcc_revas_eval/native_veritas.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 147
+    },
+    {
+      "callable": "rcc_revas_eval.native_veritas.validate_endpoint",
+      "end_line": 209,
+      "file_sha256": "ed6ccb9dabe7109810115cafaca6692cd9ad8ed63fc86cb5f4d2696a1218ebb3",
+      "path": "rcc_revas_eval/native_veritas.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 191
+    },
+    {
+      "callable": "rcc_revas_eval.native_veritas.post_decide",
+      "end_line": 245,
+      "file_sha256": "ed6ccb9dabe7109810115cafaca6692cd9ad8ed63fc86cb5f4d2696a1218ebb3",
+      "path": "rcc_revas_eval/native_veritas.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 219
+    },
+    {
+      "callable": "rcc_revas_eval.native_veritas.invoke_one",
+      "end_line": 292,
+      "file_sha256": "ed6ccb9dabe7109810115cafaca6692cd9ad8ed63fc86cb5f4d2696a1218ebb3",
+      "path": "rcc_revas_eval/native_veritas.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 248
+    },
+    {
+      "callable": "rcc_revas_eval.native_veritas.prepare_run",
+      "end_line": 327,
+      "file_sha256": "ed6ccb9dabe7109810115cafaca6692cd9ad8ed63fc86cb5f4d2696a1218ebb3",
+      "path": "rcc_revas_eval/native_veritas.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 295
+    },
+    {
+      "callable": "rcc_revas_eval.native_veritas._append",
+      "end_line": 336,
+      "file_sha256": "ed6ccb9dabe7109810115cafaca6692cd9ad8ed63fc86cb5f4d2696a1218ebb3",
+      "path": "rcc_revas_eval/native_veritas.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 330
+    },
+    {
+      "callable": "rcc_revas_eval.native_veritas._seal",
+      "end_line": 342,
+      "file_sha256": "ed6ccb9dabe7109810115cafaca6692cd9ad8ed63fc86cb5f4d2696a1218ebb3",
+      "path": "rcc_revas_eval/native_veritas.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 339
+    },
+    {
+      "callable": "rcc_revas_eval.native_veritas.invoke_run",
+      "end_line": 403,
+      "file_sha256": "ed6ccb9dabe7109810115cafaca6692cd9ad8ed63fc86cb5f4d2696a1218ebb3",
+      "path": "rcc_revas_eval/native_veritas.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 345
+    },
+    {
+      "callable": "rcc_revas_eval.native_veritas.verify_native_run",
+      "end_line": 473,
+      "file_sha256": "ed6ccb9dabe7109810115cafaca6692cd9ad8ed63fc86cb5f4d2696a1218ebb3",
+      "path": "rcc_revas_eval/native_veritas.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 406
+    },
+    {
+      "callable": "rcc_revas_eval.native_veritas.inspect_native_journal",
+      "end_line": 509,
+      "file_sha256": "ed6ccb9dabe7109810115cafaca6692cd9ad8ed63fc86cb5f4d2696a1218ebb3",
+      "path": "rcc_revas_eval/native_veritas.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 476
+    },
+    {
+      "callable": "rcc_revas_eval.partner_review.register_partner",
+      "end_line": 59,
+      "file_sha256": "67323ed43fa0c347f564a27378961fb8e1c61a4b30c325e83c7f7e2c886a4d7b",
+      "path": "rcc_revas_eval/partner_review.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 35
+    },
+    {
+      "callable": "rcc_revas_eval.partner_review.rate",
+      "end_line": 64,
+      "file_sha256": "67323ed43fa0c347f564a27378961fb8e1c61a4b30c325e83c7f7e2c886a4d7b",
+      "path": "rcc_revas_eval/partner_review.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 62
+    },
+    {
+      "callable": "rcc_revas_eval.partner_review._gate_metrics",
+      "end_line": 84,
+      "file_sha256": "67323ed43fa0c347f564a27378961fb8e1c61a4b30c325e83c7f7e2c886a4d7b",
+      "path": "rcc_revas_eval/partner_review.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 67
+    },
+    {
+      "callable": "rcc_revas_eval.partner_review._upstream_detections",
+      "end_line": 108,
+      "file_sha256": "67323ed43fa0c347f564a27378961fb8e1c61a4b30c325e83c7f7e2c886a4d7b",
+      "path": "rcc_revas_eval/partner_review.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 87
+    },
+    {
+      "callable": "rcc_revas_eval.partner_review.report_partner",
+      "end_line": 213,
+      "file_sha256": "67323ed43fa0c347f564a27378961fb8e1c61a4b30c325e83c7f7e2c886a4d7b",
+      "path": "rcc_revas_eval/partner_review.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 111
+    },
+    {
+      "callable": "rcc_revas_eval.preregistration.freeze_plan",
+      "end_line": 42,
+      "file_sha256": "285b7ec12da0aea8da76596ec5bf9c6ec17066c68e1b0c5bb5c608219cae45e4",
+      "path": "rcc_revas_eval/preregistration.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 23
+    },
+    {
+      "callable": "rcc_revas_eval.preregistration.validate_plan",
+      "end_line": 60,
+      "file_sha256": "285b7ec12da0aea8da76596ec5bf9c6ec17066c68e1b0c5bb5c608219cae45e4",
+      "path": "rcc_revas_eval/preregistration.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 45
+    },
+    {
+      "callable": "rcc_revas_eval.release.runtime_paths",
+      "end_line": 18,
+      "file_sha256": "e939af9075ec82b6551e642561980d12c8bbb6178ae5d2a3b8638422ea19fefa",
+      "path": "rcc_revas_eval/release.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 12
+    },
+    {
+      "callable": "rcc_revas_eval.release.preflight",
+      "end_line": 87,
+      "file_sha256": "e939af9075ec82b6551e642561980d12c8bbb6178ae5d2a3b8638422ea19fefa",
+      "path": "rcc_revas_eval/release.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 21
+    },
+    {
+      "callable": "rcc_revas_eval.runtime._check",
+      "end_line": 24,
+      "file_sha256": "45cbc0ef2c8223080b7c1c9e4f4a985dd4c359563d24500080bb105ff6884bad",
+      "path": "rcc_revas_eval/runtime.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 23
+    },
+    {
+      "callable": "rcc_revas_eval.runtime._observation_check",
+      "end_line": 41,
+      "file_sha256": "45cbc0ef2c8223080b7c1c9e4f4a985dd4c359563d24500080bb105ff6884bad",
+      "path": "rcc_revas_eval/runtime.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 27
+    },
+    {
+      "callable": "rcc_revas_eval.runtime.verify",
+      "end_line": 144,
+      "file_sha256": "45cbc0ef2c8223080b7c1c9e4f4a985dd4c359563d24500080bb105ff6884bad",
+      "path": "rcc_revas_eval/runtime.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 44
+    },
+    {
+      "callable": "rcc_revas_eval.runtime.adopt",
+      "end_line": 165,
+      "file_sha256": "45cbc0ef2c8223080b7c1c9e4f4a985dd4c359563d24500080bb105ff6884bad",
+      "path": "rcc_revas_eval/runtime.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 147
+    },
+    {
+      "callable": "rcc_revas_eval.runtime.select_route",
+      "end_line": 172,
+      "file_sha256": "45cbc0ef2c8223080b7c1c9e4f4a985dd4c359563d24500080bb105ff6884bad",
+      "path": "rcc_revas_eval/runtime.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 168
+    },
+    {
+      "callable": "rcc_revas_eval.runtime.materialize_candidate",
+      "end_line": 182,
+      "file_sha256": "45cbc0ef2c8223080b7c1c9e4f4a985dd4c359563d24500080bb105ff6884bad",
+      "path": "rcc_revas_eval/runtime.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 175
+    },
+    {
+      "callable": "rcc_revas_eval.runtime.evaluate_one",
+      "end_line": 281,
+      "file_sha256": "45cbc0ef2c8223080b7c1c9e4f4a985dd4c359563d24500080bb105ff6884bad",
+      "path": "rcc_revas_eval/runtime.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 185
+    },
+    {
+      "callable": "rcc_revas_eval.runtime.verify_result",
+      "end_line": 312,
+      "file_sha256": "45cbc0ef2c8223080b7c1c9e4f4a985dd4c359563d24500080bb105ff6884bad",
+      "path": "rcc_revas_eval/runtime.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 284
+    },
+    {
+      "callable": "rcc_revas_eval.scenario.validate_scenario",
+      "end_line": 60,
+      "file_sha256": "a8069689077e8cb0b2c843e23fbf0f579dceb293d6c91d7c5b847706e3bbe2f7",
+      "path": "rcc_revas_eval/scenario.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 26
+    },
+    {
+      "callable": "rcc_revas_eval.scenario.condition_checks",
+      "end_line": 106,
+      "file_sha256": "a8069689077e8cb0b2c843e23fbf0f579dceb293d6c91d7c5b847706e3bbe2f7",
+      "path": "rcc_revas_eval/scenario.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 63
+    },
+    {
+      "callable": "rcc_revas_eval.scoring.score_run",
+      "end_line": 75,
+      "file_sha256": "cb8efcde22ebe4a895116079be274c16fc2142e8f8f757bdc217311cb49b7a1f",
+      "path": "rcc_revas_eval/scoring.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 10
+    },
+    {
+      "callable": "rcc_revas_eval.takeshi._source_rows",
+      "end_line": 44,
+      "file_sha256": "e4ed63931393feb7fdc55dff524a21366fdbbbc4c879aa165f7e1e8a19cd7f30",
+      "path": "rcc_revas_eval/takeshi.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 26
+    },
+    {
+      "callable": "rcc_revas_eval.takeshi._required_text",
+      "end_line": 50,
+      "file_sha256": "e4ed63931393feb7fdc55dff524a21366fdbbbc4c879aa165f7e1e8a19cd7f30",
+      "path": "rcc_revas_eval/takeshi.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 47
+    },
+    {
+      "callable": "rcc_revas_eval.takeshi._optional_text",
+      "end_line": 57,
+      "file_sha256": "e4ed63931393feb7fdc55dff524a21366fdbbbc4c879aa165f7e1e8a19cd7f30",
+      "path": "rcc_revas_eval/takeshi.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 53
+    },
+    {
+      "callable": "rcc_revas_eval.takeshi._evidence",
+      "end_line": 71,
+      "file_sha256": "e4ed63931393feb7fdc55dff524a21366fdbbbc4c879aa165f7e1e8a19cd7f30",
+      "path": "rcc_revas_eval/takeshi.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 60
+    },
+    {
+      "callable": "rcc_revas_eval.takeshi._alias",
+      "end_line": 78,
+      "file_sha256": "e4ed63931393feb7fdc55dff524a21366fdbbbc4c879aa165f7e1e8a19cd7f30",
+      "path": "rcc_revas_eval/takeshi.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 74
+    },
+    {
+      "callable": "rcc_revas_eval.takeshi._conjunction",
+      "end_line": 84,
+      "file_sha256": "e4ed63931393feb7fdc55dff524a21366fdbbbc4c879aa165f7e1e8a19cd7f30",
+      "path": "rcc_revas_eval/takeshi.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 81
+    },
+    {
+      "callable": "rcc_revas_eval.takeshi._not",
+      "end_line": 88,
+      "file_sha256": "e4ed63931393feb7fdc55dff524a21366fdbbbc4c879aa165f7e1e8a19cd7f30",
+      "path": "rcc_revas_eval/takeshi.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 87
+    },
+    {
+      "callable": "rcc_revas_eval.takeshi.transform_case",
+      "end_line": 179,
+      "file_sha256": "e4ed63931393feb7fdc55dff524a21366fdbbbc4c879aa165f7e1e8a19cd7f30",
+      "path": "rcc_revas_eval/takeshi.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 91
+    },
+    {
+      "callable": "rcc_revas_eval.takeshi.transform_file",
+      "end_line": 217,
+      "file_sha256": "e4ed63931393feb7fdc55dff524a21366fdbbbc4c879aa165f7e1e8a19cd7f30",
+      "path": "rcc_revas_eval/takeshi.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 182
+    },
+    {
+      "callable": "rcc_revas_eval.wire._pairs",
+      "end_line": 19,
+      "file_sha256": "86812d557e74fe28af4c228f812c78517b3a593c5a517223a485f7a5b18a83f5",
+      "path": "rcc_revas_eval/wire.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 14
+    },
+    {
+      "callable": "rcc_revas_eval.wire._bad_constant",
+      "end_line": 22,
+      "file_sha256": "86812d557e74fe28af4c228f812c78517b3a593c5a517223a485f7a5b18a83f5",
+      "path": "rcc_revas_eval/wire.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 21
+    },
+    {
+      "callable": "rcc_revas_eval.wire._validate",
+      "end_line": 46,
+      "file_sha256": "86812d557e74fe28af4c228f812c78517b3a593c5a517223a485f7a5b18a83f5",
+      "path": "rcc_revas_eval/wire.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 24
+    },
+    {
+      "callable": "rcc_revas_eval.wire.wire_loads",
+      "end_line": 58,
+      "file_sha256": "86812d557e74fe28af4c228f812c78517b3a593c5a517223a485f7a5b18a83f5",
+      "path": "rcc_revas_eval/wire.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 48
+    },
+    {
+      "callable": "rcc_revas_eval.wire.wire_bytes",
+      "end_line": 64,
+      "file_sha256": "86812d557e74fe28af4c228f812c78517b3a593c5a517223a485f7a5b18a83f5",
+      "path": "rcc_revas_eval/wire.py",
+      "provenance": "NEW_BOUNDED_EXECUTABLE_IMPLEMENTATION_OR_INTEGRITY_WRAPPER",
+      "start_line": 60
+    }
+  ],
+  "source_rule_map": "docs/SOURCE_MAP.md",
+  "version": "0.1.0"
+}

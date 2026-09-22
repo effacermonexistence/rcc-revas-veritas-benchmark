@@ -1,0 +1,8 @@
+{
+  "status": "DEVELOPMENT_ONLY_NOT_PREREGISTERED_EXTERNAL_BENCHMARK",
+  "label_sha256": "6406e77e6bf4866bda63dae00b0a7a758f0632b8635b29b4e27d1cfae7475683",
+  "runtime_input_sha256": "504615197da69c677b7fbe9fc3e6f6ef4ec397f8cac6f10c87eafaf1c81c760d",
+  "case_count": 34,
+  "runtime_access_to_this_file": false,
+  "historical_36_case_dataset_modified": false
+}

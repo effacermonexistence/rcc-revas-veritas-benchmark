@@ -1,0 +1,138 @@
+[
+  {
+    "case_id": "dev-001",
+    "development_scenario": "supported factual proposition"
+  },
+  {
+    "case_id": "dev-002",
+    "development_scenario": "missing factual evidence"
+  },
+  {
+    "case_id": "dev-003",
+    "development_scenario": "bound evidence contradicts candidate"
+  },
+  {
+    "case_id": "dev-004",
+    "development_scenario": "partial-state preservation"
+  },
+  {
+    "case_id": "dev-005",
+    "development_scenario": "bounded inference retains hypothesis type"
+  },
+  {
+    "case_id": "dev-006",
+    "development_scenario": "inference lacks comparative evidence"
+  },
+  {
+    "case_id": "dev-007",
+    "development_scenario": "candidate is not highest-ranked hypothesis"
+  },
+  {
+    "case_id": "dev-008",
+    "development_scenario": "non-strict inference ranking"
+  },
+  {
+    "case_id": "dev-009",
+    "development_scenario": "verified replacement with explicit preservation evidence"
+  },
+  {
+    "case_id": "dev-010",
+    "development_scenario": "replacement loses a required property"
+  },
+  {
+    "case_id": "dev-011",
+    "development_scenario": "replacement preservation is unknown"
+  },
+  {
+    "case_id": "dev-012",
+    "development_scenario": "scoped protected action with independent fixture issuers"
+  },
+  {
+    "case_id": "dev-013",
+    "development_scenario": "missing authority assertion"
+  },
+  {
+    "case_id": "dev-014",
+    "development_scenario": "authority explicitly invalid"
+  },
+  {
+    "case_id": "dev-015",
+    "development_scenario": "missing required human approval"
+  },
+  {
+    "case_id": "dev-016",
+    "development_scenario": "approval explicitly invalid"
+  },
+  {
+    "case_id": "dev-017",
+    "development_scenario": "state not current"
+  },
+  {
+    "case_id": "dev-018",
+    "development_scenario": "expired authority evidence"
+  },
+  {
+    "case_id": "dev-019",
+    "development_scenario": "candidate action differs from requested action"
+  },
+  {
+    "case_id": "dev-020",
+    "development_scenario": "typed actor unavailable"
+  },
+  {
+    "case_id": "dev-021",
+    "development_scenario": "action outside locked scope"
+  },
+  {
+    "case_id": "dev-022",
+    "development_scenario": "invalid authority signature"
+  },
+  {
+    "case_id": "dev-023",
+    "development_scenario": "conflicting trusted factual evidence"
+  },
+  {
+    "case_id": "dev-024",
+    "development_scenario": "untrusted factual issuer"
+  },
+  {
+    "case_id": "dev-025",
+    "development_scenario": "unchanged state at later handoff"
+  },
+  {
+    "case_id": "dev-026",
+    "development_scenario": "evidence expires after adoption before handoff"
+  },
+  {
+    "case_id": "dev-027",
+    "development_scenario": "evidence revoked after adoption"
+  },
+  {
+    "case_id": "dev-028",
+    "development_scenario": "state changes after adoption"
+  },
+  {
+    "case_id": "dev-029",
+    "development_scenario": "null measurement stays null"
+  },
+  {
+    "case_id": "dev-030",
+    "development_scenario": "source lineage references retained without untyped measurement passthrough"
+  },
+  {
+    "case_id": "dev-031",
+    "development_scenario": "issuer cannot assert observations outside its scope"
+  },
+  {
+    "case_id": "dev-032",
+    "development_scenario": "evidence for a different candidate"
+  },
+  {
+    "case_id": "dev-033",
+    "development_scenario": "policy class does not require human approval"
+  },
+  {
+    "case_id": "dev-034",
+    "development_scenario": "untrusted contradictory payload cannot veto valid evidence"
+  }
+]

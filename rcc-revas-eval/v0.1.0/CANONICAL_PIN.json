@@ -7,7 +7,7 @@
   "local_canonical_source_commit": "8692c48bc4f93b56ab019004c27b7c6fd9c8fe62",
   "verified_entrypoint": "python -m rcc_revas_eval evaluate",
   "source_archive_path": "rcc-revas-eval/v0.1.0/source/rcc-revas-eval-v0.1.0-source.tar.gz",
-  "source_archive_sha256": "5d2f323188e80ff4ced5f9119755b6b298bcc7082e29bc92272fdc11f77ac2ac",
+  "source_archive_sha256": "4c736357ab93a8f4b5027b94c20340b973c760de1a0027df30bb53d3d10f47d8",
   "validation": {
     "tests_passed": 160,
     "tests_failed": 0,
@@ -23,5 +23,13 @@
   },
   "joint_contract_frozen": false,
   "native_veritas_joint_run_completed": false,
-  "claim_boundary": "Bounded upstream executable published for independent verification; joint treatment delta not yet measured."
+  "claim_boundary": "Bounded upstream executable published for independent verification; joint treatment delta not yet measured.",
+  "source_archive_size_bytes": 109796,
+  "source_git_tree": "ab477cff7924b922b0885fb665e5ca0d6e42868a",
+  "expanded_source_path": "rcc-revas-eval/v0.1.0/runtime",
+  "source_file_count": 67,
+  "publication_revision": 2,
+  "supersedes_publication_commit": "4f6996329ec49c4968545e0c0235d463225d88b3",
+  "runtime_code_changed": false,
+  "policy_or_gold_labels_changed": false
 }

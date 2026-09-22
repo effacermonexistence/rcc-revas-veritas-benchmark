@@ -1,0 +1,18 @@
+{
+  "contract": {
+    "path": "reference/Paired_Clean_Evaluation_Contract_v1.0-draft.txt",
+    "sha256": "78d765658109170f621a548e94f38231f1d8e3a42b382d77d9e0bece10634718",
+    "source_document_id": "1BlhAcON2PaA3vWalC09SjmPnUZd6Gr6CeAgmTMReLF4",
+    "status": "PARTNER_DRAFT_UNMODIFIED_NOT_JOINTLY_FROZEN"
+  },
+  "native_schema_inspection": {
+    "blob_sha": "e28aaf8fd798e27a11a8709825f434dd9a3aabf9",
+    "commit": "38da328f06baacf5939260fab30325624dc0eb0d",
+    "lines_inspected_for_response_semantics": [
+      850,
+      1290
+    ],
+    "path": "veritas_os/api/schemas.py",
+    "repository": "veritasfuji-japan/veritas_os"
+  }
+}

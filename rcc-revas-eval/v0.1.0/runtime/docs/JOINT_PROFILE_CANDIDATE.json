@@ -1,0 +1,24 @@
+{
+  "client_stop": "HTTP decision response; client does not invoke Bind",
+  "document_version": "0.5.0-upstream-canonical-handoff",
+  "historical_artifacts_or_remote_profile_overwritten": false,
+  "joint_downstream_stop_point": "TO_BE_JOINTLY_FIXED_BEFORE_FULL_TREATMENT_EVALUATION",
+  "joint_native_pin_status": "NOT_YET_JOINTLY_FROZEN",
+  "native_entry": "POST /v1/decide",
+  "native_evaluation_pin_from_partner_draft": "b14b2b379ed82af93c2a886b4861975324754594",
+  "native_inspection_reference": "38da328f06baacf5939260fab30325624dc0eb0d",
+  "native_physical_prestate_and_consumption": "VERIFY_WITH_SOURCE_PINNED_NATIVE_RUNNER",
+  "partner_acceptance": "NOT_OBSERVED_FOR_THIS_NEW_RELEASE",
+  "preserved_arms": {
+    "A": "SAME_ACCEPTED_FROZEN_RCC_REVAS",
+    "B": "SAME_RCC_REVAS_PLUS_CURRENT_VERITAS_FULL_TREATMENT"
+  },
+  "rcc_source_pin_reference": "distribution/CANONICAL_PIN.json#/canonical_rcc_executable_commit",
+  "runtime": {
+    "runtime_input_transform": "rcc_revas_eval.takeshi.transform_case",
+    "source_manifest": "source_manifest.json",
+    "support_matrix": "docs/SUPPORT_MATRIX.json",
+    "verified_entrypoint": "python -m rcc_revas_eval evaluate"
+  },
+  "status": "UPSTREAM_LOCAL_CANONICAL_READY_FOR_PARTNER_REVIEW; JOINT_PROFILE_NOT_FROZEN"
+}

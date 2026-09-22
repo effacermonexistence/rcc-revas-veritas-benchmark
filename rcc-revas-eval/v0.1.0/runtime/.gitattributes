@@ -1,0 +1,3 @@
+# Preserve externally pinned raw evidence bytes across Git checkouts.
+fixtures/takeshi/*.jsonl -text
+reference/*.txt -text

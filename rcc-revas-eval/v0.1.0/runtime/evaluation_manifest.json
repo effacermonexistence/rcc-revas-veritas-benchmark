@@ -1,0 +1,17 @@
+{
+  "execution_scope": "SYNTHETIC_STRUCTURED_SUBSET_NO_EXTERNAL_EFFECTS",
+  "keyring": "policies/SYNTHETIC_ONLY_keyring.json",
+  "policy": "policies/evaluation_policy.json",
+  "release_candidate": "0.1.0",
+  "schema_version": "rcc-revas.evaluation-manifest.v1",
+  "source_manifest": "source_manifest.json",
+  "veritas": {
+    "candidate_consumption_verified": false,
+    "native_entry_boundary": "POST /v1/decide",
+    "native_execution": "TRANSPORT_IMPLEMENTED; NATIVE_RUNTIME_NOT_ATTESTED",
+    "reference_commit": "38da328f06baacf5939260fab30325624dc0eb0d",
+    "reference_status": "SOURCE_INSPECTION_REFERENCE_NOT_JOINT_FREEZE",
+    "repository": "veritasfuji-japan/veritas_os",
+    "stop_point": "UPSTREAM_CANONICAL_HANDOFF; OPTIONAL_HTTP_RESPONSE_REVIEW_NO_BIND_DISPATCH"
+  }
+}

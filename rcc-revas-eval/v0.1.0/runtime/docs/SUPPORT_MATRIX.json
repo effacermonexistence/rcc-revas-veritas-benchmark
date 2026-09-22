@@ -1,0 +1,38 @@
+{
+  "canonical_scope": "BOUNDED_SYNTHETIC_UPSTREAM_EXECUTABLE",
+  "native_transport": {
+    "echo_is_consumption_proof": false,
+    "entrypoint": "POST /v1/decide",
+    "evaluation_pre_state_binding": true,
+    "fractional_native_json": true,
+    "native_runtime_executed_by_local_transport_tests": false,
+    "persistent_attempt_journal": true,
+    "request_candidate_binding": true
+  },
+  "next_stage": "Takeshi independent verification of exact upstream pin; agree and freeze native joint evaluation separately",
+  "not_claimed": [
+    "full private production RCC export",
+    "independent external validation",
+    "native VERITAS source attestation",
+    "native physical pre-state equality",
+    "native Authority/HumanApproval/Bind execution",
+    "joint full-treatment delta",
+    "whole-task utility"
+  ],
+  "partner_fixture": {
+    "all_original_conditions_retained": true,
+    "id_transform": "SHA256 pseudonyms; mapping audit-only",
+    "missing_typed_fields": "represented null; may HOLD",
+    "original_case_count": 36,
+    "raw_source_unchanged": true,
+    "score_transform": "finite decimal strings; advisory only",
+    "unsupported_source_fields": "per-case transform errors, never dropped silently"
+  },
+  "supported_kinds": [
+    "factual_claim",
+    "bounded_inference",
+    "candidate_replacement",
+    "protected_action"
+  ],
+  "version": "0.1.0"
+}
