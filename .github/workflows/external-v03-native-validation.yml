@@ -1,0 +1,63 @@
+name: External v0.3 Native Validation
+on:
+  push:
+    branches: [audit/external-v03-native-validation]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native-source-collection:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Check out unchanged VERITAS pin
+        uses: actions/checkout@v4
+        with:
+          repository: veritasfuji-japan/veritas_os
+          ref: b39961b003179aea70e320a57cb000f56a81951e
+          path: vendor/veritas_os
+          persist-credentials: false
+      - name: Check out unchanged AgentDojo pin
+        uses: actions/checkout@v4
+        with:
+          repository: ethz-spylab/agentdojo
+          ref: a75aba7631d3ca5fb7ab938965c97ead2f9ff84b
+          path: vendor/agentdojo
+          persist-credentials: false
+      - name: Collect public Python sources and minimal offline dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p native-validation/wheels
+          python -m pip download --no-deps --dest native-validation/wheels docstring-parser gymnasium lm-eval inspect-ai swebench datasets
+          python - <<'PY'
+          import hashlib,json,pathlib,subprocess,tarfile,platform
+          out=pathlib.Path('native-validation')
+          sources={}
+          for name,expected in [('veritas_os','b39961b003179aea70e320a57cb000f56a81951e'),('agentdojo','a75aba7631d3ca5fb7ab938965c97ead2f9ff84b')]:
+              root=pathlib.Path('vendor')/name
+              actual=subprocess.check_output(['git','-C',str(root),'rev-parse','HEAD'],text=True).strip()
+              assert actual==expected,(name,actual)
+              archive=out/(name+'-source.tar.gz')
+              with tarfile.open(archive,'w:gz') as tar:
+                  for relative in subprocess.check_output(['git','-C',str(root),'ls-files'],text=True).splitlines():
+                      path=root/relative
+                      if path.is_file() and not path.is_symlink():
+                          tar.add(path,arcname=name+'/'+relative,recursive=False)
+              sources[name]={'commit':actual,'archive_sha256':hashlib.sha256(archive.read_bytes()).hexdigest()}
+          files=[{'path':str(p.relative_to(out)),'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size} for p in sorted(out.rglob('*')) if p.is_file()]
+          (out/'manifest.json').write_text(json.dumps({'scope':'SOURCE_AND_DEPENDENCY_COLLECTION_NOT_BENCHMARK_SUCCESS','python':platform.python_version(),'sources':sources,'files':files},indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: external-v03-native-sources
+          path: native-validation/
+          if-no-files-found: error
+          retention-days: 14
