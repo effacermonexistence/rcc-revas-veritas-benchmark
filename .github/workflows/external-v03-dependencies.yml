@@ -1,0 +1,31 @@
+name: External v0.3 Optional Dependencies
+on:
+  push:
+    branches: [audit/external-v03-native-validation]
+    paths: [.github/workflows/external-v03-dependencies.yml]
+permissions:
+  contents: read
+jobs:
+  download:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Download optional libraries, no model weights and no API credentials
+        run: |
+          mkdir -p wheels
+          python -m pip download --dest wheels agent-client-protocol aiobotocore ijson jsonlines jsonpatch jsonpath-ng jsonref mmh3 nest_asyncio2 s3fs shortuuid textual tiktoken universal-pathlib zipfile-zstd zstandard evaluate pytablewriter rouge-score sacrebleu sqlitedict dill word2number docker ghapi GitPython modal pre-commit tenacity unidiff pyarrow xxhash multiprocess farama-notifications deepdiff openai anthropic cohere google-generativeai groq together mistralai
+          python - <<'PY'
+          import pathlib,hashlib,json
+          root=pathlib.Path('wheels')
+          (root/'manifest.json').write_text(json.dumps({'scope':'OPTIONAL_LIBRARY_DOWNLOAD_ONLY','files':[{'path':p.name,'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size} for p in sorted(root.iterdir()) if p.is_file()]},indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: external-v03-optional-dependencies
+          path: wheels/
+          retention-days: 7
+          if-no-files-found: error
