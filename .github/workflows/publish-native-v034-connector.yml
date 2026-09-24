@@ -1,0 +1,174 @@
+name: Publish reviewed native kit through connector
+on:
+  push:
+    branches: [release/external-v0.3.4]
+    paths: [.github/workflows/publish-native-v034-connector.yml]
+permissions:
+  contents: write
+concurrency:
+  group: reviewed-native-v034-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+      RELEASE_BRANCH: release/external-v0.3.4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Reconstruct and independently verify exact source delta
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import base64,gzip,hashlib,json,pathlib,subprocess
+          def require(ok,message):
+              if not ok: raise RuntimeError(message)
+          def digest(raw): return hashlib.sha256(raw).hexdigest()
+          def safe(name):
+              p=pathlib.PurePosixPath(name)
+              require(not p.is_absolute() and '..' not in p.parts and '\\' not in name and '.git' not in p.parts,'UNSAFE_PATH')
+              return p
+          encoded=''.join(pathlib.Path(f'.delivery/reviewed-source-v034.part{i}.b64').read_text().strip() for i in (1,2,3))
+          packed=base64.b64decode(encoded,validate=True)
+          require(len(packed)==18418 and digest(packed)=='86a5b83929a1f668d6f303847d5f466ec949ade0d8c4b5fe34417836047b41c0','PAYLOAD_HASH_MISMATCH')
+          raw=gzip.decompress(packed)
+          require(len(raw)==57922 and digest(raw)=='c743823584151ae9f11e9406cfddd47e55d1620bd9446fe4a38999245f226e3d','DELTA_HASH_MISMATCH')
+          plan=json.loads(raw)
+          require(plan['base_commit']=='16fd9eafc7305e66e6ff1e6c977bd9d9f18a9e08' and plan['root']=='external-eval/v0.3.4','WRONG_BASE')
+          root=pathlib.Path(plan['root'])
+          actual=subprocess.check_output(['git','rev-parse','HEAD:'+plan['root']],text=True).strip()
+          require(actual==plan['base_source_tree']=='46c72d9ca429e1ea7afd39ae62fb1196c4d4e6df','SOURCE_BASE_MOVED')
+          original={}
+          for p in root.rglob('*'):
+              require(not p.is_symlink(),'SOURCE_SYMLINK')
+              if p.is_file() and p.name!='SOURCE_MANIFEST.json':original[p.relative_to(root).as_posix()]=p.read_bytes()
+          result=dict(original)
+          require(len(plan['remove'])==28 and len(plan['write'])==37,'DELTA_OPERATION_COUNT')
+          for name in plan['remove']:
+              safe(name);require(name in result,'DELETE_MISSING');del result[name]
+          for op in plan['write']:
+              name=op['path'];safe(name)
+              if 'text' in op: data=op['text'].encode()
+              elif 'copy_result' in op:data=result[op['copy_result']]
+              else:
+                  text=original[op['from']].decode()
+                  for i,j,replacement in reversed(op.get('edits',[])):
+                      require(0<=i<=j<=len(text),'INVALID_TEXT_EDIT')
+                      text=text[:i]+replacement+text[j:]
+                  data=text.encode()
+              require(digest(data)==op['sha256'],'FILE_HASH_MISMATCH:'+name)
+              result[name]=data
+          def set_hash(files):return digest(b''.join(name.encode()+b'\0'+hashlib.sha256(data).digest() for name,data in sorted(files.items())))
+          require(len(result)==191 and set_hash(result)=='37072a7eb03e3c2745ac58768869d4c677c394b56fc07a40166f36a2d72af055','SOURCE_SET_MISMATCH')
+          # Correct the added regression test to exercise the policy, not an invalid constructor.
+          name='tests/test_publication_merge_guards.py';text=result[name].decode()
+          before='CandidateAction("final_answer", 1)'
+          require(text.count(before)==1,'TEST_CANDIDATE_CORRECTION_MISMATCH')
+          text=text.replace(before,'CandidateAction("final_answer", content=1)')
+          before='    gate.policy["checks"] = []\n    with pytest.raises(IntegrityError):'
+          require(text.count(before)==1,'TEST_ERROR_CORRECTION_MISMATCH')
+          text=text.replace(before,'    gate.policy["checks"] = []\n    with pytest.raises(IntegrityError, match="EXTERNAL_RCC_POLICY_MEMORY_CHANGED"):')
+          result[name]=text.encode()
+          require(digest(result[name])=='5c995d0ace30e042515b5c45b0f3d8c8319f3c688f5659e22721fcc0c7082d0d','CORRECTED_TEST_HASH')
+          meta=json.loads(result['PUBLICATION_SOURCE.json'])
+          meta['published_source_files']=192
+          meta['source_files_excluding_manifest']=191
+          meta['publication_test_correction']='The retained guard test uses a valid CandidateAction(content=1) and matches EXTERNAL_RCC_POLICY_MEMORY_CHANGED specifically.'
+          result['PUBLICATION_SOURCE.json']=(json.dumps(meta,indent=2)+'\n').encode()
+          require(set_hash(result)=='b480a302c42acfdd1e723f9c4f10d94d0ee39a3e6b59d522c2f499961425eaec','FINAL_SOURCE_SET_MISMATCH')
+          for name in original:
+              if name not in result:root.joinpath(*safe(name).parts).unlink()
+          for name,data in result.items():
+              p=root.joinpath(*safe(name).parts);p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(data)
+          subprocess.run(['python',str(root/'scripts/source_manifest.py')],check=True)
+          require(digest((root/'SOURCE_MANIFEST.json').read_bytes())=='33303f8a8aed7ee1b8f1ffc0095cbb3ec9c5c73a4c2ff8c81cc04179cf6c8f59','RELEASE_MANIFEST_HASH')
+          subprocess.run(['python',str(root/'scripts/verify_source_manifest.py')],check=True)
+          pathlib.Path('EXTERNAL_EVAL.md').write_text('# External evaluation implementation kit\n\nThis branch publishes the portable pilot source from reviewed snapshot `7898c720c938bd7edca8590814cd3c21170ba3a9`, retaining the previously published required-verifier and in-memory-policy safeguards.\n\n[Source and installation](external-eval/v0.3.4/README.md) | [English implementation guide](external-eval/v0.3.4/docs/TAKESHI_IMPLEMENTATION_v0.3.4.md) | [Japanese guide](external-eval/v0.3.4/docs/TAKESHI_IMPLEMENTATION_v0.3.4.ja.md) | [Mapping](external-eval/v0.3.4/contracts/VERITAS_MAPPING_v0.3.4.json) | [Source provenance](external-eval/v0.3.4/PUBLICATION_SOURCE.json)\n\nThe original synthetic package, previous release branch, historical evidence and `main` remain unchanged. New native APIs require explicit adapters; a generated pilot is an engineering starter, not a completed native benchmark.\n')
+          print(json.dumps({'source_files':192,'file_set_sha256':set_hash(result),'status':'PASS'}))
+          PY
+      - name: Install actual package and test revised implementation
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p external-eval/publication-native-v0.3.4
+          python -m pip install './external-eval/v0.3.4[test]'
+          cd external-eval/v0.3.4
+          python -m pytest tests/test_v034_handoff_portability.py tests/test_external_rcc.py tests/test_publication_merge_guards.py --junitxml=../publication-native-v0.3.4/tests.xml
+          python -m pip check > ../publication-native-v0.3.4/pip-check.txt
+      - name: Execute a fresh pilot outside the source checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          EVIDENCE="$GITHUB_WORKSPACE/external-eval/publication-native-v0.3.4"
+          PILOT="$RUNNER_TEMP/native-reviewed-pilot"
+          cd "$RUNNER_TEMP"
+          python -I -c 'import rveval; print(rveval.__file__); assert "site-packages" in rveval.__file__' | tee "$EVIDENCE/installed-package.txt"
+          python -I -m rveval init-pilot --name 'Takeshi new pilot' --output-dir "$PILOT" | tee "$EVIDENCE/init.json"
+          cd "$PILOT"
+          python -I -m rveval mapping-check --contract contracts/mapping.json | tee "$EVIDENCE/mapping.json"
+          python -I -m rveval freeze --config config.json --output freeze.json | tee "$EVIDENCE/freeze.log"
+          python -I -m rveval run --config config.json --freeze freeze.json --ack-freeze-sha256 "$(python -I -m rveval hash freeze.json)" --output-dir run-001 | tee "$EVIDENCE/run.json"
+          python -I -m rveval verify --run-dir run-001 --expected-index-sha256 "$(python -I -m rveval hash run-001/evidence_index.json)" | tee "$EVIDENCE/verify.json"
+          cp run-001/evidence_index.json "$EVIDENCE/pilot-evidence-index.json"
+          cp -r run-001 "$EVIDENCE/pilot-run"
+      - name: Verify results and source closure before publication
+        shell: bash
+        run: |
+          set -euo pipefail
+          python external-eval/v0.3.4/scripts/verify_source_manifest.py
+          python - <<'PY'
+          import json,os,pathlib,hashlib,xml.etree.ElementTree as ET
+          p=pathlib.Path('external-eval/publication-native-v0.3.4')
+          suites=list(ET.parse(p/'tests.xml').getroot().iter('testsuite'))
+          counts={key:sum(int(s.get(key,0)) for s in suites) for key in ('tests','failures','errors','skipped')}
+          assert counts=={'tests':34,'failures':0,'errors':0,'skipped':0},counts
+          mapping=json.loads((p/'mapping.json').read_text());verify=json.loads((p/'verify.json').read_text());run=json.loads((p/'run.json').read_text())
+          assert mapping['status']=='PASS' and verify['status']=='PASS' and run['status']=='COMPLETED'
+          files=[{'path':f.relative_to(p).as_posix(),'sha256':hashlib.sha256(f.read_bytes()).hexdigest()} for f in sorted(p.rglob('*')) if f.is_file()]
+          result={'status':'PASS','scope':'REMOTE_SOURCE_PUBLICATION_AND_INSTALLED_PILOT_HANDOFF','source_snapshot_commit':'7898c720c938bd7edca8590814cd3c21170ba3a9','source_manifest_sha256':'33303f8a8aed7ee1b8f1ffc0095cbb3ec9c5c73a4c2ff8c81cc04179cf6c8f59','source_files':192,'github_run_id':os.environ['GITHUB_RUN_ID'],'tested_workflow_commit':os.environ['GITHUB_SHA'],'ci_tests':counts,'installed_pilot':'COMPLETED_AND_VERIFIED','all_benchmarks_executed':False,'paid_model_calls':False,'evidence':files}
+          (p/'verification.json').write_text(json.dumps(result,indent=2)+'\n')
+          print(json.dumps(result,indent=2))
+          PY
+      - name: Commit and push verified source to the requested release branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os,base64,subprocess,pathlib
+          def git(*args,**kwargs):return subprocess.check_output(['git',*args],text=True,**kwargs).strip()
+          assert git('branch','--show-current')==os.environ['RELEASE_BRANCH']
+          subprocess.run(['git','config','user.name','Ben Bae'],check=True)
+          subprocess.run(['git','config','user.email','224881116+effacermonexistence@users.noreply.github.com'],check=True)
+          for i in (1,2,3):pathlib.Path(f'.delivery/reviewed-source-v034.part{i}.b64').unlink()
+          subprocess.run(['git','add','-A','external-eval/v0.3.4','external-eval/publication-native-v0.3.4','EXTERNAL_EVAL.md','.delivery'],check=True)
+          subprocess.run(['git','commit','-m','release: commit reviewed portable v0.3.4 pilot and mapping implementation; preserve verified RCC policy guards'],check=True)
+          env=dict(os.environ);env['GIT_CONFIG_COUNT']='1';env['GIT_CONFIG_KEY_0']='http.https://github.com/.extraheader';env['GIT_CONFIG_VALUE_0']='AUTHORIZATION: basic '+base64.b64encode(('x-access-token:'+env['GH_TOKEN']).encode()).decode()
+          subprocess.run(['git','push','origin','HEAD:refs/heads/'+os.environ['RELEASE_BRANCH']],check=True,env=env)
+          sha=git('rev-parse','HEAD')
+          remote=git('ls-remote','origin','refs/heads/'+os.environ['RELEASE_BRANCH'],env=env).split()[0]
+          assert remote==sha
+          pathlib.Path('published-commit.txt').write_text(sha+'\n')
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:f.write('Published and read back commit: `'+sha+'`\n')
+          print('PUBLISHED_COMMIT='+sha)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-v034-connector-publication
+          path: |
+            external-eval/publication-native-v0.3.4/
+            published-commit.txt
+          if-no-files-found: warn
+          retention-days: 30
