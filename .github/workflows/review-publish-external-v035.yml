@@ -1,0 +1,149 @@
+name: External v035 complete handoff recheck
+on:
+  push:
+    branches: [release/external-v0.3.5]
+    paths: [.github/workflows/review-publish-external-v035.yml]
+permissions:
+  contents: write
+jobs:
+  recheck-and-publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      LITELLM_LOCAL_MODEL_COST_MAP: 'True'
+      BASE_COMMIT: 7df544cca1272a725d1d6e830214168394250d0e
+      RELEASE_DIR: external-eval/v0.3.5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Reconstruct exact reviewed source and verify every file
+        run: |
+          set -euo pipefail
+          mkdir -p review-output
+          python - <<'PY'
+          import base64,zlib,hashlib,pathlib,subprocess,tarfile,io,json,os
+          p=pathlib.Path
+          parts=[p(f'.delivery/review-v035.part{i}.b64').read_text().strip() for i in range(1,6)]
+          encoded=''.join(parts)
+          assert len(encoded)==18584, [len(x) for x in parts]
+          patch=zlib.decompress(base64.b64decode(encoded,validate=True))
+          assert len(patch)==46846
+          assert hashlib.sha256(patch).hexdigest()=='b7ca09969a8b1f76ecdd86d6fb79557f5e2a09b7d6e868eeeec8b122cd88ffaa'
+          p('/tmp/review-v035.patch').write_bytes(patch)
+          root=p(os.environ['RELEASE_DIR']);root.mkdir(parents=True,exist_ok=False)
+          archive=subprocess.check_output(['git','archive',os.environ['BASE_COMMIT']+':external-eval/v0.3.4'])
+          with tarfile.open(fileobj=io.BytesIO(archive)) as tar:tar.extractall(root,filter='data')
+          subprocess.run(['git','apply','--check','--directory='+str(root),'/tmp/review-v035.patch'],check=True)
+          subprocess.run(['git','apply','--directory='+str(root),'/tmp/review-v035.patch'],check=True)
+          manifest=root/'SOURCE_MANIFEST.json'
+          assert hashlib.sha256(manifest.read_bytes()).hexdigest()=='0aa18baa8e765391097e81b25004ef3fe4c166dcef2a0ac0d62cb7d346414b9c'
+          subprocess.run(['python',str(root/'scripts/verify_source_manifest.py')],check=True)
+          p('review-output/source-receipt.json').write_text(json.dumps({'base_commit':os.environ['BASE_COMMIT'],'workflow_commit':os.environ['GITHUB_SHA'],'patch_sha256':hashlib.sha256(patch).hexdigest(),'source_manifest_sha256':hashlib.sha256(manifest.read_bytes()).hexdigest()},indent=2)+'\n')
+          PY
+      - name: Install declared CPU native dependencies and actual package
+        run: |
+          set -euo pipefail
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu 'torch==2.10.0'
+          python -m pip install -r "$RELEASE_DIR/requirements-native.txt"
+          python -m pip install "$RELEASE_DIR[test]"
+          python -m pip check > review-output/pip-check.txt
+          node --version > review-output/node-version.txt
+      - name: Retrieve exact public native source pins without credentials
+        run: |
+          python - <<'PY'
+          import os,json,pathlib,subprocess
+          root=pathlib.Path(os.environ['RELEASE_DIR'])
+          pins=json.loads((root/'SOURCES_NATIVE.json').read_text())['repositories']
+          parent=pathlib.Path(os.environ['RUNNER_TEMP'])/'rveval-native';parent.mkdir()
+          verified={}
+          for name,pin in pins.items():
+              target=parent/name;target.mkdir()
+              for command in [['git','init',str(target)],['git','-C',str(target),'remote','add','origin','https://github.com/'+pin['repository']+'.git'],['git','-C',str(target),'fetch','--depth=1','origin',pin['commit']],['git','-C',str(target),'checkout','--detach','FETCH_HEAD']]:
+                  subprocess.run(command,check=True,timeout=180)
+              actual=subprocess.check_output(['git','-C',str(target),'rev-parse','HEAD'],text=True).strip()
+              assert actual==pin['commit']
+              verified[name]={'repository':pin['repository'],'commit':actual}
+          pathlib.Path('review-output/native-source-pins.json').write_text(json.dumps(verified,indent=2)+'\n')
+          PY
+      - name: Execute all native tests and three real datasets
+        run: |
+          set -euo pipefail
+          python "$RELEASE_DIR/scripts/validate_native.py" \
+            --rcc-source "$RUNNER_TEMP/rveval-native/rcc/rcc-revas-eval/v0.1.0/runtime" \
+            --veritas-source "$RUNNER_TEMP/rveval-native/veritas" \
+            --agentdojo-source "$RUNNER_TEMP/rveval-native/agentdojo" \
+            --tau-source "$RUNNER_TEMP/rveval-native/tau" \
+            --tau2-source "$RUNNER_TEMP/rveval-native/tau2" \
+            --output "$GITHUB_WORKSPACE/review-output/native" \
+            > review-output/native-console.json 2>&1
+      - name: Execute all reference families without skipping requested runtimes
+        run: |
+          set -euo pipefail
+          python "$RELEASE_DIR/scripts/run_acceptance.py" \
+            --output "$GITHUB_WORKSPACE/review-output/reference" \
+            > review-output/reference-console.json 2>&1
+      - name: Fresh partner pilot from installed package outside checkout
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          python -I -m rveval init-pilot --name independent-partner --output-dir ./independent-partner > "$GITHUB_WORKSPACE/review-output/pilot-init.json"
+          cd independent-partner
+          test -f docs/PARTNER_START_HERE.md
+          python -I -m rveval mapping-check --contract contracts/mapping.json > "$GITHUB_WORKSPACE/review-output/pilot-mapping.json"
+          python -I -m rveval freeze --config config.json --output freeze.json
+          python -I -m rveval run --config config.json --freeze freeze.json --ack-freeze-sha256 "$(python -I -m rveval hash freeze.json)" --output-dir run-001 > "$GITHUB_WORKSPACE/review-output/pilot-run.json"
+          python -I -m rveval verify --run-dir run-001 --expected-index-sha256 "$(python -I -m rveval hash run-001/evidence_index.json)" > "$GITHUB_WORKSPACE/review-output/pilot-verify.json"
+          cp -r run-001 "$GITHUB_WORKSPACE/review-output/pilot-run"
+      - name: Validate exact counts and source closure before publication
+        run: |
+          set -euo pipefail
+          python "$RELEASE_DIR/scripts/verify_source_manifest.py" > review-output/source-after.json
+          python - <<'PY'
+          import json,pathlib,hashlib,os
+          p=pathlib.Path;out=p('review-output')
+          native=json.loads((out/'native/validation.json').read_text())
+          reference=json.loads((out/'reference/acceptance.json').read_text())
+          assert native['status']=='PASS' and native['test_counts']=={'tests':335,'failures':0,'errors':0,'skipped':0},native['test_counts']
+          assert reference['status']=='PASS' and reference['test_counts']=={'tests':286,'failures':0,'errors':0,'skipped':0},reference['test_counts']
+          assert len(reference['commands'])==31 and reference['skips']==[]
+          result={'status':'PASS','release':'0.3.5','scope':'EXECUTED_NATIVE_PROFILES_AND_RECIPIENT_INDEPENDENT_HANDOFF','reviewed_base_commit':os.environ['BASE_COMMIT'],'workflow_commit':os.environ['GITHUB_SHA'],'run_id':os.environ['GITHUB_RUN_ID'],'source_manifest_sha256':hashlib.sha256((p(os.environ['RELEASE_DIR'])/'SOURCE_MANIFEST.json').read_bytes()).hexdigest(),'native_tests':native['test_counts'],'reference_tests':reference['test_counts'],'reference_cli_commands_excluding_pytest':30,'real_dataset_execution':'COMPLETED_THREE_DATASETS','installed_partner_pilot':'COMPLETED_AND_VERIFIED','all_existing_future_benchmarks_executed':False,'paid_model_calls':False,'provider_mode':'CONTROLLED_INTEGRATION_TRANSCRIPT_NOT_FRONTIER_MODEL_PERFORMANCE'}
+          result['evidence']=[{'path':str(f.relative_to(out)),'sha256':hashlib.sha256(f.read_bytes()).hexdigest()} for f in sorted(out.rglob('*')) if f.is_file()]
+          (out/'verification.json').write_text(json.dumps(result,indent=2)+'\n')
+          print(json.dumps({k:v for k,v in result.items() if k!='evidence'},indent=2))
+          PY
+      - name: Publish only tested source and review summary on new branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p external-eval/review-v0.3.5
+          cp review-output/verification.json review-output/source-receipt.json review-output/native-source-pins.json external-eval/review-v0.3.5/
+          cp review-output/native/tests.xml external-eval/review-v0.3.5/native-tests.xml
+          cp review-output/reference/pytest.xml external-eval/review-v0.3.5/reference-tests.xml
+          cp review-output/native/validation.json external-eval/review-v0.3.5/native-validation.json
+          cp review-output/reference/acceptance.json external-eval/review-v0.3.5/reference-acceptance.json
+          git rm .delivery/review-v035.patch.b64 .delivery/review-v035.part{1,2,3,4,5}.b64
+          git add external-eval/v0.3.5 external-eval/review-v0.3.5
+          git config user.name 'RCC review automation'
+          git config user.email '224881116+effacermonexistence@users.noreply.github.com'
+          git commit -m 'release: v0.3.5 recipient-independent handoff after complete native recheck'
+          gh auth setup-git
+          git push origin HEAD:release/external-v0.3.5
+          git rev-parse HEAD > review-output/published-commit.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: external-v035-complete-recheck
+          path: review-output/
+          retention-days: 30
+          if-no-files-found: error
