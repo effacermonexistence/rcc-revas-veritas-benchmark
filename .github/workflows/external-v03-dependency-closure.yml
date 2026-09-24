@@ -15,7 +15,7 @@ jobs:
           python-version: '3.13'
       - run: |
           mkdir -p wheels
-          python -m pip download --no-deps --dest wheels 'fsspec==2026.6.0' 'ghapi<2' 'word2number==1.1' 's3fs==2026.6.0'
+          python -m pip download --no-deps --dest wheels 'fsspec==2026.6.0' 'ghapi<2' 'fastcore<2,>=1.12.19' 'word2number==1.1' 's3fs==2026.6.0'
           python - <<'PY'
           import pathlib,json,hashlib
           p=pathlib.Path('wheels')
