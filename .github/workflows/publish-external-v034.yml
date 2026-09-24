@@ -1,0 +1,136 @@
+name: Publish reviewed external evaluation 0.3.4
+on:
+  push:
+    branches: [release/external-eval-v0.3.4]
+    paths: [.github/workflows/publish-external-v034.yml]
+permissions:
+  contents: write
+jobs:
+  publish-reviewed-source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      EXPECTED_SOURCE_SHA256: 27ba43694ab05ced18b1c0896030dfeefcc027c39cdaa43a8f21c607399d3fc7
+      RELEASE_BRANCH: release/external-eval-v0.3.4
+      PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Prepare ephemeral encrypted source transfer
+        run: |
+          python -m pip install 'cryptography==50.0.1'
+          python - <<'PY'
+          import os,json,secrets,pathlib
+          from cryptography.hazmat.primitives.asymmetric import rsa
+          from cryptography.hazmat.primitives import serialization
+          key=rsa.generate_private_key(public_exponent=65537,key_size=3072)
+          private=pathlib.Path('/tmp/rveval-transfer-private.pem')
+          private.write_bytes(key.private_bytes(serialization.Encoding.PEM,serialization.PrivateFormat.PKCS8,serialization.NoEncryption()))
+          private.chmod(0o600)
+          out=pathlib.Path('handoff-public-key');out.mkdir()
+          request={'run_id':os.environ['GITHUB_RUN_ID'],'nonce':secrets.token_hex(32),'source_sha256':os.environ['EXPECTED_SOURCE_SHA256'],'public_key_pem':key.public_key().public_bytes(serialization.Encoding.PEM,serialization.PublicFormat.SubjectPublicKeyInfo).decode()}
+          (out/'request.json').write_text(json.dumps(request,indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: external-v034-transfer-public-key
+          path: handoff-public-key/request.json
+          retention-days: 1
+      - name: Import exact source archive without exposing its temporary URL
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import os,json,base64,time,urllib.request,urllib.error,urllib.parse,pathlib,hashlib,zipfile,io,subprocess
+          from cryptography.hazmat.primitives import serialization,hashes
+          from cryptography.hazmat.primitives.asymmetric import padding
+          from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+          request=json.loads(pathlib.Path('handoff-public-key/request.json').read_text())
+          key=serialization.load_pem_private_key(pathlib.Path('/tmp/rveval-transfer-private.pem').read_bytes(),password=None)
+          api='https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']+'/contents/.transfer/v034-envelope.json?ref='+urllib.parse.quote(os.environ['RELEASE_BRANCH'],safe='')
+          headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'}
+          envelope=None
+          for _ in range(180):
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(api,headers=headers),timeout=15) as r: obj=json.load(r)
+                  candidate=json.loads(base64.b64decode(obj['content']))
+                  if candidate.get('run_id')==request['run_id']:
+                      envelope=candidate;break
+              except urllib.error.HTTPError as exc:
+                  if exc.code!=404: raise RuntimeError('TRANSFER_METADATA_HTTP_ERROR') from None
+              time.sleep(5)
+          if envelope is None:raise RuntimeError('TRANSFER_ENVELOPE_TIMEOUT')
+          symmetric=key.decrypt(base64.b64decode(envelope['key']),padding.OAEP(mgf=padding.MGF1(hashes.SHA256()),algorithm=hashes.SHA256(),label=None))
+          clear=json.loads(AESGCM(symmetric).decrypt(base64.b64decode(envelope['nonce']),base64.b64decode(envelope['ciphertext']),request['nonce'].encode()))
+          if clear['run_id']!=request['run_id'] or clear['source_sha256']!=request['source_sha256']:raise RuntimeError('TRANSFER_SCOPE_MISMATCH')
+          parsed=urllib.parse.urlparse(clear['url'])
+          if parsed.scheme!='https' or not parsed.hostname.endswith('.oaiusercontent.com'):raise RuntimeError('TRANSFER_HOST_NOT_ALLOWED')
+          try:
+              with urllib.request.urlopen(clear['url'],timeout=90) as r:
+                  final=urllib.parse.urlparse(r.geturl())
+                  if final.scheme!='https' or not final.hostname.endswith('.oaiusercontent.com'):raise RuntimeError('TRANSFER_REDIRECT_NOT_ALLOWED')
+                  raw=r.read(2_000_001)
+          except Exception:raise RuntimeError('SOURCE_ARCHIVE_DOWNLOAD_FAILED') from None
+          pathlib.Path('/tmp/rveval-transfer-private.pem').unlink(missing_ok=True)
+          if len(raw)>2_000_000 or hashlib.sha256(raw).hexdigest()!=request['source_sha256']:raise RuntimeError('SOURCE_ARCHIVE_HASH_MISMATCH')
+          subprocess.run(['git','fetch','origin',os.environ['RELEASE_BRANCH']],check=True)
+          subprocess.run(['git','merge','--ff-only','FETCH_HEAD'],check=True)
+          root=pathlib.Path('external-eval/v0.3.4');root.mkdir(parents=True,exist_ok=False)
+          with zipfile.ZipFile(io.BytesIO(raw)) as z:
+              names=z.namelist()
+              if len(names)!=189 or len(set(names))!=189:raise RuntimeError('SOURCE_FILE_COUNT_MISMATCH')
+              if sum(i.file_size for i in z.infolist())>20_000_000:raise RuntimeError('SOURCE_ARCHIVE_TOO_LARGE')
+              for item in z.infolist():
+                  p=pathlib.PurePosixPath(item.filename)
+                  if p.is_absolute() or '..' in p.parts or '.git' in p.parts or '.github' in p.parts or '\\' in item.filename or (item.external_attr>>16)&0o170000==0o120000:raise RuntimeError('UNSAFE_ARCHIVE_ENTRY')
+                  destination=root.joinpath(*p.parts);destination.parent.mkdir(parents=True,exist_ok=True);destination.write_bytes(z.read(item))
+          subprocess.run(['python',str(root/'scripts/verify_source_manifest.py')],check=True)
+          pathlib.Path('/tmp/rveval-source-receipt.json').write_text(json.dumps({'source_archive_sha256':request['source_sha256'],'source_files':189,'run_id':request['run_id'],'temporary_url_persisted':False},indent=2)+'\n')
+          PY
+      - name: Install and test the actual published package
+        run: |
+          set -euo pipefail
+          mkdir -p external-eval/publication-v0.3.4-ci
+          python -m pip install './external-eval/v0.3.4[test]'
+          python -m pytest external-eval/v0.3.4/tests/test_release_handoff.py external-eval/v0.3.4/tests/test_external_rcc.py -q --junitxml=external-eval/publication-v0.3.4-ci/tests.xml
+          python -I -m rveval init-pilot --pilot-id clean-github-pilot --output-dir /tmp/rveval-clean-github-pilot
+          cd /tmp/rveval-clean-github-pilot
+          python -I -m rveval mapping-check --contract mapping.json
+          python -I -m rveval freeze --config config.json --output freeze.json
+          python -I -m rveval run --config config.json --freeze freeze.json --ack-freeze-sha256 "$(python -I -m rveval hash freeze.json)" --output-dir run-new
+          python -I -m rveval verify --run-dir run-new --expected-index-sha256 "$(python -I -m rveval hash run-new/evidence_index.json)"
+      - name: Commit only verified source, documentation and publication evidence
+        run: |
+          set -euo pipefail
+          python external-eval/v0.3.4/scripts/verify_source_manifest.py
+          python - <<'PY'
+          import os,json,pathlib,xml.etree.ElementTree as ET
+          root=pathlib.Path('external-eval/publication-v0.3.4-ci')
+          suite=ET.parse(root/'tests.xml').getroot();suites=list(suite.iter('testsuite'))
+          counts={k:sum(int(s.attrib.get(k,0)) for s in suites) for k in ('tests','failures','errors','skipped')}
+          if counts!={'tests':23,'failures':0,'errors':0,'skipped':0}:raise RuntimeError('PUBLISHED_HANDOFF_TESTS_NOT_COMPLETE')
+          receipt=json.loads(pathlib.Path('/tmp/rveval-source-receipt.json').read_text())
+          receipt.update({'status':'PASS','ci_tests':counts,'installed_outside_checkout_pilot':'COMPLETED_AND_VERIFIED','source_manifest_after_execution':'PASS','full_local_native_tests':310,'all_benchmarks_executed':False})
+          (root/'verification.json').write_text(json.dumps(receipt,indent=2)+'\n')
+          pathlib.Path('EXTERNAL_EVAL.md').write_text('# External evaluation implementation kit\n\nCurrent reviewed release: [0.3.4](external-eval/v0.3.4/README.md).\n\n[English handoff](external-eval/v0.3.4/docs/RELEASE_HANDOFF_v0.3.4.md) | [Japanese handoff](external-eval/v0.3.4/docs/RELEASE_HANDOFF_v0.3.4.ja.md) | [Mapping contract](external-eval/v0.3.4/contracts/VERITAS_MAPPING_v0.3.3.json) | [Publication verification](external-eval/publication-v0.3.4-ci/verification.json).\n\nInstall the release directory and run `rveval init-pilot --pilot-id new-pilot --output-dir ../new-pilot`. Follow its generated START_HERE.md. New native APIs require explicit adapters; no claim that every benchmark has already been executed is made. The original synthetic package and historical records are unchanged.\n')
+          PY
+          git config user.name 'Ben Bae'
+          git config user.email '224881116+effacermonexistence@users.noreply.github.com'
+          git add external-eval/v0.3.4 external-eval/publication-v0.3.4-ci EXTERNAL_EVAL.md
+          git commit -m 'release: publish verified benchmark-independent evaluation and pilot handoff v0.3.4'
+          git push origin "HEAD:${RELEASE_BRANCH}"
+          git rev-parse HEAD > /tmp/rveval-published-commit.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: external-v034-publication-verification
+          path: |
+            external-eval/publication-v0.3.4-ci/
+            /tmp/rveval-published-commit.txt
+          retention-days: 30
+          if-no-files-found: warn
