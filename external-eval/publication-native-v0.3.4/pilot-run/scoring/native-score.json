@@ -1,0 +1,1 @@
+{"benchmark_capability_claim":false,"metric":"starter_exact_match","native_treatment_claim":false,"rows":[{"arm":"A","case_id":"sum/one","correct":true},{"arm":"B","case_id":"sum/one","correct":true},{"arm":"A","case_id":"sum/two","correct":true},{"arm":"B","case_id":"sum/two","correct":true}]}

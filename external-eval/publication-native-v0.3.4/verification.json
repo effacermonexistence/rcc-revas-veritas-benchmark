@@ -1,0 +1,116 @@
+{
+  "status": "PASS",
+  "scope": "REMOTE_SOURCE_PUBLICATION_AND_INSTALLED_PILOT_HANDOFF",
+  "source_snapshot_commit": "7898c720c938bd7edca8590814cd3c21170ba3a9",
+  "source_manifest_sha256": "33303f8a8aed7ee1b8f1ffc0095cbb3ec9c5c73a4c2ff8c81cc04179cf6c8f59",
+  "source_files": 192,
+  "github_run_id": "36036688447",
+  "tested_workflow_commit": "dc7507ad370ee61f9d14e69b8ccb24db180f5c54",
+  "ci_tests": {
+    "tests": 34,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "installed_pilot": "COMPLETED_AND_VERIFIED",
+  "all_benchmarks_executed": false,
+  "paid_model_calls": false,
+  "evidence": [
+    {
+      "path": "freeze.log",
+      "sha256": "46b305d13a8275e3be9b35e7a3ed2f6f54236610011a5c0be1608f468c55c86e"
+    },
+    {
+      "path": "init.json",
+      "sha256": "e7dabbd8d58c6ec64a338107e1bab98563b6f8ddc5c515eec54bdaedb7124eaf"
+    },
+    {
+      "path": "installed-package.txt",
+      "sha256": "7120c60b1f7611fc27a2cd6e9e93c52ac78e5b44dfb9f21342e719931a46e2a4"
+    },
+    {
+      "path": "mapping.json",
+      "sha256": "7b6057dbb37771e81af21d118e241f2f49584b13f410e905d87877859e3341bb"
+    },
+    {
+      "path": "pilot-evidence-index.json",
+      "sha256": "d5a9c900f47d8b711b0facd5770ce1732c075f9c55cf64dbd4f22fec62f9e0de"
+    },
+    {
+      "path": "pilot-run/evidence_index.json",
+      "sha256": "d5a9c900f47d8b711b0facd5770ce1732c075f9c55cf64dbd4f22fec62f9e0de"
+    },
+    {
+      "path": "pilot-run/execute-request.json",
+      "sha256": "5a2d09d6fdbf3af26051d16d7731e009bc86623d6466cd5d604c32f07f35622d"
+    },
+    {
+      "path": "pilot-run/execute.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "pilot-run/execution/000000-A.json",
+      "sha256": "87718778df432c099f7265879a267aecdd1559dd6239ec48d8b0cffa86091e29"
+    },
+    {
+      "path": "pilot-run/execution/000000-B.json",
+      "sha256": "f50c15ada45bf0437c1f659da380dd39485fd20017de6e5eb08fef3c4a36e2c9"
+    },
+    {
+      "path": "pilot-run/execution/000001-A.json",
+      "sha256": "f675a79d81cbefc7989220c463eb4683641b5c15f5ecbd2ca2282bc992860c79"
+    },
+    {
+      "path": "pilot-run/execution/000001-B.json",
+      "sha256": "3a8b01a7c368e6d9aeb59c7abdfce402b679f4142a3fb876a86f2cb9f6f40fe9"
+    },
+    {
+      "path": "pilot-run/execution/execution.json",
+      "sha256": "ec67b481f55e22777898f22d7da7be2af9a32c7f927fb702905052e4cacf6580"
+    },
+    {
+      "path": "pilot-run/freeze.json",
+      "sha256": "7bd25fdba155ef63b77fd47ffe95148104d96887ee78e36318d452952ff11809"
+    },
+    {
+      "path": "pilot-run/journal.jsonl",
+      "sha256": "043ad8dbb4bab9683b396a22585cbcbce6c7f1791f6960c169e240f0a06b1596"
+    },
+    {
+      "path": "pilot-run/run_manifest.json",
+      "sha256": "9260e6d81818948bb3be0343c6d616b4d9c8bbd0ed78f4a3427b79137cc6218f"
+    },
+    {
+      "path": "pilot-run/score-request.json",
+      "sha256": "4f1fcda1220ea436c2574373d1423e2b8667c91cb91ce597a31c31ea9292d3a0"
+    },
+    {
+      "path": "pilot-run/score.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "pilot-run/scoring/native-score.json",
+      "sha256": "1df2286c32c99715ce865adefdff78deba4a98ebc9e5478ecea089ee16ad7d4e"
+    },
+    {
+      "path": "pilot-run/scoring/scores.json",
+      "sha256": "f53a3a07cacea6fedaa22f1ccc722f8bedf3d5b78defe6e9d122346d217b604a"
+    },
+    {
+      "path": "pip-check.txt",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "path": "run.json",
+      "sha256": "feb5d51aa4c226911ba687948f3c5835dc1ab56ad3790f57ba31a9683da47ce5"
+    },
+    {
+      "path": "tests.xml",
+      "sha256": "9ccc45bd3605268295a045a3bcb73ead42afd9602971f5d87dfd51ca0a4d774a"
+    },
+    {
+      "path": "verify.json",
+      "sha256": "e34780825e2be1ed311447ebdd7f597f2bc524670ae2cb0d7e459e7fb3c75f9b"
+    }
+  ]
+}

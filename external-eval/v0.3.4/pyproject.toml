@@ -29,4 +29,4 @@ testpaths = ["tests"]
 addopts = "-q"
 
 [tool.setuptools.package-data]
-rveval = ["assets/pilot_template/*", "assets/pilot_template/docs/*", "assets/pilot_template/schemas/*", "assets/pilot_template/templates/*"]
+"rveval.resources" = ["*.json", "*.md", "*.txt"]

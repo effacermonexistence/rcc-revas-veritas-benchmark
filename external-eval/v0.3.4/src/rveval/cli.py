@@ -17,7 +17,7 @@ def parser():
     n=sub.add_parser("readiness");n.add_argument("--profile",type=Path,required=True);n.add_argument("--config",type=Path)
     q=sub.add_parser("mapping-check");q.add_argument("--contract",type=Path,required=True)
     m=sub.add_parser("matrix");m.add_argument("--catalogue",type=Path,required=True);m.add_argument("--output-dir",type=Path,required=True)
-    i=sub.add_parser("init-pilot");i.add_argument("--output-dir",type=Path,required=True);i.add_argument("--pilot-id",required=True)
+    i=sub.add_parser("init-pilot");i.add_argument("--output-dir",type=Path,required=True);i.add_argument("--name",required=True)
     return p
 
 def main(argv=None):
@@ -25,7 +25,7 @@ def main(argv=None):
     try:
         if a.command=="init-pilot":
             from .pilot import initialize_pilot
-            value=initialize_pilot(a.output_dir,a.pilot_id)
+            value=initialize_pilot(a.output_dir, a.name)
         elif a.command=="mapping-check":
             from .partner_mapping import validate_mapping_contract
             value=validate_mapping_contract(a.contract)

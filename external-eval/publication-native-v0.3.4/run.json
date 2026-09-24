@@ -1,0 +1,45 @@
+{
+  "schema_version": "rveval.native-job-manifest.v1",
+  "execution_backend": "native-job/v1",
+  "status": "COMPLETED",
+  "enrolled": 2,
+  "case_count": 2,
+  "expected_arm_records": 4,
+  "automatic_retry": false,
+  "freeze_sha256": "7bd25fdba155ef63b77fd47ffe95148104d96887ee78e36318d452952ff11809",
+  "native_score_rewritten": false,
+  "native_component_authenticity_independently_attested": false,
+  "semantic_claim": "SOURCE_BOUND_NATIVE_JOB_PROTOCOL_NOT_UNIVERSAL_BENCHMARK_PROOF",
+  "execute_returncode": 0,
+  "sealed_execution_files": [
+    {
+      "path": "000000-A.json",
+      "sha256": "87718778df432c099f7265879a267aecdd1559dd6239ec48d8b0cffa86091e29",
+      "size_bytes": 4060
+    },
+    {
+      "path": "000000-B.json",
+      "sha256": "f50c15ada45bf0437c1f659da380dd39485fd20017de6e5eb08fef3c4a36e2c9",
+      "size_bytes": 4060
+    },
+    {
+      "path": "000001-A.json",
+      "sha256": "f675a79d81cbefc7989220c463eb4683641b5c15f5ecbd2ca2282bc992860c79",
+      "size_bytes": 4060
+    },
+    {
+      "path": "000001-B.json",
+      "sha256": "3a8b01a7c368e6d9aeb59c7abdfce402b679f4142a3fb876a86f2cb9f6f40fe9",
+      "size_bytes": 4060
+    },
+    {
+      "path": "execution.json",
+      "sha256": "ec67b481f55e22777898f22d7da7be2af9a32c7f927fb702905052e4cacf6580",
+      "size_bytes": 816
+    }
+  ],
+  "score_returncode": 0,
+  "completed_arm_records": 4,
+  "scores_manifest_sha256": "f53a3a07cacea6fedaa22f1ccc722f8bedf3d5b78defe6e9d122346d217b604a",
+  "framework_version": "0.3.4"
+}

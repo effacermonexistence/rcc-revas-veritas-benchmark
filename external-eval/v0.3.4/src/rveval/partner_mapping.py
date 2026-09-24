@@ -17,8 +17,32 @@ REQUIRED = {'candidate', 'upstream_decision', 'request', 'actor', 'target', 'pol
             'authority', 'approval', 'state', 'effect', 'scoring', 'provenance'}
 
 
+def _mapping_source(path, ref):
+    """Resolve own symbols against the loaded distribution, not a checkout.
+
+    Custom source references remain relative to the caller's pilot root. This is
+    source/symbol validation, not import execution or origin authentication.
+    """
+    require(type(ref) is dict and set(ref) == {'path', 'symbol'}, 'MAPPING_CODE_REF_SHAPE')
+    name, symbol = ref['path'], ref['symbol']
+    require(type(name) is str and bool(name) and type(symbol) is str and bool(symbol), 'MAPPING_CODE_REF_SHAPE')
+    relative = Path(name)
+    require(not relative.is_absolute() and '..' not in relative.parts, 'MAPPING_CODE_REF_PATH')
+    if relative.parts[:2] == ('src', 'rveval'):
+        root = Path(__file__).resolve().parent
+        source = root.joinpath(*relative.parts[2:])
+    else:
+        root = path.parent.parent.resolve()
+        source = root / relative
+    require(source.resolve().is_relative_to(root) and source.is_file() and not source.is_symlink(), 'MAPPING_CODE_REF_PATH')
+    tree = ast.parse(source.read_text(encoding='utf-8'))
+    symbols = {n.name for n in ast.walk(tree) if isinstance(n, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef))}
+    require(symbol in symbols, 'MAPPING_CODE_SYMBOL_MISSING')
+    return {'path': name, 'symbol': symbol, 'sha256': sha_file(source)}
+
+
 def validate_mapping_contract(path):
-    path = Path(path); contract = read_json(path); errors = []
+    path = Path(path); contract = read_json(path); errors = []; verified = []
     if type(contract) is not dict or contract.get('schema_version') != 'rveval.partner-mapping.v1':
         return {'status': 'FAIL', 'errors': ['MAPPING_SCHEMA'], 'contract_sha256': sha_file(path)}
     rows = contract.get('mappings', []); found = set()
@@ -26,45 +50,38 @@ def validate_mapping_contract(path):
     for row in rows:
         if type(row) is not dict: errors.append('MAPPING_ROW'); continue
         rid = row.get('id')
-        if type(rid) is not str or rid in found: errors.append('MAPPING_ID')
+        if type(rid) is not str or not rid or rid in found:
+            errors.append('MAPPING_ID'); continue
         found.add(rid)
         for field in ('source_object', 'source_field', 'target_object', 'target_field',
                       'native_semantics', 'missing_behavior', 'implementation', 'verification'):
             value = row.get(field)
             if type(value) is not str or not value.strip() or value.strip().lower() in {'todo', 'tbd', 'unknown'}:
-                errors.append(str(rid) + ':' + field)
-        if row.get('owner') not in OWNERS: errors.append(str(rid) + ':OWNER')
-        if row.get('transform') not in TRANSFORMS: errors.append(str(rid) + ':TRANSFORM')
-        for ref in row.get('code_refs', []):
-            try:
-                if 'module' in ref:
-                    import importlib.util
-                    module = ref['module']
-                    require(type(module) is str and module.startswith('rveval.') and
-                            all(part.isidentifier() for part in module.split('.')), 'MAPPING_CODE_MODULE')
-                    spec = importlib.util.find_spec(module)
-                    require(spec is not None and bool(spec.origin), 'MAPPING_CODE_MODULE_MISSING')
-                    source = Path(spec.origin)
-                    require(source.resolve().is_relative_to(Path(__file__).resolve().parent), 'MAPPING_CODE_MODULE_ESCAPE')
-                    require(type(ref.get('sha256')) is str and sha_file(source) == ref['sha256'], 'MAPPING_CODE_MODULE_HASH')
-                else:
-                    source = path.parent.parent / ref['path']
-                    require(source.resolve().is_relative_to(path.parent.parent.resolve()) and source.is_file() and not source.is_symlink(), 'MAPPING_CODE_REF_PATH')
-                tree = ast.parse(source.read_text())
-                symbols = {n.name for n in ast.walk(tree) if isinstance(n, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef))}
-                require(ref['symbol'] in symbols, 'MAPPING_CODE_SYMBOL_MISSING')
-            except (KeyError, OSError, SyntaxError, RuntimeError, ValueError, TypeError, ImportError): errors.append(str(rid) + ':CODE_REF')
-        if not row.get('code_refs'): errors.append(str(rid) + ':CODE_REFS_MISSING')
-        if rid in {'actor', 'policy', 'authority', 'approval'} and row.get('source_object') in {'candidate', 'rcc_decision', 'score'}:
-            errors.append(str(rid) + ':AUTHORITY_FROM_WRONG_SOURCE')
+                errors.append(rid + ':' + field)
+        if type(row.get('owner')) is not str or row['owner'] not in OWNERS: errors.append(rid + ':OWNER')
+        if type(row.get('transform')) is not str or row['transform'] not in TRANSFORMS: errors.append(rid + ':TRANSFORM')
+        refs = row.get('code_refs')
+        if type(refs) is not list or not refs:
+            errors.append(rid + ':CODE_REFS_MISSING')
+        else:
+            for ref in refs:
+                try:
+                    verified.append({'mapping_id': rid, **_mapping_source(path, ref)})
+                except (KeyError, TypeError, ValueError, OSError, SyntaxError, RuntimeError):
+                    errors.append(rid + ':CODE_REF')
+        if rid in {'actor', 'policy', 'authority', 'approval'} and row.get('source_object') in ('candidate', 'rcc_decision', 'score'):
+            errors.append(rid + ':AUTHORITY_FROM_WRONG_SOURCE')
         if rid == 'scoring' and row.get('transform') != 'DO_NOT_MAP': errors.append('SCORE_TO_RUNTIME')
     errors.extend('MISSING:' + x for x in sorted(REQUIRED - found))
     questions = contract.get('original_questions', {})
+    if type(questions) is not dict:
+        errors.append('Q1_Q9_COVERAGE'); questions = {}
     if set(questions) != {f'Q{i}' for i in range(1, 10)}: errors.append('Q1_Q9_COVERAGE')
     for key, value in questions.items():
         if type(value) is not dict or not value.get('answer') or not value.get('implementation'): errors.append(key + ':UNANSWERED')
     return {'status': 'FAIL' if errors else 'PASS', 'contract_sha256': sha_file(path),
             'mapping_rows': len(rows), 'original_question_count': len(questions), 'errors': errors,
+            'verified_code_refs': verified,
             'scope': 'IMPLEMENTATION_CONTRACT_COMPLETENESS_NOT_NATIVE_EXECUTION_ATTESTATION'}
 
 

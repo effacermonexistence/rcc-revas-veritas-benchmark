@@ -22,7 +22,7 @@
     "plugin": "rveval.integrations.rcc_external:ExternalRCCGate",
     "config": {
       "policy": "../../policies/external-output-contract.v0.3.json",
-      "policy_sha256": "d1126bed6c51325421f6ceeff7549e0a13f014a48897b8a97654886850a2f212"
+      "policy_sha256": "6cb7c7c91508c66cd09723151d3d0c495374a96aa012499e15a79e630b1dda40"
     }
   },
   "veritas": {

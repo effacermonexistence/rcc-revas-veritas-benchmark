@@ -8,14 +8,19 @@
       "size_bytes": 104
     },
     {
+      "path": "CHANGELOG_v0.3.3.md",
+      "sha256": "3f3f28f0b363b1f688e4ab911c9db18b03fb3ef43de7a2509aa1d732a784a7d7",
+      "size_bytes": 843
+    },
+    {
+      "path": "CHANGELOG_v0.3.4.md",
+      "sha256": "214fde23628197876b758af0b5bcc7f849df490f004088976d2f97ae4afa2997",
+      "size_bytes": 645
+    },
+    {
       "path": "CLAIM_BOUNDARY.md",
       "sha256": "088141e94f8a525872086b54797728fb6e1c9329b051d8627f15b46e743ba63d",
       "size_bytes": 2402
-    },
-    {
-      "path": "HANDOFF_ACCEPTANCE.json",
-      "sha256": "c9b9f0badfaf6193b5359dab9103014d0ca68c90d0c48887cb888d9463157a99",
-      "size_bytes": 1327
     },
     {
       "path": "NATIVE_COVERAGE.json",
@@ -23,14 +28,14 @@
       "size_bytes": 9180
     },
     {
-      "path": "PUBLICATION.md",
-      "sha256": "93c5e05ffd345f30cd4da6a6ef61eec4d3c6f64f8f39166c5095f246e08a7711",
-      "size_bytes": 1233
+      "path": "PUBLICATION_SOURCE.json",
+      "sha256": "6cfcdca49b9a1ad82d12aa7ae51ed52313a0fd3753bea174a6b1478b94138e73",
+      "size_bytes": 1521
     },
     {
       "path": "README.md",
-      "sha256": "170b305db2444ffb7c56fb493db88b2aeb29799441942452e720abfcec59b82a",
-      "size_bytes": 3786
+      "sha256": "e27895d884717813c722f9303c9158acaba98251ca00ab968e9df259a707da40",
+      "size_bytes": 5257
     },
     {
       "path": "SOURCES_NATIVE.json",
@@ -56,6 +61,11 @@
       "path": "contracts/VERITAS_MAPPING_v0.3.3.json",
       "sha256": "2711c3c13aff91745c831d42ae4e3f6d0d05cbf7a41d0b391bd74f3a7961b86d",
       "size_bytes": 17018
+    },
+    {
+      "path": "contracts/VERITAS_MAPPING_v0.3.4.json",
+      "sha256": "3362038842f889b49aaf0e05c4491eaf688f20b97905c19233e9e09168728385",
+      "size_bytes": 17049
     },
     {
       "path": "docs/ADDING_A_BENCHMARK.md",
@@ -143,16 +153,6 @@
       "size_bytes": 973
     },
     {
-      "path": "docs/RELEASE_HANDOFF_v0.3.4.ja.md",
-      "sha256": "a917b0b129fff3cf5eaf488002aeb9804dcdb765e8b273ee92fac5abf5b64e20",
-      "size_bytes": 2165
-    },
-    {
-      "path": "docs/RELEASE_HANDOFF_v0.3.4.md",
-      "sha256": "4894bb41928ab18fcf6482cdfb557002ad8cd01fc702609497dc953e0b92ac20",
-      "size_bytes": 3946
-    },
-    {
       "path": "docs/REQUIREMENTS_TRACE_v0.3.md",
       "sha256": "5485dd6d9cd6e5a812e35ce54327d5231426e295601fe106e82cd2b65e0b485e",
       "size_bytes": 2350
@@ -186,6 +186,16 @@
       "path": "docs/TAKESHI_IMPLEMENTATION_v0.3.3.md",
       "sha256": "7d8f2b87c85a0627dfe3b23f50047fb5e17ecf9a9f4fab432eb499f1324dd659",
       "size_bytes": 17059
+    },
+    {
+      "path": "docs/TAKESHI_IMPLEMENTATION_v0.3.4.ja.md",
+      "sha256": "19418a70a252906d011bcb6da61cf6da1392ccdb6202cbbeb25e551bc4e79611",
+      "size_bytes": 2487
+    },
+    {
+      "path": "docs/TAKESHI_IMPLEMENTATION_v0.3.4.md",
+      "sha256": "54f39efed21c8b7443ff81643265f60a7e2bc5713848b09ad836b737abebb275",
+      "size_bytes": 5243
     },
     {
       "path": "docs/V0.3.2_FIX_LEDGER.md",
@@ -279,17 +289,17 @@
     },
     {
       "path": "examples/sklearn/digits.json",
-      "sha256": "f59cafbdeea9f41ea9975660cf6aee73d2f502bdbf52de2bcf6aeaf79bab425c",
+      "sha256": "ee8818199fa15ffdcac00621d3b5f1a3250e46fddfa264fc341e1f8ad959cb30",
       "size_bytes": 956
     },
     {
       "path": "examples/sklearn/iris.json",
-      "sha256": "63895c4677e68e6f626badabf49f281154fbd8b923c3777a6ab5a470ee7f9e04",
+      "sha256": "e28e88f1448c56d3cccacfdd552639be857ca8756bb202a4bbe793779a12007c",
       "size_bytes": 952
     },
     {
       "path": "examples/sklearn/wine.json",
-      "sha256": "496af0f1c175ee13764171e1f9fa2f3637af05f4c12f00a5d29eaecf941bec7b",
+      "sha256": "993cb6b1affaf1b11e7a28f77cca04a47dfdf251a454a043bae90249d9a0b062",
       "size_bytes": 952
     },
     {
@@ -348,34 +358,9 @@
       "size_bytes": 593
     },
     {
-      "path": "publication-evidence/dependency-closure.log",
-      "sha256": "576896cd7f4992273f3bf8d6ecf75c2f868fa18c9c1dbf3eab84fc5c36c52a48",
-      "size_bytes": 5937
-    },
-    {
-      "path": "publication-evidence/empty-policy-before.log",
-      "sha256": "125cf6f496f07bfe71b79e4547a0f9aef7bfcf16fb113bb2c7629f93e35bfc67",
-      "size_bytes": 6
-    },
-    {
-      "path": "publication-evidence/installed-wheel-check.json",
-      "sha256": "392fdd76c58b1c6f0b6130f3b297604ef793d494beec8a30d72f9aa219c8994b",
-      "size_bytes": 16862
-    },
-    {
-      "path": "publication-evidence/tests.xml",
-      "sha256": "cfa05b7bc0e4ff8d9c22646694a99e6ff498154addcaaaa011db73b0dd9fc44f",
-      "size_bytes": 40098
-    },
-    {
-      "path": "publication-evidence/validation.json",
-      "sha256": "3432b0fc8a2d8c873e38404ad94330c8d9d495044e2bb3983f0834b48bed9a70",
-      "size_bytes": 11063
-    },
-    {
       "path": "pyproject.toml",
-      "sha256": "7e65d6b227d450ea18fbb7b60ae140abdc931a488a1a55b2ff44722dd90f7b46",
-      "size_bytes": 903
+      "sha256": "cfb060d889496ed0357cd8d8d3ec17405e78e14c4fae2fdf99211efcb697f669",
+      "size_bytes": 811
     },
     {
       "path": "requirements-native.txt",
@@ -508,96 +493,6 @@
       "size_bytes": 1132
     },
     {
-      "path": "src/rveval/assets/pilot_template/config.json",
-      "sha256": "4a41d4ceacf476b88c4cf5e41116719b4c012e792297e42b0884222a44c9891f",
-      "size_bytes": 1147
-    },
-    {
-      "path": "src/rveval/assets/pilot_template/docs/COMMAND_RPC_PROTOCOL.md",
-      "sha256": "617d2b616dfefdc60e681512b2ba2af72b501c50fb7929e075d096660778f1bb",
-      "size_bytes": 7056
-    },
-    {
-      "path": "src/rveval/assets/pilot_template/docs/NATIVE_API_SIGNATURES.md",
-      "sha256": "99915af98bb6908c53d484829e5ad75884c88b4a69b368bc2e8e65ff90b3e31e",
-      "size_bytes": 5508
-    },
-    {
-      "path": "src/rveval/assets/pilot_template/docs/TAKESHI_FINAL_IMPLEMENTATION_v0.3.2.ja.md",
-      "sha256": "e6769eecc536298ffcbb77d76f42320555132a4f75a6a2180788e8e7d7218896",
-      "size_bytes": 5740
-    },
-    {
-      "path": "src/rveval/assets/pilot_template/docs/TAKESHI_FINAL_IMPLEMENTATION_v0.3.2.md",
-      "sha256": "c2cb60c460075806c567319e8a24972b3aa40602436e39b337de0946756e6340",
-      "size_bytes": 12357
-    },
-    {
-      "path": "src/rveval/assets/pilot_template/docs/TAKESHI_IMPLEMENTATION_v0.3.3.ja.md",
-      "sha256": "4d8018cd9b30e78f8b8f244991f8dcdad959b97f19e727b5681bbe1faf1f3060",
-      "size_bytes": 5346
-    },
-    {
-      "path": "src/rveval/assets/pilot_template/docs/TAKESHI_IMPLEMENTATION_v0.3.3.md",
-      "sha256": "7d8f2b87c85a0627dfe3b23f50047fb5e17ecf9a9f4fab432eb499f1324dd659",
-      "size_bytes": 17059
-    },
-    {
-      "path": "src/rveval/assets/pilot_template/mapping.json",
-      "sha256": "2711c3c13aff91745c831d42ae4e3f6d0d05cbf7a41d0b391bd74f3a7961b86d",
-      "size_bytes": 17018
-    },
-    {
-      "path": "src/rveval/assets/pilot_template/policy.json",
-      "sha256": "d1126bed6c51325421f6ceeff7549e0a13f014a48897b8a97654886850a2f212",
-      "size_bytes": 593
-    },
-    {
-      "path": "src/rveval/assets/pilot_template/schemas/candidate.schema.json",
-      "sha256": "a762fa22c5a40c4da251d300652fcac5d392597501b126da571d01d8c974aad6",
-      "size_bytes": 587
-    },
-    {
-      "path": "src/rveval/assets/pilot_template/schemas/native_execution.schema.json",
-      "sha256": "aa06e1286a540eb8fdeff2402b8adcb5a44a9750f8622f31e2e78140fa8a3d58",
-      "size_bytes": 1627
-    },
-    {
-      "path": "src/rveval/assets/pilot_template/schemas/native_scores.schema.json",
-      "sha256": "3d72b3a51fab895f358ba3f86a8c8aae7363239cbc381a12b3e094ebba8a26ed",
-      "size_bytes": 1156
-    },
-    {
-      "path": "src/rveval/assets/pilot_template/schemas/rcc_decision.schema.json",
-      "sha256": "f36c1c45f187b8ef7ba91656c5ce06c3c180a0b91d2cba32fdf5c9748c5c8558",
-      "size_bytes": 1987
-    },
-    {
-      "path": "src/rveval/assets/pilot_template/schemas/rpc_request.schema.json",
-      "sha256": "a8de8008d5d3fdc74b898487c1afcb67f5f5a5ed276ffa294a6a7f5080434671",
-      "size_bytes": 464
-    },
-    {
-      "path": "src/rveval/assets/pilot_template/schemas/veritas_decision.schema.json",
-      "sha256": "c29093c07b1d6d1b83e3c396a0a61b337b3a181849d98f1741da0b25d70a2452",
-      "size_bytes": 501
-    },
-    {
-      "path": "src/rveval/assets/pilot_template/schemas/veritas_runtime_packet.schema.json",
-      "sha256": "2ac620bf2f5542ffec4b46d85a29ef996216e506f17f1bb949f0579aed005917",
-      "size_bytes": 3348
-    },
-    {
-      "path": "src/rveval/assets/pilot_template/templates/native_component_profile.json",
-      "sha256": "083a5f753f915d3d66bba78a72c78174ac4b36ab9947a6ae40bf5b15d8e7a766",
-      "size_bytes": 1781
-    },
-    {
-      "path": "src/rveval/assets/pilot_template/worker.py",
-      "sha256": "36caedd9ef0620e0ba443ee0c59483cd158c0c2add24aa1ffb2df14d14cf10eb",
-      "size_bytes": 4820
-    },
-    {
       "path": "src/rveval/benchmark_fitness.py",
       "sha256": "0fd59484bff2489a501e0c308f6325aac84a112f69eb3d9de61ab084f07cc384",
       "size_bytes": 1522
@@ -614,8 +509,8 @@
     },
     {
       "path": "src/rveval/cli.py",
-      "sha256": "83419fb5cd8f7388d5ebe2a90750c8c3bafeb3d8daf36dd8c73beca109f88323",
-      "size_bytes": 3490
+      "sha256": "24a76d983867e5b4de7cf10891e7e022a5eead347ca667cf1a2e9d159b8497ff",
+      "size_bytes": 3483
     },
     {
       "path": "src/rveval/counterfactual.py",
@@ -789,13 +684,13 @@
     },
     {
       "path": "src/rveval/partner_mapping.py",
-      "sha256": "5db65edaf4a71005370c70d11165a0b2f5e36c8f4e4b75ac77998e965bd98f9b",
-      "size_bytes": 8228
+      "sha256": "c4ebc5026cae65719d6f8d00af409d66d0ff25beb4d2dda081967c60210df2f6",
+      "size_bytes": 8646
     },
     {
       "path": "src/rveval/pilot.py",
-      "sha256": "ee02ab83c56ebbcf0f9daa4cdb481bb5f5ea6de0820addf01d5d472f8b1a923e",
-      "size_bytes": 7703
+      "sha256": "9e44ca34517ca2cc51709bbd9efb65e10864e8880754b0686f1d1db014a895ba",
+      "size_bytes": 4127
     },
     {
       "path": "src/rveval/plugin.py",
@@ -806,6 +701,111 @@
       "path": "src/rveval/readiness.py",
       "sha256": "7b4dc6f3cdb03c0c07927c7ae4b22a48ad34ddcc138d4af8927f8c1a51cc7ed7",
       "size_bytes": 6548
+    },
+    {
+      "path": "src/rveval/resources/BENCHMARK_SUPPORT_MATRIX.md",
+      "sha256": "c6503d21b0833a5e4df4fc916edccc21613c40417073366c97a7ea697b2e36b5",
+      "size_bytes": 6656
+    },
+    {
+      "path": "src/rveval/resources/NATIVE_API_SIGNATURES.md",
+      "sha256": "99915af98bb6908c53d484829e5ad75884c88b4a69b368bc2e8e65ff90b3e31e",
+      "size_bytes": 5508
+    },
+    {
+      "path": "src/rveval/resources/TAKESHI_FINAL_IMPLEMENTATION_v0.3.2.ja.md",
+      "sha256": "e6769eecc536298ffcbb77d76f42320555132a4f75a6a2180788e8e7d7218896",
+      "size_bytes": 5740
+    },
+    {
+      "path": "src/rveval/resources/TAKESHI_FINAL_IMPLEMENTATION_v0.3.2.md",
+      "sha256": "c2cb60c460075806c567319e8a24972b3aa40602436e39b337de0946756e6340",
+      "size_bytes": 12357
+    },
+    {
+      "path": "src/rveval/resources/TAKESHI_IMPLEMENTATION_v0.3.3.md",
+      "sha256": "7d8f2b87c85a0627dfe3b23f50047fb5e17ecf9a9f4fab432eb499f1324dd659",
+      "size_bytes": 17059
+    },
+    {
+      "path": "src/rveval/resources/TAKESHI_IMPLEMENTATION_v0.3.4.ja.md",
+      "sha256": "19418a70a252906d011bcb6da61cf6da1392ccdb6202cbbeb25e551bc4e79611",
+      "size_bytes": 2487
+    },
+    {
+      "path": "src/rveval/resources/TAKESHI_IMPLEMENTATION_v0.3.4.md",
+      "sha256": "54f39efed21c8b7443ff81643265f60a7e2bc5713848b09ad836b737abebb275",
+      "size_bytes": 5243
+    },
+    {
+      "path": "src/rveval/resources/__init__.py",
+      "sha256": "a7757eb3a723bfcda2074d7c273205a5a7110c94ae4667db2e0f3cd8275d92ab",
+      "size_bytes": 77
+    },
+    {
+      "path": "src/rveval/resources/mapping.json",
+      "sha256": "3362038842f889b49aaf0e05c4491eaf688f20b97905c19233e9e09168728385",
+      "size_bytes": 17049
+    },
+    {
+      "path": "src/rveval/resources/pilot_impl.py.txt",
+      "sha256": "b4112d051bd0c92606e4b6af55e71f5c321dae5859ef68bb1e783ed629467d9c",
+      "size_bytes": 2877
+    },
+    {
+      "path": "src/rveval/resources/pilot_start.ja.md",
+      "sha256": "b64ec840b207b95984a54b3c01e0a371ff0d1f701a36225449a777f8764a61e0",
+      "size_bytes": 2073
+    },
+    {
+      "path": "src/rveval/resources/pilot_start.md",
+      "sha256": "d2a985a5fea44d8cf47cda5547ee667808483a10238bbe9be4a833b528fac041",
+      "size_bytes": 4085
+    },
+    {
+      "path": "src/rveval/resources/pilot_worker.py.txt",
+      "sha256": "ea75a8e4eeb4801ed7aa233bd64ae3ecbc303574b9e348613e9907029c2cb9c0",
+      "size_bytes": 3525
+    },
+    {
+      "path": "src/rveval/resources/policy.json",
+      "sha256": "d1126bed6c51325421f6ceeff7549e0a13f014a48897b8a97654886850a2f212",
+      "size_bytes": 593
+    },
+    {
+      "path": "src/rveval/resources/schema__candidate.schema.json",
+      "sha256": "a762fa22c5a40c4da251d300652fcac5d392597501b126da571d01d8c974aad6",
+      "size_bytes": 587
+    },
+    {
+      "path": "src/rveval/resources/schema__native_execution.schema.json",
+      "sha256": "aa06e1286a540eb8fdeff2402b8adcb5a44a9750f8622f31e2e78140fa8a3d58",
+      "size_bytes": 1627
+    },
+    {
+      "path": "src/rveval/resources/schema__native_scores.schema.json",
+      "sha256": "3d72b3a51fab895f358ba3f86a8c8aae7363239cbc381a12b3e094ebba8a26ed",
+      "size_bytes": 1156
+    },
+    {
+      "path": "src/rveval/resources/schema__rcc_decision.schema.json",
+      "sha256": "f36c1c45f187b8ef7ba91656c5ce06c3c180a0b91d2cba32fdf5c9748c5c8558",
+      "size_bytes": 1987
+    },
+    {
+      "path": "src/rveval/resources/schema__rpc_request.schema.json",
+      "sha256": "a8de8008d5d3fdc74b898487c1afcb67f5f5a5ed276ffa294a6a7f5080434671",
+      "size_bytes": 464
+    },
+    {
+      "path": "src/rveval/resources/schema__veritas_decision.schema.json",
+      "sha256": "c29093c07b1d6d1b83e3c396a0a61b337b3a181849d98f1741da0b25d70a2452",
+      "size_bytes": 501
+    },
+    {
+      "path": "src/rveval/resources/schema__veritas_runtime_packet.schema.json",
+      "sha256": "2ac620bf2f5542ffec4b46d85a29ef996216e506f17f1bb949f0579aed005917",
+      "size_bytes": 3348
     },
     {
       "path": "src/rveval/rpc.py",
@@ -903,14 +903,14 @@
       "size_bytes": 6650
     },
     {
+      "path": "tests/test_publication_merge_guards.py",
+      "sha256": "5c995d0ace30e042515b5c45b0f3d8c8319f3c688f5659e22721fcc0c7082d0d",
+      "size_bytes": 1646
+    },
+    {
       "path": "tests/test_readiness.py",
       "sha256": "7c7dfb0008d540e7c269bbe416e4e55c395e6973fbbb4bf41f32303b1760d7f6",
       "size_bytes": 3552
-    },
-    {
-      "path": "tests/test_release_handoff.py",
-      "sha256": "24cd647fa4aad89e1bc7c451f2b3bca9a46890f60c3ed620b5ab679b99efa26a",
-      "size_bytes": 3138
     },
     {
       "path": "tests/test_round2_regressions.py",
@@ -951,6 +951,11 @@
       "path": "tests/test_v033_portability.py",
       "sha256": "22e582dbb35e854d2dda80c13ea960e55b90f11075c9eeed945a2d5813c26ff2",
       "size_bytes": 12245
+    },
+    {
+      "path": "tests/test_v034_handoff_portability.py",
+      "sha256": "643105455f8fb2ab95bddbdc3c2ab98e1aba9afe892224132aa348432bdc7665",
+      "size_bytes": 5939
     }
   ],
   "excluded_self": "SOURCE_MANIFEST.json",

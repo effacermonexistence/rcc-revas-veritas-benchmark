@@ -1,0 +1,82 @@
+{
+  "status": "PASS",
+  "contract_sha256": "3362038842f889b49aaf0e05c4491eaf688f20b97905c19233e9e09168728385",
+  "mapping_rows": 12,
+  "original_question_count": 9,
+  "errors": [],
+  "verified_code_refs": [
+    {
+      "mapping_id": "candidate",
+      "path": "src/rveval/integrations/decide_pipeline.py",
+      "symbol": "NativeDecisionIntentFactory",
+      "sha256": "60f2c051044b60f2e92c2ea9b9f0173844741329dd01a5768af3ca74d876ee92"
+    },
+    {
+      "mapping_id": "upstream_decision",
+      "path": "src/rveval/native_hook.py",
+      "symbol": "NativeGovernanceHook",
+      "sha256": "bbd581ef625a33426d46e4431125a0e90f1be87bb8d5499388c13120e8a99a32"
+    },
+    {
+      "mapping_id": "request",
+      "path": "src/rveval/partner_mapping.py",
+      "symbol": "build_runtime_packet",
+      "sha256": "c4ebc5026cae65719d6f8d00af409d66d0ff25beb4d2dda081967c60210df2f6"
+    },
+    {
+      "mapping_id": "actor",
+      "path": "src/rveval/integrations/veritas_authority.py",
+      "symbol": "NativeAuthorityResolver",
+      "sha256": "b9abedc2516a662da33bf5597a5c8d0e90db23b8b53b256e324bf29d86302268"
+    },
+    {
+      "mapping_id": "target",
+      "path": "src/rveval/integrations/decide_pipeline.py",
+      "symbol": "NativeDecisionIntentFactory",
+      "sha256": "60f2c051044b60f2e92c2ea9b9f0173844741329dd01a5768af3ca74d876ee92"
+    },
+    {
+      "mapping_id": "policy",
+      "path": "src/rveval/integrations/decide_pipeline.py",
+      "symbol": "NativeDecisionIntentFactory",
+      "sha256": "60f2c051044b60f2e92c2ea9b9f0173844741329dd01a5768af3ca74d876ee92"
+    },
+    {
+      "mapping_id": "authority",
+      "path": "src/rveval/integrations/veritas_authority.py",
+      "symbol": "NativeAuthorityResolver",
+      "sha256": "b9abedc2516a662da33bf5597a5c8d0e90db23b8b53b256e324bf29d86302268"
+    },
+    {
+      "mapping_id": "approval",
+      "path": "src/rveval/integrations/veritas_authority.py",
+      "symbol": "NativeAuthorityResolver",
+      "sha256": "b9abedc2516a662da33bf5597a5c8d0e90db23b8b53b256e324bf29d86302268"
+    },
+    {
+      "mapping_id": "state",
+      "path": "src/rveval/integrations/veritas_bind.py",
+      "symbol": "NativeBindExecutor",
+      "sha256": "16f82100e93dfbf3cf71e039ef364fa220310375693ccaf8c69f4f28ab125ee5"
+    },
+    {
+      "mapping_id": "effect",
+      "path": "src/rveval/integrations/veritas_bind.py",
+      "symbol": "NativeBindExecutor",
+      "sha256": "16f82100e93dfbf3cf71e039ef364fa220310375693ccaf8c69f4f28ab125ee5"
+    },
+    {
+      "mapping_id": "scoring",
+      "path": "src/rveval/native_job.py",
+      "symbol": "execute_native_job",
+      "sha256": "e4b680123eb49af0aeced1194021786be7e74ecfaf0c3ad6f1be66a232356ddb"
+    },
+    {
+      "mapping_id": "provenance",
+      "path": "src/rveval/partner_mapping.py",
+      "symbol": "build_runtime_packet",
+      "sha256": "c4ebc5026cae65719d6f8d00af409d66d0ff25beb4d2dda081967c60210df2f6"
+    }
+  ],
+  "scope": "IMPLEMENTATION_CONTRACT_COMPLETENESS_NOT_NATIVE_EXECUTION_ATTESTATION"
+}

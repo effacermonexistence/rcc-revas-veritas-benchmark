@@ -1,0 +1,21 @@
+{
+  "release": "0.3.4",
+  "source_snapshot_commit": "7898c720c938bd7edca8590814cd3c21170ba3a9",
+  "source_archive_sha256": "03c09e340061b020efdd1f84c470a6c7438c31c461c0ab2df08ddb7e090168d1",
+  "source_snapshot_manifest_sha256": "b21ea27bebd06cd3fe24a8c5f9279b78745286f94a07da8bfa833c3c4a6498b9",
+  "published_source_files": 192,
+  "publication_scope": "LATEST_PORTABLE_PILOT_SOURCE_WITH_PREVIOUSLY_PUBLISHED_RCC_POLICY_GUARDS_PRESERVED",
+  "historical_evidence": "Full historical evidence is retained in the input ZIP and bundle; not republished as current code.",
+  "prior_published_variant": "16fd9eafc7305e66e6ff1e6c977bd9d9f18a9e08",
+  "variant_note": "Same version number, different reviewed snapshot. This branch publishes the later 7898c720 source; it does not replace the earlier release branch.",
+  "all_possible_benchmarks_preintegrated": false,
+  "all_task_model_sweeps_executed": false,
+  "preserved_upstream_fix": {
+    "source": "16fd9eafc7305e66e6ff1e6c977bd9d9f18a9e08",
+    "file": "src/rveval/integrations/rcc_external.py",
+    "sha256": "7b91458e47525e29aa76f41387ec69c5f01a0c203533d9b823ea5f4681c137f5",
+    "reason": "The later local snapshot omitted the empty/optional-only verifier and in-memory-policy checks. Retain the published checks and update verifier pins, with regression tests."
+  },
+  "source_files_excluding_manifest": 191,
+  "publication_test_correction": "The retained guard test uses a valid CandidateAction(content=1) and matches EXTERNAL_RCC_POLICY_MEMORY_CHANGED specifically."
+}

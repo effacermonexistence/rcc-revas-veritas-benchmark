@@ -1,7 +1,7 @@
 # External evaluation implementation kit
 
-Current reviewed release: [0.3.4](external-eval/v0.3.4/README.md).
+This branch publishes the portable pilot source from reviewed snapshot `7898c720c938bd7edca8590814cd3c21170ba3a9`, retaining the previously published required-verifier and in-memory-policy safeguards.
 
-[English handoff](external-eval/v0.3.4/docs/RELEASE_HANDOFF_v0.3.4.md) | [Japanese handoff](external-eval/v0.3.4/docs/RELEASE_HANDOFF_v0.3.4.ja.md) | [Mapping contract](external-eval/v0.3.4/contracts/VERITAS_MAPPING_v0.3.3.json) | [Publication verification](external-eval/publication-v0.3.4-ci/verification.json).
+[Source and installation](external-eval/v0.3.4/README.md) | [English implementation guide](external-eval/v0.3.4/docs/TAKESHI_IMPLEMENTATION_v0.3.4.md) | [Japanese guide](external-eval/v0.3.4/docs/TAKESHI_IMPLEMENTATION_v0.3.4.ja.md) | [Mapping](external-eval/v0.3.4/contracts/VERITAS_MAPPING_v0.3.4.json) | [Source provenance](external-eval/v0.3.4/PUBLICATION_SOURCE.json)
 
-Install the release directory and run `rveval init-pilot --pilot-id new-pilot --output-dir ../new-pilot`. Follow its generated START_HERE.md. New native APIs require explicit adapters; no claim that every benchmark has already been executed is made. The original synthetic package and historical records are unchanged.
+The original synthetic package, previous release branch, historical evidence and `main` remain unchanged. New native APIs require explicit adapters; a generated pilot is an engineering starter, not a completed native benchmark.

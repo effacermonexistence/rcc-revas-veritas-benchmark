@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "record_consistency": {
+    "status": "PASS",
+    "scope": "NATIVE_JOB_RECORD_AND_BYTE_CONSISTENCY",
+    "completed": true
+  },
+  "files_verified": 14,
+  "journal_entries": 4,
+  "index_sha256": "d5a9c900f47d8b711b0facd5770ce1732c075f9c55cf64dbd4f22fec62f9e0de",
+  "claim": "BYTE_INTEGRITY_AND_VERSIONED_RECORD_CONSISTENCY_NOT_SCORER_TRUTH_OR_ORIGIN"
+}
