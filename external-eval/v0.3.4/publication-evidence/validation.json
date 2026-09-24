@@ -1,0 +1,321 @@
+{
+  "schema_version": "rveval.native-validation.v0.3",
+  "status": "PASS",
+  "test_counts": {
+    "tests": 311,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "python": "3.13.5",
+  "scope": "EXACT_NATIVE_COMPONENT_BINDINGS_AND_SELECTED_REAL_DATA_NOT_ALL_TASK_PERFORMANCE",
+  "runtime_env": {
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "LITELLM_LOCAL_MODEL_COST_MAP": "True"
+  },
+  "real_data_requested": true,
+  "paid_model_calls_requested": false,
+  "commands": [
+    {
+      "label": "dependency-closure",
+      "returncode": 0,
+      "seconds": 1.5242596260000028,
+      "argv": [
+        "/mnt/data/final_publish_audit/venv/bin/python",
+        "/mnt/data/final_publish_audit/public-kit/scripts/check_native_dependencies.py"
+      ],
+      "log": "dependency-closure.log",
+      "log_sha256": "576896cd7f4992273f3bf8d6ecf75c2f868fa18c9c1dbf3eab84fc5c36c52a48"
+    },
+    {
+      "label": "native-tests",
+      "returncode": 0,
+      "seconds": 115.72685711700001,
+      "argv": [
+        "/mnt/data/final_publish_audit/venv/bin/python",
+        "-m",
+        "pytest",
+        "tests",
+        "integration_tests",
+        "-q",
+        "--junitxml=/mnt/data/final_publish_audit/public-final-corrected/tests.xml"
+      ],
+      "log": "native-tests.log",
+      "log_sha256": "5a246a72ab9562b113dbce5d049e77a98605c033aaea141fb5e2c7cfc1256175"
+    },
+    {
+      "label": "real-data",
+      "returncode": 0,
+      "seconds": 55.45658512199998,
+      "argv": [
+        "/mnt/data/final_publish_audit/venv/bin/python",
+        "-m",
+        "rveval",
+        "matrix",
+        "--catalogue",
+        "/mnt/data/final_publish_audit/public-kit/examples/sklearn/catalogue.json",
+        "--output-dir",
+        "/mnt/data/final_publish_audit/public-final-corrected/real-data"
+      ],
+      "log": "real-data.log",
+      "log_sha256": "fa6e4877ed1be92de2d8498f00b30e518159883bf81e010fc337d543f83351da"
+    }
+  ],
+  "verified_native_critical_files": [
+    {
+      "source": "rcc",
+      "path": "rcc_revas_eval/runtime.py",
+      "sha256": "45cbc0ef2c8223080b7c1c9e4f4a985dd4c359563d24500080bb105ff6884bad"
+    },
+    {
+      "source": "rcc",
+      "path": "rcc_revas_eval/evidence.py",
+      "sha256": "889e28911280c79263138655202174cb4a226ce92bf670df21a748c22c9724eb"
+    },
+    {
+      "source": "rcc",
+      "path": "rcc_revas_eval/contract.py",
+      "sha256": "52463c3777e259abfd77247e883732b490505a28881d10a825519a5a63f948cb"
+    },
+    {
+      "source": "rcc",
+      "path": "rcc_revas_eval/release.py",
+      "sha256": "e939af9075ec82b6551e642561980d12c8bbb6178ae5d2a3b8638422ea19fefa"
+    },
+    {
+      "source": "rcc",
+      "path": "rcc_revas_eval/handoff.py",
+      "sha256": "4104c730552dbdac91e41dd837bea974395c2cc6aaa0b1a7210b04f055ae5156"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/policy/bind_core/__init__.py",
+      "sha256": "7eb881f2c4a942fba8d53d39e08ac9cb1060009bd116112ad6436a3297982204"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/policy/bind_artifacts.py",
+      "sha256": "bc18d56932fe4314f5c370273aa8fca3e87831b61ac6dff81db0e9622e6a8690"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/governance/authority_evidence.py",
+      "sha256": "e93d53c73a423e45ed153117564542ec75071e9b0c6172ec6e0751256cfcbb0f"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/policy/bind_core/normalizers.py",
+      "sha256": "0b68fb32123eb3d00925995ce5bc9a23b4ea9839de535e44336eecc27a201f35"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/api/server.py",
+      "sha256": "bdbd675d3f7c2e57e8ca87b7f01059eae5c0d609b9f5a55404dcbf661137aa64"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/kernel.py",
+      "sha256": "14700f43879d42896616419b1c48edcb7e9c9ca9b406f9bab96c0147dcfbcf02"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/governance/canonical_decision_artifact.py",
+      "sha256": "9c7bf3b31c4c0edaec184227ba25969b9c8ae3e22035d357f0a417f51f5900fe"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/policy/canonical_verified_decision_promotion.py",
+      "sha256": "aaebc1bf35e12149167169781cbdf20cd73af40a53e9a3b708ffa7b4269ac490"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/policy/bind_core/core.py",
+      "sha256": "c4ff748c99e7c5c72559d77accd4f0e3d1bce4d4385f4d9019100598a41947de"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/logging/trust_log.py",
+      "sha256": "aab9fa0793f873206343d8bbaaf24bf62d31b5e18e5042783292aeb38ad42a90"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/audit/canonical_decision_trust_link.py",
+      "sha256": "e79518a2148f26118db1cc1d35ecd1c7a288701645fcfd3a59e73899e876eaec"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/policy/compiler.py",
+      "sha256": "8c64f2ab332b2697974a4a86887ff35c9ebfefb56abd7a8c4f7cbb878409dd3a"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/policy/signing.py",
+      "sha256": "ab1f82f5f8b964891ea78a368b0ce563dffadd371713af874011101804ebb603"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_response.py",
+      "sha256": "534a5c3a55cbdb962cf738b1ba43ef57d68dbe8e13f893eb7bf4b6b653034e0e"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_contracts.py",
+      "sha256": "1cbdb8361d64ed3126d60c0bd4f2d8ee1285e6764ff83c1a0f3c308066f105f1"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_retrieval.py",
+      "sha256": "8bec8649492c04aedd5834d86e8e8ab11c87d8ea10db7415128ef2b114250ee6"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_execute.py",
+      "sha256": "922c85a97ba44aad500c1bb3441998a48e2c47139784bf4e5e30556c4d616603"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_evidence.py",
+      "sha256": "05a4e17b1e09040e155885915f5cd8022b1c62af9351461ca6fb3a5dafae4b67"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_gate.py",
+      "sha256": "63c0e02e06491aa2b9e5d2747fb68c2236ddd0115b0b86b52da12d42bb5fffc7"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_helpers.py",
+      "sha256": "93a8302bc838a92b98023b1135dac9d7fcc079ad354969b8d1df9477c37a29e0"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/governance_layers.py",
+      "sha256": "90fa974537e883b59e2ecb74ef77fa25bfebeeeea567259f01817f4f3ccea3c6"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_policy.py",
+      "sha256": "14828454fe9e6dcf59aeb0c26fa2df6fd8cd39207019949185c9570d18b58284"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_persist.py",
+      "sha256": "ca968324fbd654c1c00eb350d64d43977cb95571d6bdb84e3f714eca31982a8e"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_signature_adapter.py",
+      "sha256": "855a3db734d616091995dc5d67ab3de80c81b5bdc89b9f9191627e34514c6d37"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_persistence.py",
+      "sha256": "d833e9aa8b89fb0c2ce3e721bc3db4b6d57b88cb53c6063ce45727116fe99bb9"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_compat.py",
+      "sha256": "b33b3163d0206d4e001e01ff3130faa0854c2bca378936613efe5c4790850319"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/canonical_decision_finalization.py",
+      "sha256": "d133ce023c668f2be94d2cb8b30b7ce83b031e594a7a0aa722c128ec1790d536"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_replay.py",
+      "sha256": "2ab990daedac2e0ace3cddca1a13c4966d174eef5afcfa4bec5163fe997e7fb0"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_memory_adapter.py",
+      "sha256": "be057292d4d9733c21f1db1444e920a083059e747b612f293da6c21572c887c2"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_inputs.py",
+      "sha256": "595520e70e362b302d11be0be9a08fb9395033fc84ea2c5fb549aafd519c5719"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_critique.py",
+      "sha256": "5969ef733774e7a0be711630744d8d1e8c502cd79bb1c4fcfddc0baf24172cbe"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/__init__.py",
+      "sha256": "3d708dada1432a35410edf9897ae3d97aa217ccdf58592d4b82cf67dd96d40b6"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_web_adapter.py",
+      "sha256": "963248a9ad3f1d3ac1cf9c096ea3f55787b7040f4c309ccb07994d9ade7a5f95"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_types.py",
+      "sha256": "23d6af31100e64fe48b991f5c58e0bf537a45064ac94a3d3b93bcaa9f00dbfeb"
+    },
+    {
+      "source": "veritas",
+      "path": "veritas_os/core/pipeline/pipeline_decide_stages.py",
+      "sha256": "43a91cf743b01bd826b0e1fde8c185dbb74187bbf3656330a1a098f5111232d9"
+    },
+    {
+      "source": "agentdojo",
+      "path": "src/agentdojo/functions_runtime.py",
+      "sha256": "3c67f71eb8a7f15d2a15fe9595d84218c5e6868d95fd71d1cef679cd2192d0f7"
+    },
+    {
+      "source": "tau",
+      "path": "tau_bench/envs/base.py",
+      "sha256": "1ad0402073f0ac9ca6b527efa0706e2aa8836dd2e5c1d453ed414ecb768c6d21"
+    },
+    {
+      "source": "tau",
+      "path": "tau_bench/types.py",
+      "sha256": "38c2e79f48f9ac87fbdd7bb763c3ef7e8a825cd3de3998f51b12ecf55733b9db"
+    },
+    {
+      "source": "tau2",
+      "path": "src/tau2/environment/environment.py",
+      "sha256": "b5357f11e2914c11ce0372af919cc1d726191b91cd97f776b8fb388ae0615350"
+    },
+    {
+      "source": "tau2",
+      "path": "src/tau2/environment/toolkit.py",
+      "sha256": "3e897891e8878c3399aec72e42eb0eb5546642420c0c902b225421fc936b924a"
+    },
+    {
+      "source": "tau2",
+      "path": "src/tau2/environment/db.py",
+      "sha256": "49e12f900a8aabe62d6137a9baa1e7d471f9b3e516cf7c85fb61ecde8a65154c"
+    }
+  ],
+  "full_native_source_archive_pins": {
+    "rcc": {
+      "repository": "effacermonexistence/rcc-revas-veritas-benchmark",
+      "commit": "805cd5ff17e431cf50a3dafa7f78a60a704613b9"
+    },
+    "veritas": {
+      "repository": "veritasfuji-japan/veritas_os",
+      "commit": "b39961b003179aea70e320a57cb000f56a81951e"
+    },
+    "agentdojo": {
+      "repository": "ethz-spylab/agentdojo",
+      "commit": "a75aba7631d3ca5fb7ab938965c97ead2f9ff84b"
+    },
+    "tau": {
+      "repository": "sierra-research/tau-bench",
+      "commit": "59a200c6d575d595120f1cb70fea53cef0632f6b"
+    },
+    "tau2": {
+      "repository": "sierra-research/tau2-bench",
+      "commit": "b7ea9074c1cba482b30687fecdb5c8425fd6f619"
+    }
+  },
+  "environment_sha256": "14d8b4b864411f8a9135a734e9d866b4c6b7f5ea0e4479b8f5d2f3c116ba722a"
+}

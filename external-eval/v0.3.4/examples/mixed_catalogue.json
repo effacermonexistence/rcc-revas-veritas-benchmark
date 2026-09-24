@@ -1,0 +1,8 @@
+{
+  "configurations": [
+    "static_jsonl/config.json",
+    "native_job/config.json",
+    "rpc/javascript.json"
+  ],
+  "timeout_seconds": 120
+}

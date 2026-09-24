@@ -1,0 +1,17 @@
+{
+  "source_archive_sha256": "5d9efcee1fafe404fcd2806cf7d432a757fb67d0f86a66b109cf715c88bbbb35",
+  "source_files": 191,
+  "run_id": "36029269727",
+  "temporary_url_persisted": false,
+  "status": "PASS",
+  "ci_tests": {
+    "tests": 24,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "installed_outside_checkout_pilot": "COMPLETED_AND_VERIFIED",
+  "source_manifest_after_execution": "PASS",
+  "full_local_native_tests": 311,
+  "all_benchmarks_executed": false
+}
