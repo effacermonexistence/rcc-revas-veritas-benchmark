@@ -1,0 +1,29 @@
+name: External v032 dependency compatibility
+on:
+  push:
+    branches: [audit/external-v032-final-execution]
+    paths: [.github/workflows/external-v032-dependency-fix.yml]
+permissions:
+  contents: read
+jobs:
+  collect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: |
+          mkdir -p wheels
+          python -m pip download --no-deps --dest wheels boto3==1.43.75
+          python - <<'PY'
+          import pathlib,hashlib,json
+          p=pathlib.Path('wheels')
+          items=[{'path':f.name,'sha256':hashlib.sha256(f.read_bytes()).hexdigest()} for f in p.iterdir()]
+          (p/'manifest.json').write_text(json.dumps({'scope':'DEPENDENCY_DOWNLOAD_ONLY','files':items},indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: external-v032-boto3-compatible
+          path: wheels
+          retention-days: 7
