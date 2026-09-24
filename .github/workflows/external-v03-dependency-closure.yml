@@ -1,0 +1,29 @@
+name: External v0.3 Compatible Dependencies
+on:
+  push:
+    branches: [audit/external-v03-native-validation]
+    paths: [.github/workflows/external-v03-dependency-closure.yml]
+permissions:
+  contents: read
+jobs:
+  collect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: |
+          mkdir -p wheels
+          python -m pip download --no-deps --dest wheels 'fsspec==2026.6.0' 'ghapi<2' 'word2number==1.1' 's3fs==2026.6.0'
+          python - <<'PY'
+          import pathlib,json,hashlib
+          p=pathlib.Path('wheels')
+          (p/'manifest.json').write_text(json.dumps({'scope':'DEPENDENCY_DOWNLOAD_ONLY_NO_MODEL_CALL','files':[{'path':f.name,'sha256':hashlib.sha256(f.read_bytes()).hexdigest()} for f in sorted(p.iterdir())]},indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: external-v03-compatible-dependencies
+          path: wheels/
+          retention-days: 7
