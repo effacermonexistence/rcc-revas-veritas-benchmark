@@ -1,0 +1,28 @@
+name: External v0.3 Native Import Dependencies
+on:
+  push:
+    branches: [audit/external-v03-native-validation]
+    paths: [.github/workflows/external-v03-provider-imports.yml]
+permissions:
+  contents: read
+jobs:
+  collect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: |
+          mkdir -p wheels
+          python -m pip download --dest wheels google-genai email-validator transformers sentencepiece
+          python - <<'PY'
+          import pathlib,json,hashlib
+          p=pathlib.Path('wheels')
+          (p/'manifest.json').write_text(json.dumps({'scope':'DOWNLOAD_ONLY_NO_PROVIDER_CALLS','files':[{'path':f.name,'sha256':hashlib.sha256(f.read_bytes()).hexdigest()} for f in sorted(p.iterdir())]},indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: external-v03-native-import-dependencies
+          path: wheels/
+          retention-days: 7
