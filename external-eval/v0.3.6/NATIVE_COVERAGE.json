@@ -1,0 +1,217 @@
+{
+  "schema_version": "rveval.native-coverage.v0.3",
+  "scope": "EXECUTED_NATIVE_COMPONENT_PROFILES_AND_EXTENSIBLE_INTERFACES",
+  "all_existing_or_future_benchmarks_executed": false,
+  "coverage": [
+    {
+      "family": "AgentDojo",
+      "module": "agentdojo.py",
+      "entrypoint": "make_runtime_class",
+      "native": true,
+      "executed": [
+        "banking",
+        "workspace",
+        "travel",
+        "slack"
+      ],
+      "verified": "Original tool argument validation, allowed effect/output equality, denial without mutation, native Bind invocation",
+      "not_claimed": "Full model-driven tasks or prompt-injection attack sweep"
+    },
+    {
+      "family": "lm-evaluation-harness",
+      "module": "lm_eval.py",
+      "entrypoint": "make_lm",
+      "native": true,
+      "executed": [
+        "generate_until",
+        "loglikelihood",
+        "loglikelihood_rolling"
+      ],
+      "verified": "Actual LM base protocol with CPU Torch computation, native batching and response cardinality; Instance.doc withheld",
+      "not_claimed": "Downloaded pretrained-model leaderboard scores; every model-specific extension"
+    },
+    {
+      "family": "Gymnasium",
+      "module": "gymnasium.py",
+      "entrypoint": "make_env",
+      "native": true,
+      "executed": [
+        "CartPole-v1"
+      ],
+      "verified": "Original reset and five-element step result, native state trajectory equivalence under admission, native Bind",
+      "not_claimed": "Every environment, robot or physical actuator"
+    },
+    {
+      "family": "Inspect AI",
+      "module": "inspect_ai.py",
+      "entrypoint": "govern_tool",
+      "native": true,
+      "executed": [
+        "ToolDef",
+        "async native tool through AsyncNativeBindExecutor"
+      ],
+      "verified": "Native tool definition/schema retained and real async operation invoked once",
+      "not_claimed": "All Inspect tasks/providers or full multi-agent evaluation"
+    },
+    {
+      "family": "SWE-bench",
+      "module": "swebench.py",
+      "entrypoint": "PredictionWriter",
+      "native": true,
+      "executed": [
+        "native prediction format and official prediction parser",
+        "official Docker setup grading: sympy__sympy-20590 (known gold patch)"
+      ],
+      "verified": "Write admitted prediction exactly once through native Bind and load with official parser; v5 official schema compatibility, native resolved=true, no infrastructure failure, full report coverage checks",
+      "not_claimed": "All repository tasks/model-generated patches; the gold setup check is not model performance"
+    },
+    {
+      "family": "tau-bench legacy",
+      "module": "tau.py",
+      "entrypoint": "LegacyTauEnv",
+      "native": true,
+      "executed": [
+        "Env.step",
+        "calculate_reward"
+      ],
+      "verified": "Native environment and reward; scorer oracle replay is not intercepted as an agent action",
+      "not_claimed": "Latest task quality; this pinned legacy repository marks tasks outdated"
+    },
+    {
+      "family": "tau2 / tau3 source line",
+      "module": "tau.py",
+      "entrypoint": "TauToolBinding",
+      "native": true,
+      "executed": [
+        "Environment",
+        "DB",
+        "ToolKitBase",
+        "make_tool_call"
+      ],
+      "verified": "Native assistant/user channels, actual tool mutation, refusal, scoped method restoration",
+      "not_claimed": "All domains, full user-simulator trajectories, voice or audio-native evaluation"
+    },
+    {
+      "family": "scikit-learn",
+      "module": "sklearn.py",
+      "entrypoint": "SklearnAdapter / SklearnAgent",
+      "native": true,
+      "executed": [
+        "iris",
+        "wine",
+        "digits"
+      ],
+      "verified": "Train-only preprocessing and LogisticRegression; 25% held-out native accuracy scoring and native result preservation",
+      "not_claimed": "VERITAS uplift; no-external-effect applicability control is not native VERITAS"
+    },
+    {
+      "family": "Frozen RCC v0.1.0",
+      "module": "legacy_rcc.py",
+      "entrypoint": "CanonicalRCCGate",
+      "native": true,
+      "executed": [
+        "original 160-test suite",
+        "34 developer cases through actual evaluate_one/preflight/handoff"
+      ],
+      "verified": "Unchanged source closure, true native evaluation/handoff",
+      "not_claimed": "Non-synthetic release or full private production RCC"
+    },
+    {
+      "family": "New external RCC v0.3",
+      "module": "rcc_external.py",
+      "entrypoint": "ExternalRCCGate",
+      "native": true,
+      "executed": [
+        "tool_call",
+        "final_answer",
+        "structured_action",
+        "message",
+        "custom",
+        "batch",
+        "model_request",
+        "artifact"
+      ],
+      "verified": "Pinned verifier policy, actual verification/adoption/decision lock, uncertainty and known contradictions",
+      "not_claimed": "Structural policy proves answer correctness or implements every private RCC mechanism"
+    },
+    {
+      "family": "VERITAS Bind core and authority",
+      "module": "veritas_bind.py / veritas_authority.py",
+      "entrypoint": "NativeBindExecutor / NativeAuthorityResolver",
+      "native": true,
+      "executed": [
+        "execute_bind_adjudication",
+        "verify_authority_evidence_artifact_to_proof",
+        "RuntimeAuthorityValidator",
+        "Ed25519 valid/tampered/revoked controls"
+      ],
+      "verified": "Actual unchanged native libraries, native receipt, one effect owner; valid commits and invalid/unknown blocks",
+      "not_claimed": "Full /v1/decide-to-all-governance pipeline, production authority, encrypted production TrustLog or distributed exactly-once"
+    },
+    {
+      "family": "Other benchmarks and languages",
+      "module": "boundary.py / async_boundary.py / native_view.py / rpc",
+      "entrypoint": "GovernedExecutor / AsyncGovernedExecutor / persistent RPC",
+      "native": false,
+      "executed": [
+        "Python callbacks",
+        "JavaScript agent",
+        "typed NumPy/Torch/image views",
+        "durable local operation ledger"
+      ],
+      "verified": "Reusable integration contracts without hardcoded benchmark names, case counts or native metric rewrites",
+      "not_claimed": "Untested native frameworks are already integrated; a snapshot/view alone proves full simulator equivalence"
+    },
+    {
+      "family": "VERITAS native HTTP decision through encrypted persistence",
+      "module": "decide_pipeline.py + veritas_bind.py",
+      "entrypoint": "NativeDecisionIntentFactory + NativeBindExecutor",
+      "native": true,
+      "executed": [
+        "valid",
+        "tampered AuthorityEvidence signature",
+        "revoked authority"
+      ],
+      "verified": "Authenticated FastAPI ASGI request, native signed compiled policy/kernel/CDA/promotion, independent authority and native Bind, encrypted TrustLog and replay membership; valid effect exactly once, invalid grant no effect",
+      "not_claimed": "Provider is a controlled transcript; no model performance, every production branch, remote HTTP transport, or production WORM claim"
+    },
+    {
+      "family": "Benchmark-owned native jobs / any executable language",
+      "module": "native_job.py",
+      "entrypoint": "execute_native_job",
+      "native": false,
+      "executed": [
+        "independent native scheduler",
+        "matrix arithmetic",
+        "lazy stream",
+        "async fan-in",
+        "binary signal",
+        "mixed step/native/RPC catalogue"
+      ],
+      "verified": "Same freeze/run/verify/matrix surface; pinned executable invocation; whole execution phase sealed before separate native scoring; exact case/arm denominator; no automatic retry",
+      "not_claimed": "Every third-party API already wrapped; native component authenticity or hostile-worker isolation"
+    },
+    {
+      "family": "RCC/REVAS to VERITAS mapping packet",
+      "module": "partner_mapping.py",
+      "entrypoint": "build_runtime_packet / verify_runtime_packet / validate_mapping_contract",
+      "native": false,
+      "executed": [
+        "12 field groups",
+        "Q1 through Q9 original question coverage",
+        "real implementation-symbol validation",
+        "candidate/decision binding and tamper controls"
+      ],
+      "verified": "Independently sourced request; provenance retention; no implicit authority; published wire schema agrees with actual builder",
+      "not_claimed": "CanonicalDecisionArtifact fabrication; private RCC production parity; signer origin authenticated by digest"
+    }
+  ],
+  "run_evidence": "audit_v033/native-final/validation.json",
+  "source_pins": "SOURCES_NATIVE.json",
+  "implementation_guide": "docs/TAKESHI_IMPLEMENTATION_v0.3.3.md",
+  "release": "0.3.3",
+  "catalogue_execution": "All configurations preregistered before any run; one new process per configuration",
+  "historical_run_evidence": "audit_evidence/v0.3.2/native-final-fixed/validation.json",
+  "mapping_contract": "contracts/VERITAS_MAPPING_v0.3.3.json",
+  "benchmark_fitness_note": "Native execution compatibility does not establish the benchmark’s suitability for frontier model comparison; SWE-bench Verified historical gold setup is installation-only."
+}

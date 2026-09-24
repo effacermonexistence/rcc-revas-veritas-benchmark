@@ -1,0 +1,1 @@
+{"arm":"A","case":{"case_id":"sum/one","input":{"values":[1,2,3]},"request":"Sum the supplied numbers."},"request_sha256":"8234d033866e66013f9afea23319c38642ed87a7d744a58373092cc5f2b2ef5c"}

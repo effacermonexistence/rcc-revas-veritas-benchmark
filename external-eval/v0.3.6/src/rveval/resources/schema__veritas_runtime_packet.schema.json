@@ -1,0 +1,134 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "rveval.veritas-input.v1"
+        },
+        "packet_created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "request": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "query": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "id",
+            "query",
+            "source_ref"
+          ]
+        },
+        "candidate": {
+          "$ref": "candidate.schema.json"
+        },
+        "upstream_adoption": {
+          "$ref": "rcc_decision.schema.json"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "origin": {
+                "type": "string",
+                "minLength": 1
+              },
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "required": [
+              "origin",
+              "ref",
+              "sha256"
+            ]
+          }
+        },
+        "identities": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "candidate_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "rcc_decision_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "hash_profile": {
+              "const": "rveval.python-finite-json.v2"
+            },
+            "native_decision_id": {
+              "type": "null"
+            },
+            "native_decision_hash": {
+              "type": "null"
+            },
+            "native_identity_status": {
+              "const": "ASSIGNED_BY_VERITAS_NOT_THIS_PACKET"
+            }
+          },
+          "required": [
+            "candidate_sha256",
+            "rcc_decision_sha256",
+            "hash_profile",
+            "native_decision_id",
+            "native_decision_hash",
+            "native_identity_status"
+          ]
+        },
+        "execution_authority_conferred": {
+          "const": false
+        }
+      },
+      "required": [
+        "schema_version",
+        "packet_created_at",
+        "request",
+        "candidate",
+        "upstream_adoption",
+        "source_refs",
+        "identities",
+        "execution_authority_conferred"
+      ]
+    },
+    "payload_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "origin_authenticated": {
+      "const": false
+    }
+  },
+  "required": [
+    "payload",
+    "payload_sha256",
+    "origin_authenticated"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

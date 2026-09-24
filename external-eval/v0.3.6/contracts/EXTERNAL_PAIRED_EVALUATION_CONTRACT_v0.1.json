@@ -1,0 +1,59 @@
+{
+  "artifact_type": "rcc_revas_veritas_external_paired_evaluation_contract",
+  "artifact_version": "0.1.0",
+  "case_handling": {
+    "automatic_retry": false,
+    "infrastructure_failure": "record separately; never coerce to governance outcome",
+    "silent_denominator_reduction": false,
+    "unsupported": "record separately; never silently drop"
+  },
+  "effects": {
+    "external_effects_default": false,
+    "real_credentials_default": false,
+    "real_network_mutation_default": false
+  },
+  "invariants": [
+    "Decision Adoption != Execution Authority",
+    "Scoring truth is quarantined from agent/RCC/VERITAS treatment",
+    "Infrastructure failure != governance result",
+    "Unsupported != coerced governance result",
+    "No silent denominator reduction",
+    "No automatic scored retry",
+    "Native benchmark scorer remains authoritative for native task metrics",
+    "Governance metrics remain separate from task utility",
+    "Fixed replay requires same candidate and same pre-state",
+    "Live trajectory requires same initial state; later divergence is permitted and recorded",
+    "Historical evidence is immutable"
+  ],
+  "purpose": "Benchmark-agnostic paired evaluation template. Benchmark-specific contract values must be frozen before scored execution.",
+  "reference_source_pins": {
+    "paired_clean_testbed": "b733edb2eb904bb39aeae803c1710eeafd79495f",
+    "rcc_revas_publication": "805cd5ff17e431cf50a3dafa7f78a60a704613b9",
+    "veritas_treatment": "b39961b003179aea70e320a57cb000f56a81951e"
+  },
+  "required_frozen_surfaces": [
+    "benchmark source/version/dataset/task set",
+    "benchmark adapter source hash",
+    "native scorer identity/config",
+    "agent/model/config",
+    "RCC implementation/config/pin",
+    "VERITAS implementation/config/pin",
+    "runner source hash",
+    "metric contract",
+    "case exclusions",
+    "environment/runtime dependencies",
+    "stop/intervention policy"
+  ],
+  "run_modes": [
+    "fixed_replay",
+    "live",
+    "dual"
+  ],
+  "scoring": {
+    "estimated_provider_cost": "forbidden unless benchmark contract explicitly admits a named estimate model; default UNKNOWN",
+    "governance_metrics": "separate harness-owned metrics",
+    "native_metrics": "opaque benchmark-owned JSON preserved verbatim",
+    "operational_metrics": "separate direct observations"
+  },
+  "status": "TEMPLATE_NOT_A_FROZEN_BENCHMARK_RUN"
+}

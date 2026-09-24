@@ -1,0 +1,18 @@
+{
+  "case-1": [
+    {
+      "kind": "tool_call",
+      "name": "add",
+      "arguments": {
+        "n": 1
+      }
+    },
+    {
+      "kind": "tool_call",
+      "name": "add",
+      "arguments": {
+        "n": 1
+      }
+    }
+  ]
+}

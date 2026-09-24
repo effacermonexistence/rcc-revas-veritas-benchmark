@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RCCDecision v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "disposition",
+    "adopted_candidate"
+  ],
+  "properties": {
+    "disposition": {
+      "enum": [
+        "ADOPT",
+        "HOLD",
+        "REJECT",
+        "UNSUPPORTED",
+        "ERROR"
+      ]
+    },
+    "adopted_candidate": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "CandidateAction v2",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "tool_call",
+                "final_answer",
+                "structured_action",
+                "message",
+                "custom",
+                "batch",
+                "model_request",
+                "artifact"
+              ]
+            },
+            "name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "arguments": {},
+            "content": {},
+            "metadata": {
+              "type": "object"
+            }
+          }
+        }
+      ]
+    },
+    "handoff": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "evidence": {
+      "type": "object"
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "disposition": {
+            "const": "ADOPT"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "adopted_candidate": {
+            "type": "object"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "adopted_candidate": {
+            "type": "null"
+          }
+        }
+      }
+    }
+  ]
+}

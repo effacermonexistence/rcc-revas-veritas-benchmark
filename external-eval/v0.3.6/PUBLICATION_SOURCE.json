@@ -1,0 +1,12 @@
+{
+  "version": "0.3.6",
+  "source_base_commit": "8ef12491091b78ef9077db89d82d465d25996662",
+  "source_base_tree": "87105481796d5e47818237011e9a684f91e5404e",
+  "original_review_target": "7df544cca1272a725d1d6e830214168394250d0e",
+  "scope": "SOURCE_AND_IMPLEMENTATION_HANDOFF",
+  "prior_versions_preserved": true,
+  "source_only": true,
+  "private_mail_included": false,
+  "third_party_native_sources_included": false,
+  "all_benchmarks_executed": false
+}

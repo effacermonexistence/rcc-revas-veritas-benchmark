@@ -1,0 +1,1 @@
+{"arms":["A","B"],"native_score_files":[{"path":"native-score.json","sha256":"1df2286c32c99715ce865adefdff78deba4a98ebc9e5478ecea089ee16ad7d4e"}],"request_sha256":"cc05e251e4cf8241ae293432cbd8561e7af671f8611282b5866ca1b096f9e971","schema_version":"rveval.native-scores.v1","scored_case_ids":["sum/one","sum/two"],"status":"COMPLETED"}

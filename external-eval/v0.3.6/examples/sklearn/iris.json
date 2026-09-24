@@ -1,0 +1,39 @@
+{
+  "run_mode": "dual",
+  "seed": 29,
+  "study": {
+    "kind": "ENGINEERING"
+  },
+  "benchmark": {
+    "plugin": "rveval.integrations.sklearn:SklearnAdapter",
+    "config": {
+      "dataset": "iris",
+      "split_seed": 29
+    }
+  },
+  "agent": {
+    "plugin": "rveval.integrations.sklearn:SklearnAgent",
+    "config": {
+      "dataset": "iris",
+      "split_seed": 29
+    }
+  },
+  "rcc": {
+    "plugin": "rveval.integrations.rcc_external:ExternalRCCGate",
+    "config": {
+      "policy": "../../policies/external-output-contract.v0.3.json",
+      "policy_sha256": "d1126bed6c51325421f6ceeff7549e0a13f014a48897b8a97654886850a2f212"
+    }
+  },
+  "veritas": {
+    "plugin": "rveval.integrations.policies:NoExternalEffectPolicy",
+    "config": {}
+  },
+  "policy": {
+    "max_steps": 1,
+    "on_governance_stop": "terminate"
+  },
+  "pins": {
+    "purpose": "Real sklearn dataset, trained model, and native scorer; control path has NO native VERITAS"
+  }
+}

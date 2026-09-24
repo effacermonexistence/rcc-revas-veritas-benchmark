@@ -1,0 +1,114 @@
+{
+  "ok": true,
+  "request_id": "597f08176fad054e835856415465bad3",
+  "chosen": {
+    "action_type": "local-effect",
+    "actor_identity": "sandbox-test-operator",
+    "ambiguity_flags": [],
+    "candidate_id": "counter-candidate",
+    "candidate_rationale_ref": null,
+    "candidate_type": "execution_intent_candidate",
+    "description": "",
+    "evidence_refs": [
+      "rveval-candidate-sha256:125f6bf44284e271b68485d6cbc63fa5beaeb2f562e2db9eddac56f8adf3fc9a"
+    ],
+    "id": "counter-candidate",
+    "intended_action": "increment",
+    "metadata": {},
+    "missing_required_fields": [],
+    "policy_context_refs": [],
+    "regulated_or_high_impact": false,
+    "required_authority": [
+      "counter:increment"
+    ],
+    "required_human_approval": false,
+    "risk_level": "low",
+    "score": 0.5155348505523377,
+    "score_raw": 1.0,
+    "source_model": "declared-controlled-engineering-agent",
+    "source_trace_ref": "rcc-external:0a3d3edf5b698839caaa3e3d069b41baa7e5dfc30ce7dae8f1065a8f6c3aa484",
+    "target_resource": "counter",
+    "target_system": "local-counter",
+    "text": null,
+    "title": "increment",
+    "world": {
+      "avg_risk": 0.0,
+      "avg_value": 0.5,
+      "confidence": 0.0,
+      "plan_progress": 0.0,
+      "utility": 0.22745365444378426
+    }
+  },
+  "canonical_decision_artifact": {
+    "decision": {
+      "actionability_block_reason": null,
+      "actionability_refusal_type": null,
+      "actionability_status": "bind_required_before_execution",
+      "business_decision": "APPROVE",
+      "chosen_binding": {
+        "profile": "veritas.canonical-decision.chosen-value/v1",
+        "sha256": "cc94417255a3ddaefc37b8d844a0eb976b4f9eb5e05a75c07af4b9c6aad7d8b7"
+      },
+      "decision_status": "allow",
+      "formation_status": "COMPLETE",
+      "gate_decision": "proceed",
+      "governance_identity_binding": {
+        "profile": "veritas.canonical-decision.governance-identity/v1",
+        "sha256": "2d2d534aeadca5634eb2c323fb2a436d6e5c65aeeb262404c4104490e7b47661"
+      },
+      "human_review_required": false,
+      "lineage_promotability_binding": {
+        "profile": "veritas.canonical-decision.lineage-promotability/v1",
+        "sha256": "ec494091f8edd2861d75f894c812dda7a81baba7714f88abcfb913040bb44af5"
+      },
+      "missing_evidence": [],
+      "next_action": "EXECUTE_WITH_STANDARD_MONITORING",
+      "policy_snapshot_evidence": {
+        "semantic_digest": "b0d3a95b98bfd1a4d70386a111a2f7151c5685b69de3e9fc555afa8e44a69a66",
+        "signature_verified": true,
+        "signer_id": "ed25519",
+        "snapshot_id": "b0d3a95b98bfd1a4d70386a111a2f7151c5685b69de3e9fc555afa8e44a69a66",
+        "verified_at": "2026-09-24T02:53:30Z",
+        "version": "1"
+      },
+      "rationale": "Decision derived from FUJI gate outcome and available evidence. | next_action_reason=Gate permits proceed; monitored execution captures value with bounded risk. | next_action_score_gap=0.0455",
+      "refusal_reason": null,
+      "rejection_reason": null,
+      "required_evidence": [],
+      "requires_bind_before_execution": true,
+      "satisfied_evidence": [],
+      "selected_action_evidence": {
+        "candidate_hash": "b55498388dcb7c847da8cd4fa0539b50bf819866c3a8e8facbfeed5857bd495b",
+        "chosen_binding_sha256": "cc94417255a3ddaefc37b8d844a0eb976b4f9eb5e05a75c07af4b9c6aad7d8b7"
+      },
+      "transition_refusal_binding": null
+    },
+    "decision_hash": "0794fc6b09c3b144475e22043410ad2bfdbccabcc87b1914943fc5665809a48b",
+    "decision_id": "cda:v1:sha256:0794fc6b09c3b144475e22043410ad2bfdbccabcc87b1914943fc5665809a48b",
+    "decision_ts": "2026-09-24T02:53:30.850446Z",
+    "format_version": "canonical-decision-artifact/v1",
+    "hash_profile": "veritas.canonical-decision/v1",
+    "request_id": "597f08176fad054e835856415465bad3",
+    "source_contract": {
+      "projection_version": "canonical-decision-projection/v1",
+      "type": "DecideResponse"
+    }
+  },
+  "canonical_decision_trust_receipt": {
+    "canonical_decision_hash": "0794fc6b09c3b144475e22043410ad2bfdbccabcc87b1914943fc5665809a48b",
+    "canonical_decision_id": "cda:v1:sha256:0794fc6b09c3b144475e22043410ad2bfdbccabcc87b1914943fc5665809a48b",
+    "canonical_decision_ts": "2026-09-24T02:53:30.850446Z",
+    "event_type": "canonical_decision_link",
+    "format_version": "canonical-decision-trust-receipt/v1",
+    "ledger": "encrypted_full_ledger",
+    "request_id": "597f08176fad054e835856415465bad3",
+    "trust_log_created_at": "2026-09-24T02:53:30.868307+00:00",
+    "trust_log_entry_sha256": "1d54a763f05842d1cbd98b6e682245827666cc46a667df064ed79475820c33e6",
+    "trust_log_entry_sha256_prev": "0ce301163dc15b65e236857f93182435da3828ed286706d26e78ff2c6d266562"
+  },
+  "gate_decision": "proceed",
+  "business_decision": "APPROVE",
+  "human_review_required": false,
+  "missing_evidence": [],
+  "requires_bind_before_execution": true
+}

@@ -1,0 +1,74 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "rveval.native-execution.v1"
+    },
+    "request_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "arm": {
+            "enum": [
+              "A",
+              "B"
+            ]
+          },
+          "status": {
+            "enum": [
+              "COMPLETED",
+              "REFUSED",
+              "ERROR",
+              "UNSUPPORTED"
+            ]
+          },
+          "artifacts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "path",
+                "sha256"
+              ]
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "case_id",
+          "arm",
+          "status",
+          "artifacts"
+        ]
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "request_sha256",
+    "records"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}
