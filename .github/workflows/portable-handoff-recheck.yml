@@ -1,0 +1,81 @@
+name: Portable handoff independent recheck
+on:
+  push:
+    branches: [audit/portable-handoff-recheck-20260924]
+    paths: [.github/workflows/portable-handoff-recheck.yml]
+permissions:
+  contents: read
+jobs:
+  exact-source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: |
+          mkdir -p review-export
+          python - <<'PY'
+          import subprocess,pathlib,zipfile,json,hashlib
+          root=pathlib.Path('external-eval/v0.3.4')
+          subprocess.run(['python',str(root/'scripts/verify_source_manifest.py')],check=True)
+          tree=subprocess.check_output(['git','rev-parse','HEAD:external-eval/v0.3.4'],text=True).strip()
+          assert tree=='b2a3ff7e1ec54dc2b303a7e6f7d2533f528983f7',tree
+          names=subprocess.check_output(['git','ls-files','-z','external-eval/v0.3.4']).decode().split('\0')
+          with zipfile.ZipFile('review-export/source.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for name in filter(None,names): z.write(name,pathlib.Path(name).relative_to(root))
+          p=pathlib.Path('review-export/source.zip')
+          pathlib.Path('review-export/provenance.json').write_text(json.dumps({'baseline_commit':'7df544cca1272a725d1d6e830214168394250d0e','source_tree':tree,'archive_sha256':hashlib.sha256(p.read_bytes()).hexdigest()},indent=2))
+      - uses: actions/upload-artifact@v4
+        with:
+          name: portable-handoff-exact-source
+          path: review-export/
+          retention-days: 14
+  native-execution:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      LITELLM_LOCAL_MODEL_COST_MAP: 'True'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Verify and install unchanged native profile
+        run: |
+          set -euo pipefail
+          ROOT="$GITHUB_WORKSPACE/external-eval/v0.3.4"
+          python "$ROOT/scripts/verify_source_manifest.py"
+          PYTHON=python bash "$ROOT/scripts/bootstrap_native.sh" "$RUNNER_TEMP/rveval-native"
+      - name: Full regression and native matrix
+        run: |
+          set -euo pipefail
+          ROOT="$GITHUB_WORKSPACE/external-eval/v0.3.4"
+          N="$RUNNER_TEMP/rveval-native"
+          "$N/venv/bin/python" "$ROOT/scripts/validate_native.py" --rcc-source "$N/rcc/rcc-revas-eval/v0.1.0/runtime" --veritas-source "$N/veritas" --agentdojo-source "$N/agentdojo" --tau-source "$N/tau" --tau2-source "$N/tau2" --output "$GITHUB_WORKSPACE/recheck-native"
+      - name: New recipient installed-only run
+        run: |
+          set -euo pipefail
+          P="$RUNNER_TEMP/rveval-native/venv/bin/python"
+          cd "$RUNNER_TEMP"
+          "$P" -I -m rveval init-pilot --name 'Independent recipient' --output-dir "$RUNNER_TEMP/recipient-pilot"
+          cd "$RUNNER_TEMP/recipient-pilot"
+          "$P" -I -m rveval mapping-check --contract contracts/mapping.json
+          "$P" -I -m rveval freeze --config config.json --output freeze.json
+          "$P" -I -m rveval run --config config.json --freeze freeze.json --ack-freeze-sha256 "$("$P" -I -m rveval hash freeze.json)" --output-dir run
+          "$P" -I -m rveval verify --run-dir run --expected-index-sha256 "$("$P" -I -m rveval hash run/evidence_index.json)"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: portable-handoff-native-recheck
+          path: |
+            recheck-native/
+            ${{ runner.temp }}/recipient-pilot/
+          retention-days: 14
+          if-no-files-found: warn
