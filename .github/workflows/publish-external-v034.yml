@@ -1,0 +1,119 @@
+name: Publish reviewed external kit v0.3.4
+on:
+  push:
+    branches: [release/external-kit-v0.3.4]
+    paths: [.github/workflows/publish-external-v034.yml]
+permissions:
+  contents: write
+concurrency:
+  group: publish-external-v034
+  cancel-in-progress: false
+jobs:
+  verify-and-publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+      KIT: external-benchmark/v0.3.4
+      ARCHIVE_SHA256: d67da6317ebe3f07ff638013d9fe82f5308ba052195b4562b97fea1720c876b2
+      MANIFEST_SHA256: 0c36fe5675c1efdc0d5c27c86e63cfe6bbbd7802a5dc90b410ac75c4716c4ad3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: release/external-kit-v0.3.4
+          fetch-depth: 1
+      - name: Import only the reviewed source archive
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib, io, os, pathlib, stat, urllib.request, zipfile
+          root=pathlib.Path(os.environ['KIT'])
+          if root.exists():
+              raise SystemExit('REFUSE_EXISTING_RELEASE_DIRECTORY')
+          # This short-lived transfer contains only the source kit authorized for
+          # publication. It grants no access to Drive or any other user file.
+          url='https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-2270-820e-8734-7a88efae33af/raw?se=2026-09-24T15%3A02%3A07Z&sp=r&sv=2026-02-06&sr=b&scid=b0499253-480e-56f1-b3ac-29f4edb297ba&skoid=456594af-533f-44ef-9bdc-35ea2f9daee5&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-24T13%3A59%3A39Z&ske=2026-09-25T13%3A59%3A39Z&sks=b&skv=2026-02-06&sig=XG0WYi5Cy%2BWUtYF4pGHRFR1l7aURFf2qi9k9ayUxtas%3D'
+          print('::add-mask::'+url)
+          with urllib.request.urlopen(url,timeout=60) as response:
+              raw=response.read(2_000_001)
+          assert len(raw)==371705, 'ARCHIVE_SIZE_MISMATCH'
+          assert hashlib.sha256(raw).hexdigest()==os.environ['ARCHIVE_SHA256'], 'ARCHIVE_HASH_MISMATCH'
+          with zipfile.ZipFile(io.BytesIO(raw)) as archive:
+              entries=archive.infolist()
+              assert len(entries)==199 and len({x.filename for x in entries})==199, 'FILE_ENROLLMENT_MISMATCH'
+              assert sum(x.file_size for x in entries)<5_000_000, 'UNEXPECTED_EXPANSION'
+              for entry in entries:
+                  p=pathlib.PurePosixPath(entry.filename)
+                  assert not p.is_absolute() and '..' not in p.parts and '.git' not in p.parts, 'UNSAFE_PATH'
+                  assert not stat.S_ISLNK(entry.external_attr>>16), 'SYMLINK_FORBIDDEN'
+                  assert not entry.is_dir(), 'UNEXPECTED_DIRECTORY_ENTRY'
+              root.mkdir(parents=True)
+              for entry in entries:
+                  target=root/entry.filename
+                  target.parent.mkdir(parents=True,exist_ok=True)
+                  with target.open('xb') as output: output.write(archive.read(entry))
+          assert hashlib.sha256((root/'SOURCE_MANIFEST.json').read_bytes()).hexdigest()==os.environ['MANIFEST_SHA256']
+          print('IMPORTED_REVIEWED_SOURCE_FILES',len(entries))
+          PY
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install actual core test dependencies
+        run: |
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e "./${KIT}[test]"
+      - name: Check source closure and execute complete framework acceptance
+        run: |
+          cd "$KIT"
+          python scripts/verify_source_manifest.py
+          python scripts/run_acceptance.py --output "$RUNNER_TEMP/external-kit-v034-acceptance"
+          python scripts/verify_source_manifest.py
+      - name: Check an installed wheel outside the checkout
+        run: |
+          python -m pip wheel --no-deps --no-build-isolation "./${KIT}" -w "$RUNNER_TEMP/kit-wheel"
+          python -m venv "$RUNNER_TEMP/kit-clean"
+          "$RUNNER_TEMP/kit-clean/bin/python" -m pip install --no-index --no-deps "$RUNNER_TEMP"/kit-wheel/*.whl
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/kit-clean/bin/python" -I -m rveval pilot-init --name partner-v034 --directory "$RUNNER_TEMP/new-partner-pilot"
+          "$RUNNER_TEMP/kit-clean/bin/python" -I -m rveval pilot-check --directory "$RUNNER_TEMP/new-partner-pilot" --output-dir "$RUNNER_TEMP/installed-pilot-result" > "$RUNNER_TEMP/installed-pilot-result.json"
+      - name: Publish verified source without changing the historical main branch
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,pathlib
+          root=pathlib.Path(os.environ['KIT'])
+          acceptance=json.loads((pathlib.Path(os.environ['RUNNER_TEMP'])/'external-kit-v034-acceptance/acceptance.json').read_text())
+          assert acceptance['status']=='PASS' and not acceptance['skips']
+          counts=acceptance['test_counts']
+          assert counts['tests']>=274 and not any(counts[k] for k in ('failures','errors','skipped'))
+          installed=json.loads((pathlib.Path(os.environ['RUNNER_TEMP'])/'installed-pilot-result.json').read_text())
+          assert installed['status']=='PASS'
+          record={'schema_version':'rveval.github-publication.v1','status':'PASS','source_archive_sha256':os.environ['ARCHIVE_SHA256'],'source_manifest_sha256':os.environ['MANIFEST_SHA256'],'github_run_id':os.environ['GITHUB_RUN_ID'],'test_counts':counts,'reference_cli_commands':len(acceptance['commands'])-1,'installed_portable_pilot':'PASS','scope':'SOURCE_PUBLICATION_AND_FRAMEWORK_HANDOFF_NOT_ALL_BENCHMARK_PERFORMANCE'}
+          pathlib.Path('EXTERNAL_KIT_v0.3.4_PUBLICATION.json').write_text(json.dumps(record,indent=2)+'\n')
+          pathlib.Path('EXTERNAL_BENCHMARK_START.md').write_text('# RCC/REVAS x VERITAS external evaluation kit\n\nCurrent reviewed implementation: [v0.3.4](external-benchmark/v0.3.4/README.md).\n\n[Start here](external-benchmark/v0.3.4/docs/START_HERE.md) | [English implementation](external-benchmark/v0.3.4/docs/TAKESHI_IMPLEMENTATION_v0.3.4.md) | [Japanese implementation](external-benchmark/v0.3.4/docs/TAKESHI_IMPLEMENTATION_v0.3.4.ja.md) | [Release review](external-benchmark/v0.3.4/docs/RELEASE_AUDIT_v0.3.4.md)\n\nThe historical root package and main branch are unchanged. Install from the versioned folder, not the historical root:\n\n```bash\ncd external-benchmark/v0.3.4\npython -m venv .venv\n. .venv/bin/activate\npython -m pip install .\nrveval pilot-init --name new-partner --directory /tmp/new-partner\nrveval pilot-check --directory /tmp/new-partner --output-dir /tmp/new-partner-check\n```\n\nThe generated reference is explicitly engineering-only. New native APIs and authority semantics require a scoped implementation. Passing this kit does not assert universal task/model performance.\n')
+          # The transfer was transient. Keep only a disabled provenance stub, never
+          # a reusable download credential, in the published branch tip.
+          pathlib.Path('.github/workflows/publish-external-v034.yml').write_text('name: Published external kit v0.3.4 provenance\non:\n  workflow_dispatch:\npermissions:\n  contents: read\njobs:\n  published:\n    runs-on: ubuntu-24.04\n    steps:\n      - run: echo "Source published under external-benchmark/v0.3.4; see EXTERNAL_KIT_v0.3.4_PUBLICATION.json"\n')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$KIT" EXTERNAL_BENCHMARK_START.md EXTERNAL_KIT_v0.3.4_PUBLICATION.json .github/workflows/publish-external-v034.yml
+          git commit -m 'release: publish verified external evaluation kit v0.3.4 and portable partner pilot'
+          git push origin HEAD:refs/heads/release/external-kit-v0.3.4
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: external-kit-v034-publication-verification
+          path: |
+            ${{ runner.temp }}/external-kit-v034-acceptance/
+            ${{ runner.temp }}/installed-pilot-result/
+            ${{ runner.temp }}/installed-pilot-result.json
+            EXTERNAL_KIT_v0.3.4_PUBLICATION.json
+          retention-days: 30
+          if-no-files-found: warn
