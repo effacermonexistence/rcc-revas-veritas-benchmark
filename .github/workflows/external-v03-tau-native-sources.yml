@@ -1,0 +1,50 @@
+name: External v0.3 Tau Native Sources
+on:
+  push:
+    branches: [audit/external-v03-native-validation]
+    paths: [.github/workflows/external-v03-tau-native-sources.yml]
+permissions:
+  contents: read
+jobs:
+  collect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/checkout@v4
+        with:
+          repository: sierra-research/tau-bench
+          ref: 59a200c6d575d595120f1cb70fea53cef0632f6b
+          path: sources/tau-bench
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: sierra-research/tau2-bench
+          ref: b7ea9074c1cba482b30687fecdb5c8425fd6f619
+          path: sources/tau2-bench
+          persist-credentials: false
+      - name: Collect exact sources, no model execution
+        run: |
+          mkdir -p output/wheels
+          python -m pip download --dest output/wheels litellm
+          python - <<'PY'
+          import json,pathlib,hashlib,subprocess,tarfile
+          out=pathlib.Path('output')
+          pins={'tau-bench':'59a200c6d575d595120f1cb70fea53cef0632f6b','tau2-bench':'b7ea9074c1cba482b30687fecdb5c8425fd6f619'}
+          for name,pin in pins.items():
+              root=pathlib.Path('sources')/name
+              assert subprocess.check_output(['git','-C',str(root),'rev-parse','HEAD'],text=True).strip()==pin
+              with tarfile.open(out/(name+'.tar.gz'),'w:gz') as archive:
+                  for relative in subprocess.check_output(['git','-C',str(root),'ls-files'],text=True).splitlines():
+                      f=root/relative
+                      if f.is_file() and not f.is_symlink():archive.add(f,arcname=name+'/'+relative,recursive=False)
+          files=[{'path':str(p.relative_to(out)),'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size} for p in sorted(out.rglob('*')) if p.is_file()]
+          (out/'manifest.json').write_text(json.dumps({'scope':'SOURCE_ACQUISITION_ONLY','pins':pins,'files':files},indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: external-v03-tau-native-sources
+          path: output/
+          retention-days: 7
