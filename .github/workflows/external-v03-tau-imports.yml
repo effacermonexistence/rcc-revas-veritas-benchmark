@@ -1,0 +1,28 @@
+name: External v0.3 Tau Import Dependencies
+on:
+  push:
+    branches: [audit/external-v03-native-validation]
+    paths: [.github/workflows/external-v03-tau-imports.yml]
+permissions:
+  contents: read
+jobs:
+  collect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: |
+          mkdir -p wheels
+          python -m pip download --dest wheels 'litellm>=1.80.15,<1.82.7' 'addict>=2.4.0' 'loguru>=0.7.3' 'deepdiff>=8.4.2' 'fastapi>=0.115.11' 'uvicorn>=0.34.0' 'typer>=0.12.5'
+          python - <<'PY'
+          import pathlib,json,hashlib
+          p=pathlib.Path('wheels')
+          (p/'manifest.json').write_text(json.dumps({'scope':'DEPENDENCIES_ONLY_NO_MODEL_OR_PROVIDER_CALLS','files':[{'path':f.name,'sha256':hashlib.sha256(f.read_bytes()).hexdigest()} for f in sorted(p.iterdir())]},indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: external-v03-tau-imports
+          path: wheels/
+          retention-days: 7
