@@ -1,0 +1,69 @@
+name: External evaluation 0.3.4 installed handoff
+on:
+  push:
+    branches: [release/external-eval-v0.3.4]
+    paths: ['external-eval/**', '.github/workflows/external-eval-v034-ci.yml']
+  pull_request:
+    paths: ['external-eval/**', '.github/workflows/external-eval-v034-ci.yml']
+permissions:
+  contents: read
+jobs:
+  installed-handoff:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.13']
+    env:
+      PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Verify and install exact committed source
+        run: |
+          python external-eval/v0.3.4/scripts/verify_source_manifest.py
+          python -m pip install './external-eval/v0.3.4[test]'
+          mkdir -p /tmp/rveval-publication-verification
+          python -m pip freeze > /tmp/rveval-publication-verification/pip-freeze.txt
+      - name: Test implementation and mapping contracts
+        run: |
+          python -m pytest external-eval/v0.3.4/tests/test_release_handoff.py external-eval/v0.3.4/tests/test_external_rcc.py -q --junitxml=/tmp/rveval-publication-verification/tests.xml
+      - name: Start a pilot using only the installed package
+        run: |
+          set -euo pipefail
+          cd /tmp
+          python -I -c 'import rveval; print(rveval.__version__,rveval.__file__); assert "site-packages" in rveval.__file__'
+          python -I -m rveval init-pilot --pilot-id installed-partner --output-dir /tmp/installed-partner
+          cd /tmp/installed-partner
+          python -I -m rveval mapping-check --contract mapping.json
+          python -I -m rveval freeze --config config.json --output freeze.json
+          python -I -m rveval run --config config.json --freeze freeze.json --ack-freeze-sha256 "$(python -I -m rveval hash freeze.json)" --output-dir run
+          python -I -m rveval verify --run-dir run --expected-index-sha256 "$(python -I -m rveval hash run/evidence_index.json)"
+      - name: Recheck closure and preserve readback evidence
+        run: |
+          set -euo pipefail
+          python external-eval/v0.3.4/scripts/verify_source_manifest.py
+          test -z "$(git status --porcelain)"
+          git archive --format=zip HEAD external-eval/v0.3.4 > /tmp/rveval-publication-verification/published-source.zip
+          git bundle create /tmp/rveval-publication-verification/publication.bundle HEAD
+          python - <<'PY'
+          import pathlib,subprocess,json,platform,xml.etree.ElementTree as ET
+          p=pathlib.Path('/tmp/rveval-publication-verification');root=ET.parse(p/'tests.xml').getroot()
+          counts={k:sum(int(s.attrib.get(k,0)) for s in root.iter('testsuite')) for k in ('tests','failures','errors','skipped')}
+          assert counts=={'tests':24,'failures':0,'errors':0,'skipped':0},counts
+          (p/'summary.json').write_text(json.dumps({'status':'PASS','commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'python':platform.python_version(),'installed_handoff_tests':counts,'fresh_pilot':'COMPLETED_AND_VERIFIED','source_after_execution':'UNCHANGED','scope':'INSTALLED_PACKAGE_AND_IMPLEMENTATION_HANDOFF_NOT_ALL_BENCHMARK_TASKS'},indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: external-v034-verified-publication-python-${{ matrix.python }}
+          path: /tmp/rveval-publication-verification/
+          if-no-files-found: error
+          retention-days: 30
