@@ -1,0 +1,31 @@
+name: Read exact prior release for v036 audit
+on:
+  push:
+    branches: [release/external-v0.3.6]
+    paths: [.github/workflows/v036-base-source-readback.yml]
+permissions:
+  contents: read
+jobs:
+  readback:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 8ef12491091b78ef9077db89d82d465d25996662
+          persist-credentials: false
+      - name: Archive unchanged source with explicit provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD:external-eval/v0.3.5)" = 87105481796d5e47818237011e9a684f91e5404e
+          mkdir -p readback
+          git archive --format=tar HEAD:external-eval/v0.3.5 > readback/source.tar
+          sha256sum readback/source.tar > readback/SHA256SUMS
+          printf '%s\n' 'SOURCE_READBACK_ONLY_NOT_NEW_TEST_RESULT' > readback/SCOPE.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v036-exact-prior-source
+          path: readback/
+          retention-days: 7
+          if-no-files-found: error
