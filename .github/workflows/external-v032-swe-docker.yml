@@ -1,0 +1,70 @@
+name: External v032 official SWE Docker acceptance
+on:
+  push:
+    branches: [audit/external-v032-final-execution]
+    paths: [.github/workflows/external-v032-swe-docker.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  official-docker-grading:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      INSTANCE: sympy__sympy-20590
+      DATASET: princeton-nlp/SWE-bench_Lite
+      HF_HUB_DISABLE_TELEMETRY: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned official grader
+        run: |
+          set -euo pipefail
+          mkdir -p acceptance
+          docker info > acceptance/docker-info.txt
+          python -m pip install 'swebench==5.0.2'
+          python -m pip freeze > acceptance/environment.txt
+      - name: Run official gold setup verification
+        run: |
+          set -euo pipefail
+          python -m swebench.harness.run_evaluation \
+            --dataset_name "$DATASET" \
+            --instance_ids "$INSTANCE" \
+            --predictions_path gold \
+            --max_workers 1 \
+            --run_id "rveval-v032-${GITHUB_RUN_ID}-gold" \
+            --timeout 600 2>&1 | tee acceptance/official-grader.log
+      - name: Validate native result rather than exit code alone
+        if: always()
+        run: |
+          python - <<'PY'
+          import json,os,pathlib,hashlib
+          instance=os.environ['INSTANCE']; root=pathlib.Path('.')
+          reports=[]
+          for path in root.glob('logs/run_evaluation/rveval-v032-*/**/report.json'):
+              try: obj=json.loads(path.read_text())
+              except (OSError,ValueError): continue
+              reports.append({'path':str(path),'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'report':obj})
+          resolved=any(r['report'].get(instance,{}).get('resolved') is True for r in reports)
+          result={'status':'PASS' if resolved else 'FAIL','instance_id':instance,'reports':reports,
+                  'scope':'OFFICIAL_DOCKER_GRADER_INFRASTRUCTURE_ACCEPTANCE',
+                  'prediction_source':'official_gold_patch_setup_check','model_performance_claim':False,
+                  'all_swe_tasks_executed':False,'github_run_id':os.environ['GITHUB_RUN_ID']}
+          pathlib.Path('acceptance').mkdir(exist_ok=True)
+          pathlib.Path('acceptance/result.json').write_text(json.dumps(result,indent=2)+'\n')
+          print(json.dumps(result,indent=2))
+          raise SystemExit(0 if resolved else 2)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: external-v032-swe-docker-acceptance
+          path: |
+            acceptance/
+            logs/run_evaluation/
+          retention-days: 7
+          if-no-files-found: error
