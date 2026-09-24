@@ -1,0 +1,57 @@
+name: External v034 independent recheck
+on:
+  push:
+    branches: [audit/external-v034-third-party-review]
+    paths: [.github/workflows/external-v034-independent-recheck.yml]
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 7df544cca1272a725d1d6e830214168394250d0e
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Preserve exact published source
+        run: |
+          mkdir -p recheck
+          git rev-parse HEAD > recheck/source-commit.txt
+          git archive HEAD:external-eval/v0.3.4 -o recheck/published-source.tar
+          sha256sum recheck/published-source.tar > recheck/source-archive.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: external-v034-exact-source-recheck
+          path: recheck/
+          retention-days: 14
+      - name: Install and run source acceptance
+        working-directory: external-eval/v0.3.4
+        run: |
+          set -euo pipefail
+          python scripts/verify_source_manifest.py
+          python -m pip install '.[test]'
+          python scripts/run_acceptance.py --output "$GITHUB_WORKSPACE/recheck/acceptance" > "$GITHUB_WORKSPACE/recheck/acceptance-console.log" 2>&1
+      - name: Generate a pilot from installed distribution
+        run: |
+          set -euo pipefail
+          cd /tmp
+          python -I -m rveval init-pilot --name independent-review --output-dir /tmp/rveval-independent-review > "$GITHUB_WORKSPACE/recheck/init.json"
+          cd /tmp/rveval-independent-review
+          python -I -m rveval mapping-check --contract contracts/mapping.json > "$GITHUB_WORKSPACE/recheck/mapping.json"
+          python -I -m rveval freeze --config config.json --output freeze.json
+          python -I -m rveval run --config config.json --freeze freeze.json --ack-freeze-sha256 "$(python -I -m rveval hash freeze.json)" --output-dir run-001 > "$GITHUB_WORKSPACE/recheck/pilot.json"
+          python -I -m rveval verify --run-dir run-001 --expected-index-sha256 "$(python -I -m rveval hash run-001/evidence_index.json)" > "$GITHUB_WORKSPACE/recheck/pilot-verification.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: external-v034-independent-recheck-results
+          path: recheck/
+          retention-days: 14
+          if-no-files-found: error
