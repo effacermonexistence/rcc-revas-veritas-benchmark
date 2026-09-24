@@ -1,0 +1,983 @@
+{
+  "schema_version": "rveval.release-source-manifest.v2",
+  "version": "0.3.5",
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "55f7f68323160e3b3627f44eacdc0b03818f40f576b708e71706755126a154e4",
+      "size_bytes": 104
+    },
+    {
+      "path": "CHANGELOG_v0.3.3.md",
+      "sha256": "3f3f28f0b363b1f688e4ab911c9db18b03fb3ef43de7a2509aa1d732a784a7d7",
+      "size_bytes": 843
+    },
+    {
+      "path": "CHANGELOG_v0.3.4.md",
+      "sha256": "214fde23628197876b758af0b5bcc7f849df490f004088976d2f97ae4afa2997",
+      "size_bytes": 645
+    },
+    {
+      "path": "CLAIM_BOUNDARY.md",
+      "sha256": "088141e94f8a525872086b54797728fb6e1c9329b051d8627f15b46e743ba63d",
+      "size_bytes": 2402
+    },
+    {
+      "path": "NATIVE_COVERAGE.json",
+      "sha256": "16d8eba270d99e77c7eca8330191112edfb5d5c25c02c10c5209f8cc94192faf",
+      "size_bytes": 9180
+    },
+    {
+      "path": "PUBLICATION_SOURCE.json",
+      "sha256": "6cfcdca49b9a1ad82d12aa7ae51ed52313a0fd3753bea174a6b1478b94138e73",
+      "size_bytes": 1521
+    },
+    {
+      "path": "README.md",
+      "sha256": "95ed6399ea56040a5b16500c6abe2bc2bd7d87a96a3e539a1ad6993d6fd5c674",
+      "size_bytes": 5436
+    },
+    {
+      "path": "REVIEW_v0.3.5.md",
+      "sha256": "81b49ee37ad58e7587aaba88fa0041719b82e644719ee814ee279a2ec32b3efa",
+      "size_bytes": 3217
+    },
+    {
+      "path": "SOURCES_NATIVE.json",
+      "sha256": "8f35b475e569c2cc660208014cf7b418d5817871c203e8562c5170cc216a4def",
+      "size_bytes": 8446
+    },
+    {
+      "path": "contracts/EXTERNAL_PAIRED_EVALUATION_CONTRACT_v0.1.json",
+      "sha256": "a843932a247085eb7322bc3bde35592a9cced7d87b2b50c717d1f4072b873703",
+      "size_bytes": 2388
+    },
+    {
+      "path": "contracts/EXTERNAL_PAIRED_EVALUATION_CONTRACT_v0.2.1.json",
+      "sha256": "547f034dc84447ec48524000e97c3b67d8361fd8e81d6b8288257495ea8216bb",
+      "size_bytes": 3338
+    },
+    {
+      "path": "contracts/EXTERNAL_PAIRED_EVALUATION_CONTRACT_v0.2.json",
+      "sha256": "decb164d45b9ca955bcd734898b2f00f8105ba148bf2edbeee5af131f44d2716",
+      "size_bytes": 2991
+    },
+    {
+      "path": "contracts/VERITAS_MAPPING_v0.3.3.json",
+      "sha256": "2711c3c13aff91745c831d42ae4e3f6d0d05cbf7a41d0b391bd74f3a7961b86d",
+      "size_bytes": 17018
+    },
+    {
+      "path": "contracts/VERITAS_MAPPING_v0.3.4.json",
+      "sha256": "3362038842f889b49aaf0e05c4491eaf688f20b97905c19233e9e09168728385",
+      "size_bytes": 17049
+    },
+    {
+      "path": "docs/ADDING_A_BENCHMARK.md",
+      "sha256": "93628c5f903a5ad8e3f13ff126b1a809640f0f844d51559432bc28d37b4da5ac",
+      "size_bytes": 1111
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "sha256": "de3fa10797e5dbdff943bc5da54d965030b6d07d8c6e1aa2aaaa6db8d8af51c3",
+      "size_bytes": 990
+    },
+    {
+      "path": "docs/AUDIT_FINDINGS.md",
+      "sha256": "1d3c55e5529594e4e0db0f9017796c50cd307270a4bf89cb75cb2adb8b77abd1",
+      "size_bytes": 4070
+    },
+    {
+      "path": "docs/BENCHMARK_SUPPORT_MATRIX.md",
+      "sha256": "c6503d21b0833a5e4df4fc916edccc21613c40417073366c97a7ea697b2e36b5",
+      "size_bytes": 6656
+    },
+    {
+      "path": "docs/COMMAND_RPC_PROTOCOL.md",
+      "sha256": "617d2b616dfefdc60e681512b2ba2af72b501c50fb7929e075d096660778f1bb",
+      "size_bytes": 7056
+    },
+    {
+      "path": "docs/CURRENT_PIN_INTEGRATION.md",
+      "sha256": "d1442443c3b895e532584a86662476fb135ba3350a1c0d8df3ace628463a8f41",
+      "size_bytes": 1811
+    },
+    {
+      "path": "docs/FINAL_CORRECTIVE_AUDIT_v0.3.1.ko.md",
+      "sha256": "0e274ad375d8b8af3ed0087f915769af5bb4b367b7830dd5bb272c1f352fc91b",
+      "size_bytes": 1388
+    },
+    {
+      "path": "docs/FINAL_CORRECTIVE_AUDIT_v0.3.1.md",
+      "sha256": "d78170fe6c928d4affa9ecb4cda9b232e236a18f08e473baad9f39541b597131",
+      "size_bytes": 5429
+    },
+    {
+      "path": "docs/FINAL_RUN_GATE.md",
+      "sha256": "1dae5ec986f1fe563297c95b03d8e6d72764c0e3a5f875d00a50625b5803648f",
+      "size_bytes": 7008
+    },
+    {
+      "path": "docs/GITHUB_BOOTSTRAP.md",
+      "sha256": "bcd4297c63d51532073f8d4b821f1adfc356e575859d2a357ef3e8d6b57e3b21",
+      "size_bytes": 857
+    },
+    {
+      "path": "docs/IMPLEMENTATION_GUIDE.md",
+      "sha256": "7ff0987d97858bcff10f17a6ea418af2a62184a8672eca8f93d022cb65df218e",
+      "size_bytes": 13153
+    },
+    {
+      "path": "docs/NATIVE_API_ADDITIONS_v0.3.2.json",
+      "sha256": "3eed513b28f64f640fe70c35b897b20fd214bb1f3183a32e7e60bed95c1ec81a",
+      "size_bytes": 3642
+    },
+    {
+      "path": "docs/NATIVE_API_SIGNATURES.json",
+      "sha256": "16e1180a432a314f50b3fc39c0d36b1ec9866d1ea1c5786e7ac4a5e4d4e7f25b",
+      "size_bytes": 6019
+    },
+    {
+      "path": "docs/NATIVE_API_SIGNATURES.md",
+      "sha256": "99915af98bb6908c53d484829e5ad75884c88b4a69b368bc2e8e65ff90b3e31e",
+      "size_bytes": 5508
+    },
+    {
+      "path": "docs/NATIVE_IMPLEMENTATION_v0.3.ja.md",
+      "sha256": "48fde60fe140498cd4f1b8efde11b8a90c352f5186aadbb762d81c97254a4d14",
+      "size_bytes": 3686
+    },
+    {
+      "path": "docs/NATIVE_IMPLEMENTATION_v0.3.md",
+      "sha256": "56172d3a591fa2f0b1e2eb69e12a0330132f9c9e4ea17070f4ce7d72a911cc3e",
+      "size_bytes": 19026
+    },
+    {
+      "path": "docs/PARTNER_START_HERE.md",
+      "sha256": "de6285b5241ca80a1ad0a8e3a80960501c5224e06ed74e82f921941d103a03df",
+      "size_bytes": 10455
+    },
+    {
+      "path": "docs/PRE_SCORE_CHECKLIST.md",
+      "sha256": "26ada6ccc47e95510951e219e4866da0490f74d746e108cc665469bfe7ff8592",
+      "size_bytes": 973
+    },
+    {
+      "path": "docs/REQUIREMENTS_TRACE_v0.3.md",
+      "sha256": "5485dd6d9cd6e5a812e35ce54327d5231426e295601fe106e82cd2b65e0b485e",
+      "size_bytes": 2350
+    },
+    {
+      "path": "docs/TAKESHI_FINAL_IMPLEMENTATION_v0.3.2.ja.md",
+      "sha256": "e6769eecc536298ffcbb77d76f42320555132a4f75a6a2180788e8e7d7218896",
+      "size_bytes": 5740
+    },
+    {
+      "path": "docs/TAKESHI_FINAL_IMPLEMENTATION_v0.3.2.md",
+      "sha256": "c2cb60c460075806c567319e8a24972b3aa40602436e39b337de0946756e6340",
+      "size_bytes": 12357
+    },
+    {
+      "path": "docs/TAKESHI_IMPLEMENTATION_GUIDE.ja.md",
+      "sha256": "cf772e0e9b44a0311fd6bd58697d0a425d6e2b317b2139e3e317af06b0ba3c1d",
+      "size_bytes": 7382
+    },
+    {
+      "path": "docs/TAKESHI_IMPLEMENTATION_GUIDE.md",
+      "sha256": "ae6c05bc32d9a836aa2b0a86f8f4ae22fe2ece4e064ed38fcf867ecd8d6830a1",
+      "size_bytes": 16448
+    },
+    {
+      "path": "docs/TAKESHI_IMPLEMENTATION_v0.3.3.ja.md",
+      "sha256": "4d8018cd9b30e78f8b8f244991f8dcdad959b97f19e727b5681bbe1faf1f3060",
+      "size_bytes": 5346
+    },
+    {
+      "path": "docs/TAKESHI_IMPLEMENTATION_v0.3.3.md",
+      "sha256": "7d8f2b87c85a0627dfe3b23f50047fb5e17ecf9a9f4fab432eb499f1324dd659",
+      "size_bytes": 17059
+    },
+    {
+      "path": "docs/TAKESHI_IMPLEMENTATION_v0.3.4.ja.md",
+      "sha256": "19418a70a252906d011bcb6da61cf6da1392ccdb6202cbbeb25e551bc4e79611",
+      "size_bytes": 2487
+    },
+    {
+      "path": "docs/TAKESHI_IMPLEMENTATION_v0.3.4.md",
+      "sha256": "54f39efed21c8b7443ff81643265f60a7e2bc5713848b09ad836b737abebb275",
+      "size_bytes": 5243
+    },
+    {
+      "path": "docs/V0.3.2_FIX_LEDGER.md",
+      "sha256": "7f95a1ddb025e4ac0b4e0a654447043dc645aeb5ffb7c6bef3f059026b393162",
+      "size_bytes": 2849
+    },
+    {
+      "path": "docs/VALIDATION_PROTOCOL.md",
+      "sha256": "a89947de0408602f8798e044cc36e2ac11983bc8ae35a4cb3f00e30a9e3242aa",
+      "size_bytes": 4317
+    },
+    {
+      "path": "examples/mixed_catalogue.json",
+      "sha256": "94a2131eefa33f6c4ade79f0deb51eda4605394790d0ec43045db5c9eb4a0388",
+      "size_bytes": 144
+    },
+    {
+      "path": "examples/native_bind/sandbox.py",
+      "sha256": "6095e7902924cc8a609d450c62645f642ac21eb1bdf39432f5d147fa48c51616",
+      "size_bytes": 8599
+    },
+    {
+      "path": "examples/native_decide_bind/sandbox.py",
+      "sha256": "b3e4825c7be6ad6e94775d07a5bb76285b338357ba9a2329635ad383917f2f67",
+      "size_bytes": 18858
+    },
+    {
+      "path": "examples/native_job/config.json",
+      "sha256": "4a41d4ceacf476b88c4cf5e41116719b4c012e792297e42b0884222a44c9891f",
+      "size_bytes": 1147
+    },
+    {
+      "path": "examples/native_job/worker.py",
+      "sha256": "34883cec6cbbdd8cb6874577a32a97338969cddd20c4b3b721755c97e66d2053",
+      "size_bytes": 4856
+    },
+    {
+      "path": "examples/rpc/agent.mjs",
+      "sha256": "bcc43319b29f88eacbd7d17fe3affa8293b350ead0e41e2aed755ee16d4fd538",
+      "size_bytes": 1036
+    },
+    {
+      "path": "examples/rpc/artifact.json",
+      "sha256": "c81b71c1e0f2997541208a335770e86a7ee0770199b22539cbb356596122c39b",
+      "size_bytes": 1299
+    },
+    {
+      "path": "examples/rpc/batch.json",
+      "sha256": "04147630207e86ccf68932f223025832157ae8d246fe290637b1496724547bb6",
+      "size_bytes": 1287
+    },
+    {
+      "path": "examples/rpc/deny.json",
+      "sha256": "a19bfca7c6789ff145d7ec8fc42379e970e19a80cba3a8dc53b1a962cb261475",
+      "size_bytes": 1295
+    },
+    {
+      "path": "examples/rpc/javascript.json",
+      "sha256": "c273125e34bc25d12defbd8bad33b0246286df15c5a230a8d754227d48ed822f",
+      "size_bytes": 1240
+    },
+    {
+      "path": "examples/rpc/likelihood.json",
+      "sha256": "3dec24efcdf007dd82701690442221d5bc7b553a562ba9f5f2083247805af92f",
+      "size_bytes": 1307
+    },
+    {
+      "path": "examples/rpc/multimodal.json",
+      "sha256": "180173c4d5d4b75a23557bd94d13131790e959736862fea5aa8a004f0be4bfc7",
+      "size_bytes": 1307
+    },
+    {
+      "path": "examples/rpc/qa.json",
+      "sha256": "d228c3d6d9b9469a89ab9fa26c929202804fbec044c80652399fef5b92a79894",
+      "size_bytes": 1275
+    },
+    {
+      "path": "examples/rpc/stateful.json",
+      "sha256": "ec89dab9104b7c02ecee53a5bd1c18f6befdd9b5b743ee4fb2c1fc931e8dad48",
+      "size_bytes": 1299
+    },
+    {
+      "path": "examples/rpc/worker.py",
+      "sha256": "d10aa16ec66f20e6c70a7ffec20ae06eaf7c949fafc6d11883816996d06429d1",
+      "size_bytes": 5875
+    },
+    {
+      "path": "examples/sklearn/catalogue.json",
+      "sha256": "c26b5be14f9d220d129b7034e0854742185e94571a757304a7b24508032cc621",
+      "size_bytes": 82
+    },
+    {
+      "path": "examples/sklearn/digits.json",
+      "sha256": "f59cafbdeea9f41ea9975660cf6aee73d2f502bdbf52de2bcf6aeaf79bab425c",
+      "size_bytes": 956
+    },
+    {
+      "path": "examples/sklearn/iris.json",
+      "sha256": "63895c4677e68e6f626badabf49f281154fbd8b923c3777a6ab5a470ee7f9e04",
+      "size_bytes": 952
+    },
+    {
+      "path": "examples/sklearn/wine.json",
+      "sha256": "496af0f1c175ee13764171e1f9fa2f3637af05f4c12f00a5d29eaecf941bec7b",
+      "size_bytes": 952
+    },
+    {
+      "path": "examples/stateful/actions.json",
+      "sha256": "e3ab5368065a1ee8096e63c3dbb3fb587d331825976e10de4ab7556b091a8978",
+      "size_bytes": 231
+    },
+    {
+      "path": "examples/stateful/config.json",
+      "sha256": "941d9021e1e611632445fa93ee316b3e19fe5d20fd0e5699d43a1d94f8b9676c",
+      "size_bytes": 654
+    },
+    {
+      "path": "examples/static_jsonl/actions.json",
+      "sha256": "0a25bc8dde7bb4639e08837d6c89b2d01d06e4c53717bb54f77781a1bbba2b31",
+      "size_bytes": 163
+    },
+    {
+      "path": "examples/static_jsonl/cases.jsonl",
+      "sha256": "09203b6696489860743726bb980f05e157c4da3cb8ffe3b82f3ea643fd7b7b3c",
+      "size_bytes": 104
+    },
+    {
+      "path": "examples/static_jsonl/config.json",
+      "sha256": "2c34acc39856599e9e7acbbdd65bbd7043112a9f442265cde00d3b0392b7748b",
+      "size_bytes": 776
+    },
+    {
+      "path": "examples/static_jsonl/labels.jsonl",
+      "sha256": "f9719f59143353885825b5afcc4a7de9e5d642a85542c06efee6fe1c4f6521e5",
+      "size_bytes": 62
+    },
+    {
+      "path": "integration_tests/fixtures/native-decide-sandbox-response.json",
+      "sha256": "92a00d0f0a74abce4613c761ccac42411b64a012d0ada08dd1e6c3b24d2c32fe",
+      "size_bytes": 4876
+    },
+    {
+      "path": "integration_tests/test_decide_pipeline.py",
+      "sha256": "b4ec5bd092619f28249a8aba597474736cd861d177bb8deedb4bfdc983069240",
+      "size_bytes": 6280
+    },
+    {
+      "path": "integration_tests/test_native_boundaries.py",
+      "sha256": "a3fb46a6c9b05ae3dd7005c94c2fdd7ee3f4360e8a23f561ec672acaf7e14bbf",
+      "size_bytes": 23164
+    },
+    {
+      "path": "integration_tests/test_swe_launcher.py",
+      "sha256": "84496bbe151e75436a5ab7dee213e326374ab26ff2dc275a71a4b83223b0b175",
+      "size_bytes": 3513
+    },
+    {
+      "path": "policies/external-output-contract.v0.3.json",
+      "sha256": "d1126bed6c51325421f6ceeff7549e0a13f014a48897b8a97654886850a2f212",
+      "size_bytes": 593
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "842f890e976db40980d9f255f8cdbbf6a12a025c8e1953f1fb51c44153510faa",
+      "size_bytes": 838
+    },
+    {
+      "path": "requirements-native.txt",
+      "sha256": "8f9b887e70833a05d3ae36857d27d82347c9a34d6ff7a75a4cb56b2f3ba87cbb",
+      "size_bytes": 848
+    },
+    {
+      "path": "schemas/candidate.schema.json",
+      "sha256": "a762fa22c5a40c4da251d300652fcac5d392597501b126da571d01d8c974aad6",
+      "size_bytes": 587
+    },
+    {
+      "path": "schemas/native_execution.schema.json",
+      "sha256": "aa06e1286a540eb8fdeff2402b8adcb5a44a9750f8622f31e2e78140fa8a3d58",
+      "size_bytes": 1627
+    },
+    {
+      "path": "schemas/native_scores.schema.json",
+      "sha256": "3d72b3a51fab895f358ba3f86a8c8aae7363239cbc381a12b3e094ebba8a26ed",
+      "size_bytes": 1156
+    },
+    {
+      "path": "schemas/rcc_decision.schema.json",
+      "sha256": "f36c1c45f187b8ef7ba91656c5ce06c3c180a0b91d2cba32fdf5c9748c5c8558",
+      "size_bytes": 1987
+    },
+    {
+      "path": "schemas/rpc_request.schema.json",
+      "sha256": "a8de8008d5d3fdc74b898487c1afcb67f5f5a5ed276ffa294a6a7f5080434671",
+      "size_bytes": 464
+    },
+    {
+      "path": "schemas/veritas_decision.schema.json",
+      "sha256": "c29093c07b1d6d1b83e3c396a0a61b337b3a181849d98f1741da0b25d70a2452",
+      "size_bytes": 501
+    },
+    {
+      "path": "schemas/veritas_runtime_packet.schema.json",
+      "sha256": "2ac620bf2f5542ffec4b46d85a29ef996216e506f17f1bb949f0579aed005917",
+      "size_bytes": 3348
+    },
+    {
+      "path": "scripts/audit_partner_artifact.py",
+      "sha256": "08a09a744b760a8cbf1e23be73dfd21788b9e2c1b9410da0abc01fe394d193b3",
+      "size_bytes": 2845
+    },
+    {
+      "path": "scripts/bootstrap_native.sh",
+      "sha256": "7a03e7c7a7a32c977e72aa4379452367d8c392c78834abda6e67de693be3a063",
+      "size_bytes": 1862
+    },
+    {
+      "path": "scripts/check_native_dependencies.py",
+      "sha256": "ffdeb32b56e34f16414c286f44b85fd8043d69ef931ec96a82ac84488d41973b",
+      "size_bytes": 2320
+    },
+    {
+      "path": "scripts/run_acceptance.py",
+      "sha256": "0cfedf566894008adc5e8d46e74f7e66c30e24ac4d0ed49212685a947dab102b",
+      "size_bytes": 4319
+    },
+    {
+      "path": "scripts/run_swe_native.py",
+      "sha256": "8362b0fa87224cf9f767dffbcf83d7f26a5883baa4596a27d95eade88f010719",
+      "size_bytes": 1054
+    },
+    {
+      "path": "scripts/source_manifest.py",
+      "sha256": "90136b864ee09f7b16df2d62ae6bf2002ec5cee320d4c3ee452a23efe9459c15",
+      "size_bytes": 1179
+    },
+    {
+      "path": "scripts/validate_native.py",
+      "sha256": "925febfc930caa64f160202d7f30f89abf6623fd71c457f22bfef87ad1df4b34",
+      "size_bytes": 4195
+    },
+    {
+      "path": "scripts/verify_source_manifest.py",
+      "sha256": "0dd4297a7285a5431c98718e40c4913c6664b5338889c205372db55e22088cdd",
+      "size_bytes": 440
+    },
+    {
+      "path": "src/rveval/__init__.py",
+      "sha256": "4e19c2b85dd7eebb1049de4f01e6bf8df600ef466684bbe415c2c1c413f06676",
+      "size_bytes": 22
+    },
+    {
+      "path": "src/rveval/__main__.py",
+      "sha256": "79ee6f134c5c5193377cf9b189cbdcc3e2095e49ba9cec310114441c15a917c4",
+      "size_bytes": 47
+    },
+    {
+      "path": "src/rveval/adapters/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "src/rveval/adapters/command_rpc.py",
+      "sha256": "4f590335f61f0b9223c43f85e3b01a6092854656057de9e931d8cc578adb8232",
+      "size_bytes": 6468
+    },
+    {
+      "path": "src/rveval/adapters/mock_stateful.py",
+      "sha256": "ffc8607a749039b608934b1298f5a8540126e1ce60093f15d4daefed66234edc",
+      "size_bytes": 1825
+    },
+    {
+      "path": "src/rveval/adapters/native_static.py",
+      "sha256": "208a6b718fbcb00d8ea645817dcf2fe2dba067efc9ef3d8c8dcdd9b15d9f9d63",
+      "size_bytes": 2652
+    },
+    {
+      "path": "src/rveval/adapters/static_jsonl.py",
+      "sha256": "31b10a676ac9ec66add808d6fa3c65d24f547c06ae5771c9310d7c2e32b2c181",
+      "size_bytes": 4608
+    },
+    {
+      "path": "src/rveval/agents/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "src/rveval/agents/command.py",
+      "sha256": "206a2e8e54d2f73e90a375c9c003cfeb1a1dbdb0c134c61399ae07c2b049393e",
+      "size_bytes": 1080
+    },
+    {
+      "path": "src/rveval/agents/replay.py",
+      "sha256": "d0b63473c625ba42a40c757833b0db117d75de5cb40d949a86f42942e31ab628",
+      "size_bytes": 1132
+    },
+    {
+      "path": "src/rveval/benchmark_fitness.py",
+      "sha256": "0fd59484bff2489a501e0c308f6325aac84a112f69eb3d9de61ab084f07cc384",
+      "size_bytes": 1522
+    },
+    {
+      "path": "src/rveval/bridges/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "src/rveval/canonical.py",
+      "sha256": "a37806d5ab165421b2044d7afb25775e0ba3d3df1332d13171000d4507901077",
+      "size_bytes": 2320
+    },
+    {
+      "path": "src/rveval/cli.py",
+      "sha256": "24a76d983867e5b4de7cf10891e7e022a5eead347ca667cf1a2e9d159b8497ff",
+      "size_bytes": 3483
+    },
+    {
+      "path": "src/rveval/counterfactual.py",
+      "sha256": "7c8ce40fa4f9dd0e1a27af35cf132a83e1cc5c4a6c7f6992cd877c50030594b3",
+      "size_bytes": 5079
+    },
+    {
+      "path": "src/rveval/deferred.py",
+      "sha256": "4ef6a96ddff8259a211578c46ba790242e17a19e28ac4903ce3b8c9e127cc996",
+      "size_bytes": 1458
+    },
+    {
+      "path": "src/rveval/evidence.py",
+      "sha256": "37acf98f840f23a48948d1fb48866a7759d26cd0795d087b97d2b34a3bab573d",
+      "size_bytes": 3012
+    },
+    {
+      "path": "src/rveval/external_identity.py",
+      "sha256": "ff12941e0ce6d8360079c6aaa1cc0c380bc6bf88798d8904e090c30e84425be1",
+      "size_bytes": 1178
+    },
+    {
+      "path": "src/rveval/freeze.py",
+      "sha256": "aa3e83133b9fe13aedfc2765f7c0690e263dc47108dd65463f750d982bf02c67",
+      "size_bytes": 6983
+    },
+    {
+      "path": "src/rveval/governance/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "src/rveval/governance/command.py",
+      "sha256": "d31d3916fc0bd844ed4a7a9ddc7f4ee1e13dbc756db045685efd5869debc03cb",
+      "size_bytes": 2453
+    },
+    {
+      "path": "src/rveval/governance/passthrough.py",
+      "sha256": "f5ac3e23508a872e50c261c240bd38bfe808fb54a5d139872fe4e12eae71d092",
+      "size_bytes": 1087
+    },
+    {
+      "path": "src/rveval/guardrails.py",
+      "sha256": "8a3b1a7bdb6e43f1460dd9a98e39ae33e620e75f392aab5d5e252183f68021d1",
+      "size_bytes": 1551
+    },
+    {
+      "path": "src/rveval/integrations/__init__.py",
+      "sha256": "1f4de5830ffc1f9fd64a394b2ed6ac15eb1225e3560210f8f6826c9d04325c31",
+      "size_bytes": 81
+    },
+    {
+      "path": "src/rveval/integrations/agentdojo.py",
+      "sha256": "f536085f4d8b2ac5fd47a5fa867a7dec918f12e7e5390dbd51849e5ea2e7bd1a",
+      "size_bytes": 3029
+    },
+    {
+      "path": "src/rveval/integrations/async_boundary.py",
+      "sha256": "70f3ecdb601a126832806560e5e7d8cea76b7e99eb2d976c856959333d090409",
+      "size_bytes": 4701
+    },
+    {
+      "path": "src/rveval/integrations/boundary.py",
+      "sha256": "7c48b8e2d7bec8f025234bf023b40f0efd8cce5fbb9519dd261f3a931350afaf",
+      "size_bytes": 6022
+    },
+    {
+      "path": "src/rveval/integrations/callables.py",
+      "sha256": "e27f3a87a649cb0d12bb793a093dc4db97e59f8a429a2fc30faae1fad4a7e432",
+      "size_bytes": 4219
+    },
+    {
+      "path": "src/rveval/integrations/decide_pipeline.py",
+      "sha256": "60f2c051044b60f2e92c2ea9b9f0173844741329dd01a5768af3ca74d876ee92",
+      "size_bytes": 8832
+    },
+    {
+      "path": "src/rveval/integrations/gymnasium.py",
+      "sha256": "e2e97190f9f4efc0bcb0a8d17636692a04df92d5b771429f6b2cb773dc0cd163",
+      "size_bytes": 1467
+    },
+    {
+      "path": "src/rveval/integrations/inspect_ai.py",
+      "sha256": "27eb01f333c5f4262d82bed444f502f0602a2040e75bda105aa96010b0cda19e",
+      "size_bytes": 2107
+    },
+    {
+      "path": "src/rveval/integrations/ledger.py",
+      "sha256": "ca82aaa1eba40040f4316251ddb85a2a7865631f344b996b343d3f1a3426b75e",
+      "size_bytes": 1363
+    },
+    {
+      "path": "src/rveval/integrations/legacy_rcc.py",
+      "sha256": "1341947879f7539173661a309ef7d9baabc4c704144731e65f7bfbe1f42b6753",
+      "size_bytes": 3038
+    },
+    {
+      "path": "src/rveval/integrations/lm_eval.py",
+      "sha256": "de69080b8cec68d821afc35ba1b9d78397457e369d80d3834d74e9ea579b1247",
+      "size_bytes": 3585
+    },
+    {
+      "path": "src/rveval/integrations/native_view.py",
+      "sha256": "4ed209c001729ebe18a7c5a583a2aa77bfb46879db69e5da4af8fa4b21851203",
+      "size_bytes": 5925
+    },
+    {
+      "path": "src/rveval/integrations/policies.py",
+      "sha256": "d45096d54169dded550cc773da4b5ba4de8ca98686b1967316759c63a9d9a818",
+      "size_bytes": 2903
+    },
+    {
+      "path": "src/rveval/integrations/rcc_external.py",
+      "sha256": "7b91458e47525e29aa76f41387ec69c5f01a0c203533d9b823ea5f4681c137f5",
+      "size_bytes": 8575
+    },
+    {
+      "path": "src/rveval/integrations/sklearn.py",
+      "sha256": "2fa26a3ce5d86124c6a9fc128265e028c8e6e2c5f5ed87b126132ba733bfdf35",
+      "size_bytes": 6686
+    },
+    {
+      "path": "src/rveval/integrations/swebench.py",
+      "sha256": "b394e831dad45f0631b8eb182b64630be848587c81f148401cd7acd0666463b2",
+      "size_bytes": 9363
+    },
+    {
+      "path": "src/rveval/integrations/tau.py",
+      "sha256": "f911c9dda0943d71cbdbc417b52029c3c623dc938a2ca57622a020278d7cb555",
+      "size_bytes": 5097
+    },
+    {
+      "path": "src/rveval/integrations/veritas_authority.py",
+      "sha256": "b9abedc2516a662da33bf5597a5c8d0e90db23b8b53b256e324bf29d86302268",
+      "size_bytes": 6348
+    },
+    {
+      "path": "src/rveval/integrations/veritas_bind.py",
+      "sha256": "16f82100e93dfbf3cf71e039ef364fa220310375693ccaf8c69f4f28ab125ee5",
+      "size_bytes": 12112
+    },
+    {
+      "path": "src/rveval/interfaces.py",
+      "sha256": "01ee88e830c59a7f0a2448b8d0ce3d916825ae842123385675b76553b6d97841",
+      "size_bytes": 5020
+    },
+    {
+      "path": "src/rveval/matrix.py",
+      "sha256": "d1589dc5fd7bff9354322059f99c1fb3e7733220e73a61a0f7711db34f56e91e",
+      "size_bytes": 5991
+    },
+    {
+      "path": "src/rveval/metrics.py",
+      "sha256": "730d7dc4e14d69adc3bc442fe2c364e2eeefb35fcff511cb4ffa45544d337069",
+      "size_bytes": 2045
+    },
+    {
+      "path": "src/rveval/models.py",
+      "sha256": "37543ff555cb2b0dac54d35b25b063fdd8c5fbfe4ef969af5b43b8cfef05335a",
+      "size_bytes": 3822
+    },
+    {
+      "path": "src/rveval/native_hook.py",
+      "sha256": "bbd581ef625a33426d46e4431125a0e90f1be87bb8d5499388c13120e8a99a32",
+      "size_bytes": 2900
+    },
+    {
+      "path": "src/rveval/native_job.py",
+      "sha256": "dfc7315342814d6597789148abff9bcb5c48d44f4320d131a0770f8e0c28f5f7",
+      "size_bytes": 17049
+    },
+    {
+      "path": "src/rveval/partner_mapping.py",
+      "sha256": "22aec501220bdb984fc5f6ed97cd7896b8d517cfaa8bb3a9d35c19948c2883d6",
+      "size_bytes": 8744
+    },
+    {
+      "path": "src/rveval/pilot.py",
+      "sha256": "9e44ca34517ca2cc51709bbd9efb65e10864e8880754b0686f1d1db014a895ba",
+      "size_bytes": 4127
+    },
+    {
+      "path": "src/rveval/plugin.py",
+      "sha256": "bd596961680aadcbc2818509877c7259be650a6e2f3baeb77967dd058e94f4c3",
+      "size_bytes": 1667
+    },
+    {
+      "path": "src/rveval/readiness.py",
+      "sha256": "7b4dc6f3cdb03c0c07927c7ae4b22a48ad34ddcc138d4af8927f8c1a51cc7ed7",
+      "size_bytes": 6548
+    },
+    {
+      "path": "src/rveval/resources/BENCHMARK_SUPPORT_MATRIX.md",
+      "sha256": "c6503d21b0833a5e4df4fc916edccc21613c40417073366c97a7ea697b2e36b5",
+      "size_bytes": 6656
+    },
+    {
+      "path": "src/rveval/resources/NATIVE_API_SIGNATURES.md",
+      "sha256": "99915af98bb6908c53d484829e5ad75884c88b4a69b368bc2e8e65ff90b3e31e",
+      "size_bytes": 5508
+    },
+    {
+      "path": "src/rveval/resources/PARTNER_START_HERE.md",
+      "sha256": "de6285b5241ca80a1ad0a8e3a80960501c5224e06ed74e82f921941d103a03df",
+      "size_bytes": 10455
+    },
+    {
+      "path": "src/rveval/resources/TAKESHI_FINAL_IMPLEMENTATION_v0.3.2.ja.md",
+      "sha256": "e6769eecc536298ffcbb77d76f42320555132a4f75a6a2180788e8e7d7218896",
+      "size_bytes": 5740
+    },
+    {
+      "path": "src/rveval/resources/TAKESHI_FINAL_IMPLEMENTATION_v0.3.2.md",
+      "sha256": "c2cb60c460075806c567319e8a24972b3aa40602436e39b337de0946756e6340",
+      "size_bytes": 12357
+    },
+    {
+      "path": "src/rveval/resources/TAKESHI_IMPLEMENTATION_v0.3.3.md",
+      "sha256": "7d8f2b87c85a0627dfe3b23f50047fb5e17ecf9a9f4fab432eb499f1324dd659",
+      "size_bytes": 17059
+    },
+    {
+      "path": "src/rveval/resources/TAKESHI_IMPLEMENTATION_v0.3.4.ja.md",
+      "sha256": "19418a70a252906d011bcb6da61cf6da1392ccdb6202cbbeb25e551bc4e79611",
+      "size_bytes": 2487
+    },
+    {
+      "path": "src/rveval/resources/TAKESHI_IMPLEMENTATION_v0.3.4.md",
+      "sha256": "54f39efed21c8b7443ff81643265f60a7e2bc5713848b09ad836b737abebb275",
+      "size_bytes": 5243
+    },
+    {
+      "path": "src/rveval/resources/__init__.py",
+      "sha256": "a7757eb3a723bfcda2074d7c273205a5a7110c94ae4667db2e0f3cd8275d92ab",
+      "size_bytes": 77
+    },
+    {
+      "path": "src/rveval/resources/mapping.json",
+      "sha256": "3362038842f889b49aaf0e05c4491eaf688f20b97905c19233e9e09168728385",
+      "size_bytes": 17049
+    },
+    {
+      "path": "src/rveval/resources/pilot_impl.py.txt",
+      "sha256": "b4112d051bd0c92606e4b6af55e71f5c321dae5859ef68bb1e783ed629467d9c",
+      "size_bytes": 2877
+    },
+    {
+      "path": "src/rveval/resources/pilot_start.ja.md",
+      "sha256": "421dbde99fc680271a0a232dded3fee8b0b40c2807d6900d07cfc835592f769c",
+      "size_bytes": 2426
+    },
+    {
+      "path": "src/rveval/resources/pilot_start.md",
+      "sha256": "068a110f91b56619a45786867a52e1fd15266163ef8730e0295c4370e58fcef6",
+      "size_bytes": 4232
+    },
+    {
+      "path": "src/rveval/resources/pilot_worker.py.txt",
+      "sha256": "120d60c4288e68b72849ae889b72c75080a98d2f3dd0c87a51dc178e422e8528",
+      "size_bytes": 3561
+    },
+    {
+      "path": "src/rveval/resources/policy.json",
+      "sha256": "d1126bed6c51325421f6ceeff7549e0a13f014a48897b8a97654886850a2f212",
+      "size_bytes": 593
+    },
+    {
+      "path": "src/rveval/resources/schema__candidate.schema.json",
+      "sha256": "a762fa22c5a40c4da251d300652fcac5d392597501b126da571d01d8c974aad6",
+      "size_bytes": 587
+    },
+    {
+      "path": "src/rveval/resources/schema__native_execution.schema.json",
+      "sha256": "aa06e1286a540eb8fdeff2402b8adcb5a44a9750f8622f31e2e78140fa8a3d58",
+      "size_bytes": 1627
+    },
+    {
+      "path": "src/rveval/resources/schema__native_scores.schema.json",
+      "sha256": "3d72b3a51fab895f358ba3f86a8c8aae7363239cbc381a12b3e094ebba8a26ed",
+      "size_bytes": 1156
+    },
+    {
+      "path": "src/rveval/resources/schema__rcc_decision.schema.json",
+      "sha256": "f36c1c45f187b8ef7ba91656c5ce06c3c180a0b91d2cba32fdf5c9748c5c8558",
+      "size_bytes": 1987
+    },
+    {
+      "path": "src/rveval/resources/schema__rpc_request.schema.json",
+      "sha256": "a8de8008d5d3fdc74b898487c1afcb67f5f5a5ed276ffa294a6a7f5080434671",
+      "size_bytes": 464
+    },
+    {
+      "path": "src/rveval/resources/schema__veritas_decision.schema.json",
+      "sha256": "c29093c07b1d6d1b83e3c396a0a61b337b3a181849d98f1741da0b25d70a2452",
+      "size_bytes": 501
+    },
+    {
+      "path": "src/rveval/resources/schema__veritas_runtime_packet.schema.json",
+      "sha256": "2ac620bf2f5542ffec4b46d85a29ef996216e506f17f1bb949f0579aed005917",
+      "size_bytes": 3348
+    },
+    {
+      "path": "src/rveval/rpc.py",
+      "sha256": "46a9720c3bd8a6e44589749f382dfd6159c9ad9e83f0bee960bd9bef5dee2d44",
+      "size_bytes": 6661
+    },
+    {
+      "path": "src/rveval/run_validation.py",
+      "sha256": "c31ae521749fe4bc4b8a70eb5158da68a3149b9d35b33372de3d69d26dcc410e",
+      "size_bytes": 3895
+    },
+    {
+      "path": "src/rveval/runner.py",
+      "sha256": "f76d3157eb0a6eabe50c67e87d79ef8786bb3dd56101a06df4b103d88df0ab6e",
+      "size_bytes": 26206
+    },
+    {
+      "path": "src/rveval/scorers.py",
+      "sha256": "c4620e8dde19fdcbdbbb487dff2293f004fc88f6d50e445cf88bde5431cde5a8",
+      "size_bytes": 1315
+    },
+    {
+      "path": "src/rveval/snapshot.py",
+      "sha256": "117e89a6dbf607a9a5a1b56c4d54009ca70a50c1d85d63f43bf535347edbbdba",
+      "size_bytes": 1694
+    },
+    {
+      "path": "templates/native_component_profile.json",
+      "sha256": "083a5f753f915d3d66bba78a72c78174ac4b36ab9947a6ae40bf5b15d8e7a766",
+      "size_bytes": 1781
+    },
+    {
+      "path": "tests/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "tests/conftest.py",
+      "sha256": "1c472cd7f306cefd48c69601fd21ab123ab56694595baf8ef3db72eba3d17591",
+      "size_bytes": 1344
+    },
+    {
+      "path": "tests/round2_plugins.py",
+      "sha256": "a55812ad71e4a64a26a323c546100c8ff0e06d71626574bd49ce2461ae65a9f5",
+      "size_bytes": 2759
+    },
+    {
+      "path": "tests/support_plugins.py",
+      "sha256": "fa215dc92729587cfd3e65d6604036dfc25850ea33badd42551527cdbb8acf84",
+      "size_bytes": 4584
+    },
+    {
+      "path": "tests/test_audit_integrity.py",
+      "sha256": "5481c8217b9361143db4ba87c5ea9d883ae485e7ac1082171e7bdd727ca6ae26",
+      "size_bytes": 5002
+    },
+    {
+      "path": "tests/test_audit_runner.py",
+      "sha256": "01251dc1f460efc62dae57ec7ce55a410128dc0b08a66a73ba5b3ad99bf93752",
+      "size_bytes": 4765
+    },
+    {
+      "path": "tests/test_catalogue_freeze.py",
+      "sha256": "62dafb863f2fbf23f99519b142548d341831eaad43df7c286b0ebe14899a5429",
+      "size_bytes": 4064
+    },
+    {
+      "path": "tests/test_counterfactual.py",
+      "sha256": "119e779ffbd5c9d0510d4db0ae6b4966b084693b59af22669df049b74b584c21",
+      "size_bytes": 2048
+    },
+    {
+      "path": "tests/test_dual_runner.py",
+      "sha256": "f1d4fb08e624992f038a5ee30eec3ab1c84c29ad53d3e415b6fd39847f35b167",
+      "size_bytes": 541
+    },
+    {
+      "path": "tests/test_external_rcc.py",
+      "sha256": "3b6ff665199e5652b6b7562d9a7348ae6fceb1bdeacfe0334fcc028ec500d718",
+      "size_bytes": 2040
+    },
+    {
+      "path": "tests/test_final_semantic_regressions.py",
+      "sha256": "ca59febe964e4f3e35bb4a063f10eeb03a0de5a89d65291c9b12ab171274bf55",
+      "size_bytes": 3922
+    },
+    {
+      "path": "tests/test_guardrails.py",
+      "sha256": "0e8106d35d1970004fc4802b92e0b0bc160c6e58fe80a4662fabd6015ba3bd65",
+      "size_bytes": 312
+    },
+    {
+      "path": "tests/test_native_boundary_integrity.py",
+      "sha256": "41ca471d19bef953ad059f134584b404f1dd71831d62159a4d77a5622447d162",
+      "size_bytes": 6650
+    },
+    {
+      "path": "tests/test_publication_merge_guards.py",
+      "sha256": "5c995d0ace30e042515b5c45b0f3d8c8319f3c688f5659e22721fcc0c7082d0d",
+      "size_bytes": 1646
+    },
+    {
+      "path": "tests/test_readiness.py",
+      "sha256": "7c7dfb0008d540e7c269bbe416e4e55c395e6973fbbb4bf41f32303b1760d7f6",
+      "size_bytes": 3552
+    },
+    {
+      "path": "tests/test_round2_regressions.py",
+      "sha256": "05e9291e3fb8b99520a3c24420741fb33ccf24ec09b15d3cd3466fc7bb1ce160",
+      "size_bytes": 10914
+    },
+    {
+      "path": "tests/test_rpc_and_native_hook.py",
+      "sha256": "1999153df4d85d9906aa5f8e32cc58c3d4448eff46a3ddad4ce11243c7898f08",
+      "size_bytes": 6604
+    },
+    {
+      "path": "tests/test_schemas.py",
+      "sha256": "e35f6338c73aa2077ab136e8403766c5373ae4347b086dc7c35b7ede8a2356fe",
+      "size_bytes": 989
+    },
+    {
+      "path": "tests/test_stateful_divergence.py",
+      "sha256": "6233a1e8c902339196cc73e59dccd9801ff6780f263c4bb770cc2267fef366b4",
+      "size_bytes": 359
+    },
+    {
+      "path": "tests/test_stateful_runner.py",
+      "sha256": "f808b5832296e7abf67ba63210cf8017f312ad79e195c44e81cb7feac735fcbe",
+      "size_bytes": 811
+    },
+    {
+      "path": "tests/test_static_adapter.py",
+      "sha256": "a709076f0178d24f3e4b63a4e334bb296a27ca7fd4a4403490441191956c6c92",
+      "size_bytes": 401
+    },
+    {
+      "path": "tests/test_swe_report_completion.py",
+      "sha256": "4cec211faa34c5ff58c2e3515999d9a9eb6aef5a8a25ddd280a75d8b3353549c",
+      "size_bytes": 1789
+    },
+    {
+      "path": "tests/test_third_party_review.py",
+      "sha256": "4b34fa0b4280660cff9b68a8d788ba527deb4107ff28906f5c22dc5bb513646d",
+      "size_bytes": 5057
+    },
+    {
+      "path": "tests/test_v033_portability.py",
+      "sha256": "22e582dbb35e854d2dda80c13ea960e55b90f11075c9eeed945a2d5813c26ff2",
+      "size_bytes": 12245
+    },
+    {
+      "path": "tests/test_v034_handoff_portability.py",
+      "sha256": "643105455f8fb2ab95bddbdc3c2ab98e1aba9afe892224132aa348432bdc7665",
+      "size_bytes": 5939
+    }
+  ],
+  "excluded_self": "SOURCE_MANIFEST.json",
+  "independent_authentication": false
+}

@@ -1,0 +1,31 @@
+{
+  "run_mode": "dual",
+  "seed": 42,
+  "benchmark": {
+    "plugin": "rveval.adapters.mock_stateful:MockStatefulAdapter",
+    "config": {}
+  },
+  "agent": {
+    "plugin": "rveval.agents.replay:ReplayAgent",
+    "config": {
+      "actions_path": "actions.json"
+    }
+  },
+  "rcc": {
+    "plugin": "rveval.governance.passthrough:PassThroughRCC",
+    "config": {}
+  },
+  "veritas": {
+    "plugin": "rveval.governance.passthrough:DenyNamedActionVeritas",
+    "config": {
+      "deny_name": "add"
+    }
+  },
+  "policy": {
+    "max_steps": 5,
+    "on_governance_stop": "terminate"
+  },
+  "pins": {
+    "purpose": "stateful divergence demonstration only"
+  }
+}

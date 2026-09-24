@@ -1,0 +1,66 @@
+"""Portable source-pinned worker protocol. Customize pilot_impl.py, not the core."""
+from pathlib import Path
+from copy import deepcopy
+import argparse
+from rveval.canonical import read_json, sha_file, write_json_new
+from rveval.guardrails import require
+import pilot_impl
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--request', type=Path, required=True)
+    parser.add_argument('--output', type=Path, required=True)
+    args = parser.parse_args()
+    request = read_json(args.request)
+    digest = sha_file(args.request)
+    output = args.output
+    if request['phase'] == 'execute':
+        require('scorer_inputs' not in request, 'PILOT_EARLY_SCORER_INPUT')
+        sources = request['runtime_inputs']
+        require(len(sources) == 1, 'PILOT_RUNTIME_INPUT_COUNT')
+        require(sha_file(Path(sources[0]['path'])) == sources[0]['sha256'], 'PILOT_RUNTIME_HASH')
+        rows = read_json(Path(sources[0]['path']))
+        require(type(rows) is list and all(type(x) is dict for x in rows), 'PILOT_CASES_INVALID')
+        ids = [x['case_id'] for x in rows]
+        require(ids == request['case_ids'], 'PILOT_ENROLLMENT_MISMATCH')
+        records = []
+        for index, case in enumerate(rows):
+            for arm in request['arms']:
+                try:
+                    result = pilot_impl.execute_case(deepcopy(case), arm, request_sha256=digest)
+                    require(type(result) is dict and result.get('status') in
+                            {'COMPLETED', 'REFUSED', 'ERROR', 'UNSUPPORTED'}, 'PILOT_NATIVE_RESULT')
+                except Exception as exc:
+                    # Preserve failed enrollment. No retries and no successful refusal.
+                    result = {'status': 'ERROR', 'error_type': type(exc).__name__,
+                              'effect_state': 'UNKNOWN'}
+                name = f'{index:06d}-{arm}.json'
+                write_json_new(output / name, {'case_id': case['case_id'], 'arm': arm, 'result': result})
+                records.append({'case_id': case['case_id'], 'arm': arm, 'status': result['status'],
+                    'artifacts': [{'path': name, 'sha256': sha_file(output / name)}]})
+        write_json_new(output / 'execution.json', {'schema_version': 'rveval.native-execution.v1',
+            'request_sha256': digest, 'records': records})
+    elif request['phase'] == 'score':
+        sources = request['scorer_inputs']
+        require(len(sources) == 1, 'PILOT_SCORER_INPUT_COUNT')
+        require(sha_file(Path(sources[0]['path'])) == sources[0]['sha256'], 'PILOT_SCORER_HASH')
+        targets = read_json(Path(sources[0]['path']))
+        execution = Path(request['execution_directory'])
+        records = []
+        for row in read_json(execution / 'execution.json')['records']:
+            artifact = row['artifacts'][0]
+            require(sha_file(execution / artifact['path']) == artifact['sha256'], 'PILOT_TRACE_HASH')
+            records.append(read_json(execution / artifact['path']))
+        result = pilot_impl.score_run(records, targets)
+        write_json_new(output / 'native-score.json', result)
+        write_json_new(output / 'scores.json', {'schema_version': 'rveval.native-scores.v1',
+            'request_sha256': digest, 'status': 'COMPLETED', 'scored_case_ids': request['case_ids'],
+            'arms': request['arms'], 'native_score_files': [{'path': 'native-score.json',
+                'sha256': sha_file(output / 'native-score.json')}]})
+    else:
+        raise ValueError('PILOT_PHASE_INVALID')
+
+
+if __name__ == '__main__':
+    main()

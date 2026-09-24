@@ -1,0 +1,22 @@
+{
+  "rcc": {
+    "repository": "effacermonexistence/rcc-revas-veritas-benchmark",
+    "commit": "805cd5ff17e431cf50a3dafa7f78a60a704613b9"
+  },
+  "veritas": {
+    "repository": "veritasfuji-japan/veritas_os",
+    "commit": "b39961b003179aea70e320a57cb000f56a81951e"
+  },
+  "agentdojo": {
+    "repository": "ethz-spylab/agentdojo",
+    "commit": "a75aba7631d3ca5fb7ab938965c97ead2f9ff84b"
+  },
+  "tau": {
+    "repository": "sierra-research/tau-bench",
+    "commit": "59a200c6d575d595120f1cb70fea53cef0632f6b"
+  },
+  "tau2": {
+    "repository": "sierra-research/tau2-bench",
+    "commit": "b7ea9074c1cba482b30687fecdb5c8425fd6f619"
+  }
+}

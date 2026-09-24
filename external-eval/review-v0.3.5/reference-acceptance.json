@@ -1,0 +1,586 @@
+{
+  "schema_version": "rveval.acceptance.v2",
+  "status": "PASS",
+  "python": "3.13.15",
+  "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+  "node_available": true,
+  "tests_requested": true,
+  "test_counts": {
+    "tests": 286,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "commands": [
+    {
+      "label": "pytest",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-rA",
+        "--junitxml=/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/pytest.xml"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 28.876842574999955,
+      "log": "pytest.log",
+      "log_sha256": "dd6e44726345be2813ddf142722bf9a158dc9218b5b7f5f201fa46ef522c96a8"
+    },
+    {
+      "label": "static-freeze",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "freeze",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/static_jsonl/config.json",
+        "--output",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/static-freeze.json"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.16444423699999788,
+      "log": "static-freeze.log",
+      "log_sha256": "4c99d641b9870d15fd5ba7112e23324b290ab6afac2c748dca665ddd464a8c8a"
+    },
+    {
+      "label": "static-run",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "run",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/static_jsonl/config.json",
+        "--freeze",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/static-freeze.json",
+        "--ack-freeze-sha256",
+        "45cce79785dac3d440f640dfa69253205fc4cfb1f09cf42b24327716af1d5f32",
+        "--output-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/static-run"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.16438562500002263,
+      "log": "static-run.log",
+      "log_sha256": "3ed37e02e988cec2b04c77d199db7ab21d2b4593870ef1874ffd4dcb61872cb1"
+    },
+    {
+      "label": "static-verify",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "verify",
+        "--run-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/static-run",
+        "--expected-index-sha256",
+        "77a913fd3dfdad72353bde04fc8f13ef58549d505b722b300d328d45f8aea981"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.11422269700005927,
+      "log": "static-verify.log",
+      "log_sha256": "82298e59f55ef037f57f7f1ec4e2a89671bd3097c4ca6b49cffdfd0a48e95641"
+    },
+    {
+      "label": "stateful-freeze",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "freeze",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/stateful/config.json",
+        "--output",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/stateful-freeze.json"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.16440468900009364,
+      "log": "stateful-freeze.log",
+      "log_sha256": "773904ee67a279324e4e70117e4a42a68b042e9370f18005f83324ba3598a2a2"
+    },
+    {
+      "label": "stateful-run",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "run",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/stateful/config.json",
+        "--freeze",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/stateful-freeze.json",
+        "--ack-freeze-sha256",
+        "99a2ad51cd6c691603b18c772be7b9fcacde2337790b68037f99f8e0f1501dbe",
+        "--output-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/stateful-run"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.1644675099998949,
+      "log": "stateful-run.log",
+      "log_sha256": "5fc1a3bdc2e6b0cad30931f7a13a76c30dcb98c2937d53e5fc21d3fe4a748b52"
+    },
+    {
+      "label": "stateful-verify",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "verify",
+        "--run-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/stateful-run",
+        "--expected-index-sha256",
+        "9f13d95a665a968d6271e45cc0f2500dc4971ea8e235ff3b4830c84162d10ab9"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.11442987500004165,
+      "log": "stateful-verify.log",
+      "log_sha256": "61ae409b583f6a728ca1491cfc3afbbd3b1894772a7908dec736655e686f4569"
+    },
+    {
+      "label": "rpc-qa-freeze",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "freeze",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/rpc/qa.json",
+        "--output",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-qa-freeze.json"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.31455561900020257,
+      "log": "rpc-qa-freeze.log",
+      "log_sha256": "6f6e520ed7f193c5db39db7d2164fc58953274c9db45e58e1ef9199e45c5e8b5"
+    },
+    {
+      "label": "rpc-qa-run",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "run",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/rpc/qa.json",
+        "--freeze",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-qa-freeze.json",
+        "--ack-freeze-sha256",
+        "ec7c44fb0de7ab3a26d04ad3c6a9a20dc747a2abe76202b1a568e9db3c977931",
+        "--output-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-qa-run"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.6153558419998717,
+      "log": "rpc-qa-run.log",
+      "log_sha256": "cd9998618f25b45c434df905f4c5c65a4845e9cb4ff90fe70038359cd28d8306"
+    },
+    {
+      "label": "rpc-qa-verify",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "verify",
+        "--run-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-qa-run",
+        "--expected-index-sha256",
+        "0016f3355193fd8975de1b8f5d998f4aacae3ad0243200e4729eb92aaffebabe"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.11431043300012789,
+      "log": "rpc-qa-verify.log",
+      "log_sha256": "cfc096c9e4b5bdafa4e6ffb66fb15ea64a43bacac26dfdeaec7230ff8d4f0caa"
+    },
+    {
+      "label": "rpc-stateful-freeze",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "freeze",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/rpc/stateful.json",
+        "--output",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-stateful-freeze.json"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.31464930199990704,
+      "log": "rpc-stateful-freeze.log",
+      "log_sha256": "4dc09c66811cdefd5e76b9bd3a594f22205b29af906886291497ad09487013be"
+    },
+    {
+      "label": "rpc-stateful-run",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "run",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/rpc/stateful.json",
+        "--freeze",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-stateful-freeze.json",
+        "--ack-freeze-sha256",
+        "368055956459bfff02812cbf5d019b8e305ff3654565550d710351db49339095",
+        "--output-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-stateful-run"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.6152892270001757,
+      "log": "rpc-stateful-run.log",
+      "log_sha256": "f851daccc7bde0fb7dce87acbf1d38de7e3201a209a65b8c5e64261615733323"
+    },
+    {
+      "label": "rpc-stateful-verify",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "verify",
+        "--run-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-stateful-run",
+        "--expected-index-sha256",
+        "e4138d1482ca1b8e0c0bd854df70b8144e41810f38df0cf5f39534ddd90177f1"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.11416165299988279,
+      "log": "rpc-stateful-verify.log",
+      "log_sha256": "cc4cda691b960427d98d412e316b8f840bd0eac739b6c0ef538f093cb1a6481c"
+    },
+    {
+      "label": "rpc-likelihood-freeze",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "freeze",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/rpc/likelihood.json",
+        "--output",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-likelihood-freeze.json"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.31467911300001106,
+      "log": "rpc-likelihood-freeze.log",
+      "log_sha256": "eb986afe62d9286fc5172fc20f5fa6029ae691690ecde774a43ad9367a48a570"
+    },
+    {
+      "label": "rpc-likelihood-run",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "run",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/rpc/likelihood.json",
+        "--freeze",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-likelihood-freeze.json",
+        "--ack-freeze-sha256",
+        "2e370760228d702d463f8f1174e2b25215832326c6b67bde052b7d0acea73607",
+        "--output-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-likelihood-run"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.6152072340000814,
+      "log": "rpc-likelihood-run.log",
+      "log_sha256": "b1fda926db57d1021ab2e06fd6970eb612acc252211cbf5bc502d55ee053f9e6"
+    },
+    {
+      "label": "rpc-likelihood-verify",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "verify",
+        "--run-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-likelihood-run",
+        "--expected-index-sha256",
+        "18359e5549651235955c1d0c8144a76dab516af43c72dfdc8b3ec67b146a0c06"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.11415571699990323,
+      "log": "rpc-likelihood-verify.log",
+      "log_sha256": "4f60d1871259159d4faa557949c6fafbfb4b489bf80b543551ddb4f8b15737b5"
+    },
+    {
+      "label": "rpc-artifact-freeze",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "freeze",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/rpc/artifact.json",
+        "--output",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-artifact-freeze.json"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.31475885999998354,
+      "log": "rpc-artifact-freeze.log",
+      "log_sha256": "b16f279c18b01a227a216d34220ab24557c0cdaf582360303aeacc2f51b4396d"
+    },
+    {
+      "label": "rpc-artifact-run",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "run",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/rpc/artifact.json",
+        "--freeze",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-artifact-freeze.json",
+        "--ack-freeze-sha256",
+        "8e4fc824dc7ce2d98f4623d9eca3d4960da61e0f26c4a80252fdf7148bf43c08",
+        "--output-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-artifact-run"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.6152058949999173,
+      "log": "rpc-artifact-run.log",
+      "log_sha256": "1e7cf478252046e7da35971f451ea757df5ea9ca9cd8e80df16f76617430340e"
+    },
+    {
+      "label": "rpc-artifact-verify",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "verify",
+        "--run-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-artifact-run",
+        "--expected-index-sha256",
+        "ba0481a6331bfda40d32becefffc3005b8c5e9c6d0358da0a1cdde1b42e3e58b"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.1141867789999651,
+      "log": "rpc-artifact-verify.log",
+      "log_sha256": "5621a2031f9347fba8514604b4478b21ef00aa668a26a6e464360e85fee84dbc"
+    },
+    {
+      "label": "rpc-batch-freeze",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "freeze",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/rpc/batch.json",
+        "--output",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-batch-freeze.json"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.31470075099991845,
+      "log": "rpc-batch-freeze.log",
+      "log_sha256": "b76fc42d690ece04e2041cb7242cde234329a8b82367aeddf1489a8b45336480"
+    },
+    {
+      "label": "rpc-batch-run",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "run",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/rpc/batch.json",
+        "--freeze",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-batch-freeze.json",
+        "--ack-freeze-sha256",
+        "34aa8f1400b078465f90d59153308095bac9df7f9608224a7836c7c1572dd2b0",
+        "--output-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-batch-run"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.6153389900000548,
+      "log": "rpc-batch-run.log",
+      "log_sha256": "3874af4d8f46dc99a5a46e1cbcf696f98d8134d7cef1ebed853e6b5ccf2dbd72"
+    },
+    {
+      "label": "rpc-batch-verify",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "verify",
+        "--run-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-batch-run",
+        "--expected-index-sha256",
+        "077e36c6f052bfb76afd66932309b85a7fa5638dfb624098c0b76e9ebc15399a"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.11423653099996045,
+      "log": "rpc-batch-verify.log",
+      "log_sha256": "3315cf188ec3df4c0d7539e9a64a4fdf297fee33fdb06dca718be708983c37bd"
+    },
+    {
+      "label": "rpc-multimodal-freeze",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "freeze",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/rpc/multimodal.json",
+        "--output",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-multimodal-freeze.json"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.3147542849999354,
+      "log": "rpc-multimodal-freeze.log",
+      "log_sha256": "56fef6866be129c7fac3f2e13f43e3406e494ac5c53081d9fe04be2654778565"
+    },
+    {
+      "label": "rpc-multimodal-run",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "run",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/rpc/multimodal.json",
+        "--freeze",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-multimodal-freeze.json",
+        "--ack-freeze-sha256",
+        "5ba71459992696aec184702fbe54a788564b39158ae9203ef256be7430c6caec",
+        "--output-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-multimodal-run"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.6155009510000582,
+      "log": "rpc-multimodal-run.log",
+      "log_sha256": "030ab4ba28f88e4249b54fcf1d9c7c651c6ed7e3d53a30674a616fc1be6919db"
+    },
+    {
+      "label": "rpc-multimodal-verify",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "verify",
+        "--run-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-multimodal-run",
+        "--expected-index-sha256",
+        "329a0710d5a03ec6fe7d160b4fca5304566a1399294835cd6d032799beceae6d"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.11427867999987029,
+      "log": "rpc-multimodal-verify.log",
+      "log_sha256": "698d8cbd4faa9f340013d1653d2bdac6908d5d50ba70fb4dd5ee52b49fa3ff57"
+    },
+    {
+      "label": "rpc-deny-freeze",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "freeze",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/rpc/deny.json",
+        "--output",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-deny-freeze.json"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.31480339600011575,
+      "log": "rpc-deny-freeze.log",
+      "log_sha256": "7fabf8c597691293b4ec963524748a14a7c6905e5d1462f6cd4ae68e32531f25"
+    },
+    {
+      "label": "rpc-deny-run",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "run",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/rpc/deny.json",
+        "--freeze",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-deny-freeze.json",
+        "--ack-freeze-sha256",
+        "ea94e5e8d4c6f8246d766fdfb95712bd753948cc8d3b0cf8d3cf6fc5b6abed34",
+        "--output-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-deny-run"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.6155070279999109,
+      "log": "rpc-deny-run.log",
+      "log_sha256": "809f3379b5a33c9645786996221a3603cab7e28142e9414c83870c7c1ae18c33"
+    },
+    {
+      "label": "rpc-deny-verify",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "verify",
+        "--run-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-deny-run",
+        "--expected-index-sha256",
+        "c5e00c0437bf17d8f8b20d02afb60a353ac21998fa4d94e1cbb72932f796c9d4"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.11428431000013006,
+      "log": "rpc-deny-verify.log",
+      "log_sha256": "a46cabc5c2bf168f28df99c8e9be9275cdbe739800fa34f472333b7a661f231a"
+    },
+    {
+      "label": "rpc-javascript-freeze",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "freeze",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/rpc/javascript.json",
+        "--output",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-javascript-freeze.json"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.31465587000002415,
+      "log": "rpc-javascript-freeze.log",
+      "log_sha256": "fb7428a3dceb983ce77e6e491d073582641e4a4e8e6a73df4e22156430659fd5"
+    },
+    {
+      "label": "rpc-javascript-run",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "run",
+        "--config",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/external-eval/v0.3.5/examples/rpc/javascript.json",
+        "--freeze",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-javascript-freeze.json",
+        "--ack-freeze-sha256",
+        "c997bfa41aa74bf0bf77d44b70f3cc36dfaaff2a715c111999f269e757435d39",
+        "--output-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-javascript-run"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.6153771429999324,
+      "log": "rpc-javascript-run.log",
+      "log_sha256": "a8f525bd406c5b51527809f088ffa2f0176cf538f24ffe1216732265ec4daab3"
+    },
+    {
+      "label": "rpc-javascript-verify",
+      "command": [
+        "/opt/hostedtoolcache/Python/3.13.15/x64/bin/python",
+        "-m",
+        "rveval",
+        "verify",
+        "--run-dir",
+        "/home/runner/work/rcc-revas-veritas-benchmark/rcc-revas-veritas-benchmark/review-output/reference/rpc-javascript-run",
+        "--expected-index-sha256",
+        "326a2fdbe47199aa60ce05408aad3ececb6c6a9b7d717965713891ce196debb7"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.11437998699989294,
+      "log": "rpc-javascript-verify.log",
+      "log_sha256": "0b464202c072272a4a5f5a0cf6bf0dc6755ba50734ee4e7fde8f66a54ec05cb1"
+    }
+  ],
+  "failures": [],
+  "skips": [],
+  "scope": "LOCAL_REFERENCE_FRAMEWORK_ACCEPTANCE",
+  "real_external_benchmarks_run": [],
+  "native_RCC_VERITAS_end_to_end_run": false
+}

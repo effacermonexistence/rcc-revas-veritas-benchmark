@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VeritasDecision v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "disposition"
+  ],
+  "properties": {
+    "disposition": {
+      "enum": [
+        "ALLOW",
+        "HOLD",
+        "DENY",
+        "UNSUPPORTED",
+        "ERROR"
+      ]
+    },
+    "evidence": {
+      "type": "object"
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
