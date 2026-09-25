@@ -1,0 +1,51 @@
+name: Export exact verified v039 source
+on:
+  push:
+    branches: [release/external-v0.3.9]
+    paths: [.github/workflows/export-verified-v039.yml]
+permissions:
+  contents: read
+jobs:
+  exact-export:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Archive only source objects from the verified publication
+        run: |
+          set -euo pipefail
+          mkdir -p delivery
+          python - <<'PY'
+          import json,pathlib,subprocess,zipfile,hashlib
+          pin='63a8fa15d79c1c6bfd72c6557bb46daeb8e621a3'
+          path='external-eval/v0.3.9'
+          tree=subprocess.check_output(['git','rev-parse',pin+':'+path],text=True).strip()
+          assert tree=='97fb30ef5a41e4bf92cf9d050ae49cd4290d66f2'
+          report=json.loads(subprocess.check_output(['git','show',pin+':external-eval/review-v0.3.9/verification.json']))
+          assert report['status']=='PASS' and report['source_tree']==tree
+          assert report['native_tests']=={'tests':444,'failures':0,'errors':0,'skipped':0}
+          target=pathlib.Path('delivery/rcc-revas-veritas-handoff-v0.3.9.zip')
+          subprocess.run(['git','archive','--format=zip','--output='+str(target),pin+':'+path],check=True)
+          with zipfile.ZipFile(target) as archive:
+              files={p for p in archive.namelist() if not p.endswith('/')}
+              tracked=set(subprocess.check_output(['git','ls-tree','-rz','--name-only',pin+':'+path]).decode().split('\0')[:-1])
+              assert files==tracked and len(files)==218
+              assert all(not p.startswith(('build/','dist/','.git/')) for p in files)
+              for p in files:
+                  expected=subprocess.check_output(['git','show',pin+':'+path+'/'+p])
+                  assert expected==archive.read(p),p
+          result={'status':'PASS','source_commit':pin,'source_tree':tree,'tracked_source_files':218,'archive_source_byte_differences':0,'contains_generated_build_files':False,'archive_sha256':hashlib.sha256(target.read_bytes()).hexdigest(),'scope':'PACKAGING_ONLY_SOURCE_UNCHANGED_AFTER_FULL_NATIVE_RECHECK','original_verification_run':'36125797796','export_run_id':__import__('os').environ['GITHUB_RUN_ID']}
+          pathlib.Path('delivery/export-verification.json').write_text(json.dumps(result,indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v039-exact-source-delivery
+          path: delivery/
+          retention-days: 30
+          if-no-files-found: error
