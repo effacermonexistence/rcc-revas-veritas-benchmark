@@ -1,0 +1,202 @@
+name: Reproduce and publish closed v038 source
+on:
+  push:
+    branches: [release/external-v0.3.8]
+    paths: [.github/workflows/publish-closed-v038.yml]
+permissions:
+  contents: write
+jobs:
+  reproduce-and-publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      RELEASE_BRANCH: release/external-v0.3.8
+      SRC: external-eval/v0.3.8
+      EXPECTED_ARCHIVE: 50efefa29edb2c7ca7c44ee5a86e45af248cd9a502dd7c918a247248a65754c5
+      EXPECTED_SOURCE_TREE: e21e28aab4cd879e13a3422daf152841c51320e6
+      PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      LITELLM_LOCAL_MODEL_COST_MAP: 'True'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Create ephemeral public transfer key
+        run: |
+          python -m pip install 'cryptography==50.0.1'
+          python - <<'PY'
+          import os,json,secrets,pathlib
+          from cryptography.hazmat.primitives.asymmetric import rsa
+          from cryptography.hazmat.primitives import serialization
+          key=rsa.generate_private_key(public_exponent=65537,key_size=3072)
+          private=pathlib.Path(os.environ['RUNNER_TEMP'])/'v038-key.pem'
+          private.write_bytes(key.private_bytes(serialization.Encoding.PEM,serialization.PrivateFormat.PKCS8,serialization.NoEncryption()))
+          private.chmod(0o600)
+          folder=pathlib.Path('transfer-key');folder.mkdir()
+          request={'run_id':os.environ['GITHUB_RUN_ID'],'nonce':secrets.token_hex(32),'archive_sha256':os.environ['EXPECTED_ARCHIVE'],'public_key_pem':key.public_key().public_bytes(serialization.Encoding.PEM,serialization.PublicFormat.SubjectPublicKeyInfo).decode()}
+          (folder/'request.json').write_text(json.dumps(request,indent=2)+'\n')
+          pathlib.Path('closed-review-output').mkdir()
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v038-transfer-public-key
+          path: transfer-key/request.json
+          retention-days: 1
+          if-no-files-found: error
+      - name: Receive exact reviewed bytes without publishing a bearer URL
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import os,json,base64,time,urllib.request,urllib.error,urllib.parse,pathlib,hashlib,zipfile,io,subprocess
+          from cryptography.hazmat.primitives import serialization,hashes
+          from cryptography.hazmat.primitives.asymmetric import padding
+          from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+          p=pathlib.Path
+          request=json.loads(p('transfer-key/request.json').read_text())
+          private=p(os.environ['RUNNER_TEMP'])/'v038-key.pem'
+          key=serialization.load_pem_private_key(private.read_bytes(),password=None)
+          api='https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']+'/contents/.delivery/v038-envelope.json?ref='+urllib.parse.quote(os.environ['RELEASE_BRANCH'],safe='')
+          headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'}
+          envelope=None
+          for _ in range(120):
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(api,headers=headers),timeout=15) as response:entry=json.load(response)
+                  candidate=json.loads(base64.b64decode(entry['content']))
+                  if candidate.get('run_id')==request['run_id']:
+                      envelope=candidate;break
+              except urllib.error.HTTPError as exc:
+                  if exc.code!=404:raise RuntimeError('TRANSFER_METADATA_HTTP_'+str(exc.code)) from None
+              time.sleep(5)
+          if envelope is None:raise RuntimeError('TRANSFER_ENVELOPE_TIMEOUT')
+          symmetric=key.decrypt(base64.b64decode(envelope['key']),padding.OAEP(mgf=padding.MGF1(hashes.SHA256()),algorithm=hashes.SHA256(),label=None))
+          clear=json.loads(AESGCM(symmetric).decrypt(base64.b64decode(envelope['nonce']),base64.b64decode(envelope['ciphertext']),request['nonce'].encode()))
+          assert clear['run_id']==request['run_id'] and clear['archive_sha256']==request['archive_sha256']
+          parsed=urllib.parse.urlparse(clear['url'])
+          assert parsed.scheme=='https' and parsed.hostname.endswith('.oaiusercontent.com')
+          try:
+              with urllib.request.urlopen(clear['url'],timeout=90) as response:
+                  final=urllib.parse.urlparse(response.geturl())
+                  assert final.scheme=='https' and any(final.hostname.endswith(s) for s in ('.oaiusercontent.com','.blob.core.windows.net','.blob.storage.azure.net'))
+                  raw=response.read(2_000_001)
+          except Exception as exc:
+              raise RuntimeError('SOURCE_TRANSFER_FAILED_'+type(exc).__name__) from None
+          finally:private.unlink(missing_ok=True)
+          assert len(raw)<=2_000_000 and hashlib.sha256(raw).hexdigest()==request['archive_sha256']
+          subprocess.run(['git','fetch','origin',os.environ['RELEASE_BRANCH']],check=True)
+          subprocess.run(['git','merge','--ff-only','FETCH_HEAD'],check=True)
+          root=p(os.environ['SRC']);root.mkdir(parents=True,exist_ok=False)
+          with zipfile.ZipFile(io.BytesIO(raw)) as archive:
+              entries=archive.infolist()
+              assert len(entries)==215 and len({x.filename for x in entries})==215
+              assert sum(x.file_size for x in entries)<20_000_000
+              for entry in entries:
+                  rel=pathlib.PurePosixPath(entry.filename)
+                  assert rel.parts[0]=='rcc-revas-veritas-v0.3.8'
+                  assert not rel.is_absolute() and '..' not in rel.parts and '.git' not in rel.parts and '.github' not in rel.parts and '\\' not in entry.filename
+                  assert (entry.external_attr>>16)&0o170000!=0o120000
+                  dest=root.joinpath(*rel.parts[1:]);dest.parent.mkdir(parents=True,exist_ok=True)
+                  dest.write_bytes(archive.read(entry))
+                  dest.chmod(0o755 if ((entry.external_attr>>16)&0o111) else 0o644)
+          subprocess.run(['python',str(root/'scripts/verify_source_manifest.py')],check=True)
+          subprocess.run(['git','add',str(root)],check=True)
+          tree=subprocess.check_output(['git','write-tree','--prefix='+str(root)+'/'],text=True).strip()
+          assert tree==os.environ['EXPECTED_SOURCE_TREE'],tree
+          (p('closed-review-output')/'source-receipt.json').write_text(json.dumps({'archive_sha256':request['archive_sha256'],'source_tree':tree,'source_files':215,'run_id':request['run_id'],'bearer_url_persisted':False},indent=2)+'\n')
+          PY
+      - name: Install actual declared dependencies from package indexes
+        run: |
+          set -euo pipefail
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu 'torch==2.10.0'
+          python -m pip install -r "$SRC/requirements-native.txt"
+          python -m pip install "$SRC[test]"
+          python -m pip check > closed-review-output/pip-check.txt
+          node --version > closed-review-output/node.txt
+      - name: Obtain and verify exact native source pins
+        run: |
+          python - <<'PY'
+          import os,json,pathlib,subprocess
+          root=pathlib.Path(os.environ['SRC']);pins=json.loads((root/'SOURCES_NATIVE.json').read_text())['repositories']
+          parent=pathlib.Path(os.environ['RUNNER_TEMP'])/'v038-native';parent.mkdir()
+          verified={}
+          for name,pin in pins.items():
+              target=parent/name;target.mkdir()
+              for cmd in [['git','init',str(target)],['git','-C',str(target),'remote','add','origin','https://github.com/'+pin['repository']+'.git'],['git','-C',str(target),'fetch','--depth=1','origin',pin['commit']],['git','-C',str(target),'checkout','--detach','FETCH_HEAD']]:subprocess.run(cmd,check=True,timeout=180)
+              actual=subprocess.check_output(['git','-C',str(target),'rev-parse','HEAD'],text=True).strip()
+              assert actual==pin['commit'];verified[name]={'repository':pin['repository'],'commit':actual}
+          pathlib.Path('closed-review-output/native-pins.json').write_text(json.dumps(verified,indent=2)+'\n')
+          PY
+      - name: Execute complete native regression and real-data profiles
+        run: |
+          set -euo pipefail
+          python "$SRC/scripts/validate_native.py" \
+            --rcc-source "$RUNNER_TEMP/v038-native/rcc/rcc-revas-eval/v0.1.0/runtime" \
+            --veritas-source "$RUNNER_TEMP/v038-native/veritas" \
+            --agentdojo-source "$RUNNER_TEMP/v038-native/agentdojo" \
+            --tau-source "$RUNNER_TEMP/v038-native/tau" \
+            --tau2-source "$RUNNER_TEMP/v038-native/tau2" \
+            --output "$GITHUB_WORKSPACE/closed-review-output/native" \
+            > closed-review-output/native-console.log 2>&1
+      - name: Execute reference matrix and installed recipient independently
+        run: |
+          set -euo pipefail
+          python "$SRC/scripts/run_acceptance.py" --output "$GITHUB_WORKSPACE/closed-review-output/reference" > closed-review-output/reference-console.log 2>&1
+          cd "$RUNNER_TEMP"
+          python -I -m rveval init-pilot --name independent-v038 --output-dir ./recipient-v038 > "$GITHUB_WORKSPACE/closed-review-output/recipient-init.json"
+          cd recipient-v038
+          python -I -m rveval mapping-check --contract contracts/mapping.json > "$GITHUB_WORKSPACE/closed-review-output/recipient-mapping.json"
+          python -I -m rveval freeze --config config.json --output freeze.json
+          python -I -m rveval run --config config.json --freeze freeze.json --ack-freeze-sha256 "$(python -I -m rveval hash freeze.json)" --output-dir run-1 > "$GITHUB_WORKSPACE/closed-review-output/recipient-run.json"
+          python -I -m rveval verify --run-dir run-1 --expected-index-sha256 "$(python -I -m rveval hash run-1/evidence_index.json)" > "$GITHUB_WORKSPACE/closed-review-output/recipient-verify.json"
+          cp -r run-1 "$GITHUB_WORKSPACE/closed-review-output/recipient-evidence"
+      - name: Validate exact scope and unchanged source before publication
+        run: |
+          python "$SRC/scripts/verify_source_manifest.py" > closed-review-output/source-after.json
+          python - <<'PY'
+          import pathlib,json,os,hashlib,subprocess
+          p=pathlib.Path;out=p('closed-review-output');root=p(os.environ['SRC'])
+          native=json.loads((out/'native/validation.json').read_text());reference=json.loads((out/'reference/acceptance.json').read_text())
+          assert native['status']=='PASS' and native['test_counts']=={'tests':413,'failures':0,'errors':0,'skipped':0},native.get('test_counts')
+          assert reference['status']=='PASS' and reference['test_counts']=={'tests':364,'failures':0,'errors':0,'skipped':0},reference.get('test_counts')
+          assert len(reference['commands'])==31 and not reference['skips']
+          assert json.loads((out/'recipient-run.json').read_text())['status']=='COMPLETED'
+          assert json.loads((out/'recipient-verify.json').read_text())['status']=='PASS'
+          subprocess.run(['git','add',str(root)],check=True)
+          tree=subprocess.check_output(['git','write-tree','--prefix='+str(root)+'/'],text=True).strip();assert tree==os.environ['EXPECTED_SOURCE_TREE']
+          result={'status':'PASS','version':'0.3.8','source_tree':tree,'local_source_commit':'4d2e478e5eaf9de36123a3371c40e9ecae26e2e5','run_id':os.environ['GITHUB_RUN_ID'],'workflow_commit':os.environ['GITHUB_SHA'],'native_tests':native['test_counts'],'reference_tests':reference['test_counts'],'reference_cli_commands':30,'installed_recipient':'COMPLETED_AND_VERIFIED','native_real_data_profiles':3,'all_benchmark_task_model_sweeps_executed':False,'paid_model_calls':False,'provider_mode':'CONTROLLED_NATIVE_INTEGRATION_TRANSCRIPT','bug_freedom_proven':False,'source_unchanged_after_execution':True}
+          result['evidence']=[{'path':str(f.relative_to(out)),'sha256':hashlib.sha256(f.read_bytes()).hexdigest()} for f in sorted(out.rglob('*')) if f.is_file()]
+          (out/'verification.json').write_text(json.dumps(result,indent=2)+'\n')
+          PY
+      - name: Publish tested source and exact repeat evidence without changing main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p external-eval/review-v0.3.8
+          cp closed-review-output/verification.json closed-review-output/source-receipt.json closed-review-output/native-pins.json external-eval/review-v0.3.8/
+          cp closed-review-output/native/tests.xml external-eval/review-v0.3.8/native-tests.xml
+          cp closed-review-output/reference/pytest.xml external-eval/review-v0.3.8/reference-tests.xml
+          cp closed-review-output/native/validation.json external-eval/review-v0.3.8/native-validation.json
+          git rm --ignore-unmatch .delivery/v038.part1.b64 .delivery/v038-envelope.json
+          git add external-eval/v0.3.8 external-eval/review-v0.3.8
+          git config user.name 'RCC review automation'
+          git config user.email '224881116+effacermonexistence@users.noreply.github.com'
+          git commit -m 'release: v0.3.8 after unchanged-source repeat runs and record-closure checks'
+          gh auth setup-git
+          git push origin HEAD:release/external-v0.3.8
+          git rev-parse HEAD > closed-review-output/published-commit.txt
+          git archive HEAD:external-eval/v0.3.8 -o closed-review-output/published-source.zip
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v038-closed-recheck
+          path: closed-review-output/
+          retention-days: 30
+          if-no-files-found: error
