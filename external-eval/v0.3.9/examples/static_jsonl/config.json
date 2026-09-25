@@ -1,0 +1,33 @@
+{
+  "run_mode": "dual",
+  "seed": 7,
+  "benchmark": {
+    "plugin": "rveval.adapters.static_jsonl:StaticJSONLAdapter",
+    "config": {
+      "name": "example-static",
+      "cases_path": "cases.jsonl",
+      "labels_path": "labels.jsonl"
+    }
+  },
+  "agent": {
+    "plugin": "rveval.agents.replay:ReplayAgent",
+    "config": {
+      "actions_path": "actions.json"
+    }
+  },
+  "rcc": {
+    "plugin": "rveval.governance.passthrough:PassThroughRCC",
+    "config": {}
+  },
+  "veritas": {
+    "plugin": "rveval.governance.passthrough:AllowAllVeritas",
+    "config": {}
+  },
+  "policy": {
+    "max_steps": 4,
+    "on_governance_stop": "terminate"
+  },
+  "pins": {
+    "purpose": "example only; replace with exact benchmark/model/RCC/VERITAS pins before external validation"
+  }
+}

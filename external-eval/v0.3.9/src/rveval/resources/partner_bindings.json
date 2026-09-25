@@ -1,0 +1,151 @@
+{
+  "schema_version": "rveval.recipient-bindings.v1",
+  "status": "UNFILLED_NOT_NATIVE_READY",
+  "description": "Fill with your actual native fields and evidence sources. This worksheet does not replace the canonical 12-group contract or Q1-Q9. NOT_APPLICABLE requires a scope-specific reason and named semantic owner. Never infer authority or approvals from a candidate or scoring labels.",
+  "bindings": [
+    {
+      "id": "candidate",
+      "applicability": "UNRESOLVED",
+      "source_path": null,
+      "target_path": null,
+      "semantic_owner": null,
+      "transform": null,
+      "missing_behavior": null,
+      "source_provenance": null,
+      "verifier": null,
+      "reason": null
+    },
+    {
+      "id": "upstream_decision",
+      "applicability": "UNRESOLVED",
+      "source_path": null,
+      "target_path": null,
+      "semantic_owner": null,
+      "transform": null,
+      "missing_behavior": null,
+      "source_provenance": null,
+      "verifier": null,
+      "reason": null
+    },
+    {
+      "id": "request",
+      "applicability": "UNRESOLVED",
+      "source_path": null,
+      "target_path": null,
+      "semantic_owner": null,
+      "transform": null,
+      "missing_behavior": null,
+      "source_provenance": null,
+      "verifier": null,
+      "reason": null
+    },
+    {
+      "id": "actor",
+      "applicability": "UNRESOLVED",
+      "source_path": null,
+      "target_path": null,
+      "semantic_owner": null,
+      "transform": null,
+      "missing_behavior": null,
+      "source_provenance": null,
+      "verifier": null,
+      "reason": null
+    },
+    {
+      "id": "target",
+      "applicability": "UNRESOLVED",
+      "source_path": null,
+      "target_path": null,
+      "semantic_owner": null,
+      "transform": null,
+      "missing_behavior": null,
+      "source_provenance": null,
+      "verifier": null,
+      "reason": null
+    },
+    {
+      "id": "policy",
+      "applicability": "UNRESOLVED",
+      "source_path": null,
+      "target_path": null,
+      "semantic_owner": null,
+      "transform": null,
+      "missing_behavior": null,
+      "source_provenance": null,
+      "verifier": null,
+      "reason": null
+    },
+    {
+      "id": "authority",
+      "applicability": "UNRESOLVED",
+      "source_path": null,
+      "target_path": null,
+      "semantic_owner": null,
+      "transform": null,
+      "missing_behavior": null,
+      "source_provenance": null,
+      "verifier": null,
+      "reason": null
+    },
+    {
+      "id": "approval",
+      "applicability": "UNRESOLVED",
+      "source_path": null,
+      "target_path": null,
+      "semantic_owner": null,
+      "transform": null,
+      "missing_behavior": null,
+      "source_provenance": null,
+      "verifier": null,
+      "reason": null
+    },
+    {
+      "id": "state",
+      "applicability": "UNRESOLVED",
+      "source_path": null,
+      "target_path": null,
+      "semantic_owner": null,
+      "transform": null,
+      "missing_behavior": null,
+      "source_provenance": null,
+      "verifier": null,
+      "reason": null
+    },
+    {
+      "id": "effect",
+      "applicability": "UNRESOLVED",
+      "source_path": null,
+      "target_path": null,
+      "semantic_owner": null,
+      "transform": null,
+      "missing_behavior": null,
+      "source_provenance": null,
+      "verifier": null,
+      "reason": null
+    },
+    {
+      "id": "scoring",
+      "applicability": "UNRESOLVED",
+      "source_path": null,
+      "target_path": null,
+      "semantic_owner": null,
+      "transform": null,
+      "missing_behavior": null,
+      "source_provenance": null,
+      "verifier": null,
+      "reason": null
+    },
+    {
+      "id": "provenance",
+      "applicability": "UNRESOLVED",
+      "source_path": null,
+      "target_path": null,
+      "semantic_owner": null,
+      "transform": null,
+      "missing_behavior": null,
+      "source_provenance": null,
+      "verifier": null,
+      "reason": null
+    }
+  ]
+}

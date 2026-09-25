@@ -1,0 +1,23 @@
+{
+  "policy_id": "rcc-external-output-contract",
+  "version": "0.3.9",
+  "supported_kinds": [
+    "tool_call",
+    "final_answer",
+    "structured_action",
+    "message",
+    "custom",
+    "batch",
+    "model_request",
+    "artifact"
+  ],
+  "checks": [
+    {
+      "check_id": "public-output-contract",
+      "callable": "rveval.integrations.rcc_external:verify_output_contract",
+      "source_sha256": "cb9c4740240e4a808aaf9cb57d91a0babff38422e1fb426af27c311c0dbc4e7d",
+      "required": true
+    }
+  ],
+  "claim_scope": "OBSERVABLE_OUTPUT_CONTRACT_NOT_ANSWER_TRUTH_OR_EXECUTION_AUTHORITY"
+}

@@ -1,0 +1,101 @@
+{
+  "release": "0.3.2",
+  "signatures": [
+    {
+      "module": "rveval.integrations.decide_pipeline",
+      "callable": "NativeDecisionIntentFactory.__init__",
+      "signature": "self, *, post: Callable, candidate_factory: Callable, request_context: Callable, verify_receipt: Callable, clock: Callable, journal: Callable, source_pins: dict[str, str], ttl_seconds: int=300",
+      "line": 29
+    },
+    {
+      "module": "rveval.integrations.decide_pipeline",
+      "callable": "NativeDecisionIntentFactory.__call__",
+      "signature": "self, action: CandidateAction, pre_state: dict, rcc_review: dict",
+      "line": 60
+    },
+    {
+      "module": "rveval.integrations.veritas_bind",
+      "callable": "NativeBindFailure.__init__",
+      "signature": "self, receipt: dict",
+      "line": 20
+    },
+    {
+      "module": "rveval.integrations.veritas_bind",
+      "callable": "NativeBindExecutor.__init__",
+      "signature": "self, hook, *, snapshot: Callable, context: Callable, journal: Callable, intent_factory: Callable, authority_check: Callable, constraints_check: Callable, risk_check: Callable, postcondition_check: Callable, revert: Callable, target: str, bind_time: Callable, native_core_sha256: str, ledger=None, append_native_trustlog: bool=False, native_trustlog_verifier: Callable | None=None",
+      "line": 35
+    },
+    {
+      "module": "rveval.integrations.veritas_bind",
+      "callable": "NativeBindExecutor.call",
+      "signature": "self, candidate: CandidateAction, apply: Callable, *, operation_id: str | None=None",
+      "line": 64
+    },
+    {
+      "module": "rveval.integrations.veritas_bind",
+      "callable": "AsyncNativeBindExecutor.__init__",
+      "signature": "self, native: NativeBindExecutor",
+      "line": 175
+    },
+    {
+      "module": "rveval.integrations.veritas_bind",
+      "callable": "AsyncNativeBindExecutor.call",
+      "signature": "self, candidate, apply, *, operation_id=None",
+      "line": 178
+    },
+    {
+      "module": "rveval.integrations.veritas_bind",
+      "callable": "AsyncNativeBindExecutor.drain",
+      "signature": "self",
+      "line": 201
+    },
+    {
+      "module": "rveval.integrations.swebench",
+      "callable": "PredictionWriter.__init__",
+      "signature": "self, output: Path, model_name: str, executor",
+      "line": 15
+    },
+    {
+      "module": "rveval.integrations.swebench",
+      "callable": "PredictionWriter.add",
+      "signature": "self, instance_id: str, patch: str",
+      "line": 22
+    },
+    {
+      "module": "rveval.integrations.swebench",
+      "callable": "PredictionWriter.close",
+      "signature": "self",
+      "line": 41
+    },
+    {
+      "module": "rveval.integrations.swebench",
+      "callable": "native_harness_command",
+      "signature": "*, dataset_name: str, predictions_path: Path, run_id: str, max_workers: int=1, python: str=sys.executable",
+      "line": 46
+    },
+    {
+      "module": "rveval.integrations.swebench",
+      "callable": "collect_native_reports",
+      "signature": "run_directory: Path, enrolled_ids: list[str]",
+      "line": 55
+    },
+    {
+      "module": "rveval.integrations.swebench",
+      "callable": "run_native_grading",
+      "signature": "*, dataset_rows: list[dict], predictions_path: Path, output: Path, run_id: str, max_workers: int=1, timeout_seconds: int=3600",
+      "line": 89
+    },
+    {
+      "module": "rveval.matrix",
+      "callable": "_run_child",
+      "signature": "argv, log, *, cwd, timeout",
+      "line": 16
+    },
+    {
+      "module": "rveval.matrix",
+      "callable": "run_matrix",
+      "signature": "catalogue: Path, output: Path",
+      "line": 35
+    }
+  ]
+}

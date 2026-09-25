@@ -1,0 +1,52 @@
+"""Replace these two native hooks for a new pilot; keep its native scorer.
+
+This starter deliberately uses identical engineering controls in A and B.
+It does not claim VERITAS is present. Native treatment must be supplied explicitly.
+"""
+from datetime import datetime, timezone
+from pathlib import Path
+from rveval.canonical import sha_file
+from rveval.models import CandidateAction
+from rveval.integrations.rcc_external import ExternalRCCGate
+from rveval.partner_mapping import build_runtime_packet
+
+
+def execute_case(case: dict, arm: str, *, request_sha256: str) -> dict:
+    """Return status plus raw native output/trace; never access targets.json.
+
+    Replace the calculation with your model or existing native task loop. Capture
+    the user request independently of the proposed candidate. In treatment B,
+    insert NativeDecisionIntentFactory/NativeBindExecutor at the declared boundary.
+    The actor, grants, policy, approvals and live-state readers come from your
+    genuine native environment, not from the candidate or the hidden scorer.
+    """
+    policy = Path(__file__).with_name('policy.json')
+    numbers = case['input']['values']
+    if type(numbers) is not list or any(type(x) not in (int, float) for x in numbers):
+        raise ValueError('NUMERIC_INPUT_REQUIRED')
+    candidate = CandidateAction('final_answer', content=sum(numbers))
+    gate = ExternalRCCGate({'policy': str(policy), 'policy_sha256': sha_file(policy)}, policy.parent)
+    decision = gate.review(candidate=candidate, context={'task': {
+        'request_id': case['case_id'], 'query': case['request'], 'input': case['input']}})
+    if decision.disposition != 'ADOPT':
+        return {'status': 'REFUSED', 'decision': decision.to_dict(), 'prediction': None}
+    packet = build_runtime_packet(candidate=candidate, rcc_decision=decision,
+        request={'id': case['case_id'], 'query': case['request'],
+                 'source_ref': 'native-request:sha256:' + request_sha256},
+        source_refs=[], produced_at=datetime.now(timezone.utc))
+    return {'status': 'COMPLETED', 'prediction': candidate.content, 'packet': packet,
+            'native_veritas_invoked': False,
+            'comparison_role': 'IDENTICAL_ENGINEERING_CONTROL_NOT_VERITAS_TREATMENT'}
+
+
+def score_run(records: list[dict], targets: dict) -> dict:
+    """Phase 2 only. Replace this with the ORIGINAL benchmark's scoring function.
+
+    A zero task score is a valid completed evaluation, not infrastructure failure.
+    Return native metrics without reinterpreting them as governance metrics.
+    """
+    rows = [{'case_id': row['case_id'], 'arm': row['arm'],
+             'correct': row['result'].get('prediction') == targets[row['case_id']]}
+            for row in records]
+    return {'metric': 'starter_exact_match', 'rows': rows,
+            'benchmark_capability_claim': False, 'native_treatment_claim': False}
