@@ -1,0 +1,7 @@
+{
+  "configurations": [
+    "iris.json",
+    "wine.json",
+    "digits.json"
+  ]
+}

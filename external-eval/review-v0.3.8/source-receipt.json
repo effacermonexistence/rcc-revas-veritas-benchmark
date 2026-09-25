@@ -1,0 +1,11 @@
+{
+  "source_tree": "e21e28aab4cd879e13a3422daf152841c51320e6",
+  "source_manifest_sha256": "1c0aebca9fc42f131b7bc3290f25eaf7a4e2df1e60bf27d3880eea295f67a58c",
+  "source_files": 215,
+  "patch_sha256": "5e46bdd282a88898df1e5d7bc05c8307cab524517fb728340679c496057f920a",
+  "base": "3b3da4a0ca36946ad1269730506abe4f98fe7c13:external-eval/v0.3.6",
+  "run_id": "36108578746",
+  "transport": "GITHUB_CONTENTS",
+  "prior_failed_transfer_run": "36107529816",
+  "source_changed_for_transfer": false
+}

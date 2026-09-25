@@ -1,0 +1,129 @@
+"""Portable two-phase worker with fresh Python state for every case/arm.
+
+A child owns one complete native trajectory, not one tool step. This isolates
+Python globals and input objects, not external databases, files or provider state.
+Those resources still require the pilot's native clone/reset/isolation contract.
+Customize pilot_impl.py; keep enrollment, failure and scoring semantics intact.
+"""
+from pathlib import Path
+import argparse
+import os
+import signal
+import subprocess
+import sys
+from rveval.canonical import read_json, sha_file, write_json_new
+from rveval.guardrails import require
+from rveval.process_control import managed_process, terminate_group
+
+
+def isolated_case(case, arm, digest, output, index, timeout):
+    folder = output / 'attempts' / f'{index:06d}-{arm}'
+    folder.mkdir(parents=True, exist_ok=False)
+    task = folder / 'request.json'
+    result_path = folder / 'result.json'
+    # Durable intent before dispatch. Each child deserializes its own input.
+    write_json_new(task, {'case': case, 'arm': arm, 'request_sha256': digest})
+    task_sha = sha_file(task)
+    command = [sys.executable, str(Path(__file__).resolve()), '--case-request',
+               str(task.resolve()), '--output', str(result_path.resolve())]
+    returncode = None
+    timed_out = False
+    with (folder / 'execution.log').open('xb') as log:
+        with managed_process(command, stdout=log, stderr=subprocess.STDOUT) as process:
+            try:
+                returncode = process.wait(timeout=timeout)
+            except subprocess.TimeoutExpired:
+                timed_out = True
+                terminate_group(process)
+                returncode = process.returncode
+    if timed_out:
+        result = {'status': 'ERROR', 'error_type': 'CASE_TIMEOUT', 'effect_state': 'UNKNOWN'}
+    elif returncode != 0 or not result_path.is_file() or result_path.is_symlink():
+        result = {'status': 'ERROR', 'error_type': 'CASE_PROCESS_FAILED', 'effect_state': 'UNKNOWN'}
+    else:
+        try:
+            require(sha_file(task) == task_sha, 'PILOT_CASE_REQUEST_CHANGED')
+            result = read_json(result_path)
+            require(type(result) is dict and result.get('status') in
+                    {'COMPLETED', 'REFUSED', 'ERROR', 'UNSUPPORTED'}, 'PILOT_NATIVE_RESULT')
+        except Exception as exc:
+            result = {'status': 'ERROR', 'error_type': type(exc).__name__, 'effect_state': 'UNKNOWN'}
+    write_json_new(folder / 'dispatch.json', {
+        'returncode': returncode, 'timed_out': timed_out, 'retry_count': 0,
+        'input_sha256': task_sha, 'python_process_isolation': True,
+        'external_resource_isolation_verified': False})
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    modes = parser.add_mutually_exclusive_group(required=True)
+    modes.add_argument('--request', type=Path)
+    modes.add_argument('--case-request', type=Path)
+    parser.add_argument('--output', type=Path, required=True)
+    args = parser.parse_args()
+    if args.case_request is not None:
+        item = read_json(args.case_request)
+        try:
+            # Never import an implementation into the cohort coordinator.
+            import pilot_impl
+            result = pilot_impl.execute_case(item['case'], item['arm'],
+                                             request_sha256=item['request_sha256'])
+            require(type(result) is dict and result.get('status') in
+                    {'COMPLETED', 'REFUSED', 'ERROR', 'UNSUPPORTED'}, 'PILOT_NATIVE_RESULT')
+            write_json_new(args.output, result)
+        except Exception as exc:
+            write_json_new(args.output, {'status': 'ERROR', 'error_type': type(exc).__name__,
+                                         'effect_state': 'UNKNOWN'})
+        return
+    request = read_json(args.request)
+    digest = sha_file(args.request)
+    output = args.output
+    if request['phase'] == 'execute':
+        require('scorer_inputs' not in request, 'PILOT_EARLY_SCORER_INPUT')
+        sources = request['runtime_inputs']
+        require(len(sources) == 1, 'PILOT_RUNTIME_INPUT_COUNT')
+        require(sha_file(Path(sources[0]['path'])) == sources[0]['sha256'], 'PILOT_RUNTIME_HASH')
+        rows = read_json(Path(sources[0]['path']))
+        require(type(rows) is list and all(type(x) is dict for x in rows), 'PILOT_CASES_INVALID')
+        require([x['case_id'] for x in rows] == request['case_ids'], 'PILOT_ENROLLMENT_MISMATCH')
+        timeout = request.get('runtime_parameters', {}).get('case_timeout_seconds', 60)
+        require(type(timeout) in (int, float) and 0 < timeout <= 86400, 'PILOT_CASE_TIMEOUT_INVALID')
+        records = []
+        for index, case in enumerate(rows):
+            for arm in request['arms']:
+                try:
+                    result = isolated_case(case, arm, digest, output, index, timeout)
+                except Exception as exc:
+                    result = {'status': 'ERROR', 'error_type': type(exc).__name__,
+                              'effect_state': 'UNKNOWN'}
+                name = f'{index:06d}-{arm}.json'
+                write_json_new(output / name, {'case_id': case['case_id'], 'arm': arm, 'result': result})
+                records.append({'case_id': case['case_id'], 'arm': arm, 'status': result['status'],
+                    'artifacts': [{'path': name, 'sha256': sha_file(output / name)}]})
+        write_json_new(output / 'execution.json', {'schema_version': 'rveval.native-execution.v1',
+            'request_sha256': digest, 'records': records})
+    elif request['phase'] == 'score':
+        sources = request['scorer_inputs']
+        require(len(sources) == 1, 'PILOT_SCORER_INPUT_COUNT')
+        require(sha_file(Path(sources[0]['path'])) == sources[0]['sha256'], 'PILOT_SCORER_HASH')
+        targets = read_json(Path(sources[0]['path']))
+        execution = Path(request['execution_directory'])
+        records = []
+        for row in read_json(execution / 'execution.json')['records']:
+            artifact = row['artifacts'][0]
+            require(sha_file(execution / artifact['path']) == artifact['sha256'], 'PILOT_TRACE_HASH')
+            records.append(read_json(execution / artifact['path']))
+        import pilot_impl
+        result = pilot_impl.score_run(records, targets)
+        write_json_new(output / 'native-score.json', result)
+        write_json_new(output / 'scores.json', {'schema_version': 'rveval.native-scores.v1',
+            'request_sha256': digest, 'status': 'COMPLETED', 'scored_case_ids': request['case_ids'],
+            'arms': request['arms'], 'native_score_files': [{'path': 'native-score.json',
+                'sha256': sha_file(output / 'native-score.json')}]})
+    else:
+        raise ValueError('PILOT_PHASE_INVALID')
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,69 @@
+{
+  "run_mode": "dual",
+  "seed": 11,
+  "study_kind": "ENGINEERING",
+  "policy": {
+    "max_steps": 5,
+    "on_governance_stop": "terminate"
+  },
+  "benchmark": {
+    "plugin": "rveval.adapters.command_rpc:CommandRPCBenchmarkAdapter",
+    "config": {
+      "command": [
+        "{python}",
+        "worker.py",
+        "benchmark",
+        "multimodal"
+      ],
+      "source_files": [
+        "worker.py"
+      ],
+      "timeout_seconds": 5
+    }
+  },
+  "agent": {
+    "plugin": "rveval.agents.command:CommandAgent",
+    "config": {
+      "command": [
+        "{python}",
+        "worker.py",
+        "agent",
+        "multimodal"
+      ],
+      "source_files": [
+        "worker.py"
+      ],
+      "timeout_seconds": 5
+    }
+  },
+  "rcc": {
+    "plugin": "rveval.governance.command:CommandRCCGate",
+    "config": {
+      "command": [
+        "{python}",
+        "worker.py",
+        "rcc",
+        "multimodal"
+      ],
+      "source_files": [
+        "worker.py"
+      ],
+      "timeout_seconds": 5
+    }
+  },
+  "veritas": {
+    "plugin": "rveval.governance.command:CommandVeritasGate",
+    "config": {
+      "command": [
+        "{python}",
+        "worker.py",
+        "veritas",
+        "multimodal"
+      ],
+      "source_files": [
+        "worker.py"
+      ],
+      "timeout_seconds": 5
+    }
+  }
+}

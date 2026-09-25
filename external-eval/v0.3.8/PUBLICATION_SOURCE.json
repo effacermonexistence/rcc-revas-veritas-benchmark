@@ -1,0 +1,10 @@
+{
+  "version": "0.3.8",
+  "input_local_source_commit": "f2b319e6ce356c312bb0d513ffa47724b9f95bed",
+  "published_ancestor_repository": "effacermonexistence/rcc-revas-veritas-benchmark",
+  "published_ancestor_commit": "3b3da4a0ca36946ad1269730506abe4f98fe7c13",
+  "published_ancestor_subtree": "f9e403b6426b5dd3ef910998036219b3f22f4881",
+  "scope": "CROSS_RECORD_EXECUTION_AND_RECIPIENT_CLOSURE_RECHECK",
+  "prior_results_rewritten": false,
+  "all_benchmarks_tasks_models_executed": false
+}
