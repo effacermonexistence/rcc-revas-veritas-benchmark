@@ -1,0 +1,97 @@
+name: Reproduce v038 via verified GitHub contents
+on:
+  push:
+    branches: [release/external-v0.3.8]
+    paths: [.github/workflows/publish-closed-v038-contents.yml]
+permissions:
+  contents: write
+jobs:
+  reproduce-and-publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      RELEASE_BRANCH: release/external-v0.3.8
+      SRC: external-eval/v0.3.8
+      EXPECTED_SOURCE_TREE: e21e28aab4cd879e13a3422daf152841c51320e6
+      PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      LITELLM_LOCAL_MODEL_COST_MAP: 'True'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Reconstruct unchanged tested source from exact prior tree
+        run: |
+          set -euo pipefail
+          mkdir closed-review-output
+          python -m pip install PyYAML
+          python - <<'PY'
+          import pathlib,base64,lzma,hashlib,subprocess,tarfile,io,json,os,yaml
+          p=pathlib.Path
+          expected=['594c74ee36337d5aa8dc39ee4d7c6ffd0d01b5b87b7f1723b078dc69784d8cdc','78c56e2226861108e686aa77380267414e48a3698a0b3bc5b5ae3262a1d1149e','dc4c794a035bdaf4d24101cd9cb9aec23f08b2828fcc6e024224896a599f575b','c314154169e8a536871de03e53b0b802ed6946d07b4d2671a5f05737afde7941','f9a10457aedfd4b64536a8687060cee3ddecd57af0086ffa7ea7d14d7c69199f','8438e148493b317d6044a918fe2974af27cbc0766b636d57040e40f060be77e2','697658f090531b6fbb376294579d997f57c76b0c0b8d3eb9828e9412a80abd75']
+          parts=[p(f'.delivery/v038-xz-{i}.b64').read_text().strip() for i in range(1,8)]
+          actual=[hashlib.sha256(s.encode()).hexdigest() for s in parts]
+          (p('closed-review-output')/'transport-hashes.json').write_text(json.dumps({'expected':expected,'actual':actual,'match':actual==expected},indent=2)+'\n')
+          assert actual==expected,[(i+1,len(parts[i]),a) for i,a in enumerate(actual) if a!=expected[i]]
+          encoded=''.join(parts);assert len(encoded)==30336
+          patch=lzma.decompress(base64.b64decode(encoded,validate=True))
+          assert len(patch)==103659 and hashlib.sha256(patch).hexdigest()=='5e46bdd282a88898df1e5d7bc05c8307cab524517fb728340679c496057f920a'
+          patchpath=p(os.environ['RUNNER_TEMP'])/'reviewed.patch';patchpath.write_bytes(patch)
+          root=p(os.environ['SRC']);root.mkdir(parents=True,exist_ok=False)
+          base='3b3da4a0ca36946ad1269730506abe4f98fe7c13:external-eval/v0.3.6'
+          archive=subprocess.check_output(['git','archive',base])
+          with tarfile.open(fileobj=io.BytesIO(archive)) as t:t.extractall(root,filter='data')
+          subprocess.run(['git','apply','--check','--directory='+str(root),str(patchpath)],check=True)
+          subprocess.run(['git','apply','--directory='+str(root),str(patchpath)],check=True)
+          subprocess.run(['python',str(root/'scripts/source_manifest.py')],check=True)
+          manifest_sha=hashlib.sha256((root/'SOURCE_MANIFEST.json').read_bytes()).hexdigest()
+          assert manifest_sha=='1c0aebca9fc42f131b7bc3290f25eaf7a4e2df1e60bf27d3880eea295f67a58c'
+          subprocess.run(['python',str(root/'scripts/verify_source_manifest.py')],check=True)
+          subprocess.run(['git','add',str(root)],check=True)
+          tree=subprocess.check_output(['git','write-tree','--prefix='+str(root)+'/'],text=True).strip()
+          assert tree==os.environ['EXPECTED_SOURCE_TREE'],tree
+          (p('closed-review-output')/'source-receipt.json').write_text(json.dumps({'source_tree':tree,'source_manifest_sha256':manifest_sha,'source_files':215,'patch_sha256':hashlib.sha256(patch).hexdigest(),'base':base,'run_id':os.environ['GITHUB_RUN_ID'],'transport':'GITHUB_CONTENTS','prior_failed_transfer_run':'36107529816','source_changed_for_transfer':False},indent=2)+'\n')
+          old=subprocess.check_output(['git','show','5ada385add64d2287116dab1b3c79773107eb92d:.github/workflows/publish-closed-v038.yml'],text=True)
+          steps=yaml.safe_load(old)['jobs']['reproduce-and-publish']['steps']
+          selected=[s for s in steps if 'run' in s and s.get('name','') in {
+            'Install actual declared dependencies from package indexes',
+            'Obtain and verify exact native source pins',
+            'Execute complete native regression and real-data profiles',
+            'Execute reference matrix and installed recipient independently',
+            'Validate exact scope and unchanged source before publication',
+            'Publish tested source and exact repeat evidence without changing main'}]
+          assert len(selected)==6
+          for i,s in enumerate(selected):
+              body=s['run']
+              if i==5:
+                  body=body.replace('git rm --ignore-unmatch .delivery/v038.part1.b64 .delivery/v038-envelope.json','git rm --ignore-unmatch .delivery/v038.part1.b64 .delivery/v038-envelope.json .delivery/v038-xz-*.b64')
+              (p(os.environ['RUNNER_TEMP'])/f'v038-phase-{i}.sh').write_text('set -euo pipefail\n'+body)
+          PY
+      - name: Install declared package dependencies
+        run: bash "$RUNNER_TEMP/v038-phase-0.sh"
+      - name: Verify public native source pins
+        run: bash "$RUNNER_TEMP/v038-phase-1.sh"
+      - name: Execute full 413-test native suite and real datasets
+        run: bash "$RUNNER_TEMP/v038-phase-2.sh"
+      - name: Execute reference matrix and installed fresh partner
+        run: bash "$RUNNER_TEMP/v038-phase-3.sh"
+      - name: Require exact passing counts and unchanged source
+        run: bash "$RUNNER_TEMP/v038-phase-4.sh"
+      - name: Commit and publish only after complete acceptance
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash "$RUNNER_TEMP/v038-phase-5.sh"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v038-closed-recheck-contents
+          path: closed-review-output/
+          retention-days: 30
+          if-no-files-found: error
