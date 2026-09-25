@@ -1,0 +1,219 @@
+{
+  "status": "PASS_WITHIN_EXECUTED_SCOPE",
+  "version": "0.3.9",
+  "recorded_at_utc": "2026-09-25T10:55:51.447295+00:00",
+  "repository": "effacermonexistence/rcc-revas-veritas-benchmark",
+  "branch": "release/external-v0.3.9",
+  "source_path": "external-eval/v0.3.9",
+  "source_publication_commit": "63a8fa15d79c1c6bfd72c6557bb46daeb8e621a3",
+  "archive_export_workflow_commit": "bf789437479dc2cc7880006f74fa0b1c91f0fd23",
+  "local_source_commit": "ee04c79709f68e0bff7b453586be87a7df5ef26a",
+  "source_tree": "97fb30ef5a41e4bf92cf9d050ae49cd4290d66f2",
+  "input_remote_commit": "85224ecfd965f7aff6c3d5d8a772f49c17db717c",
+  "source_files": 218,
+  "manifest_entries": 217,
+  "source_manifest_sha256": "700dd37dedb7905c5bc61f5457fe9fdca16b1aeadd6e7f6021cf8a4151e2805d",
+  "baseline_ordinary_tests": {
+    "tests": 364,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "unchanged_baseline_counterexamples": {
+    "typed-labels-before": {
+      "tests": 15,
+      "failures": 10,
+      "errors": 0,
+      "skipped": 0
+    },
+    "typed-bindings-before": {
+      "tests": 8,
+      "failures": 8,
+      "errors": 0,
+      "skipped": 0
+    },
+    "typed-index-before": {
+      "tests": 2,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "reproduced_failed_probes": 20,
+  "product_defect_family": "PYTHON_EQUALITY_AND_INTEGER_ONLY_CLASSES_CONFLICT_WITH_EXISTING_TYPED_JSON_PROFILE",
+  "post_fix_new_tests": {
+    "tests": 31,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "final_native_suite_runs": [
+    {
+      "environment": "local controlled dependency profile",
+      "counts": {
+        "tests": 444,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "environment": "fresh local Git bundle checkout",
+      "counts": {
+        "tests": 444,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "environment": "GitHub fresh dependency installation",
+      "counts": {
+        "tests": 444,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "run_id": 36125797796
+    }
+  ],
+  "new_runtime_code_changes_during_final_suite_runs": 0,
+  "additional_post_fix_property_runs": [
+    {
+      "status": "PASS",
+      "seed": 93901,
+      "counts": {
+        "valid_labels": 512,
+        "distinct_label_checks": 512,
+        "packets_roundtripped": 512,
+        "typed_handoff_contradictions_rejected": 512,
+        "explicit_bindings_rejected": 40
+      },
+      "failures": [],
+      "elapsed_seconds": 2.0787754479999876,
+      "source_manifest_sha256": "700dd37dedb7905c5bc61f5457fe9fdca16b1aeadd6e7f6021cf8a4151e2805d",
+      "code_changed": false,
+      "external_model_performance_claimed": false
+    },
+    {
+      "status": "PASS",
+      "seed": 93902,
+      "counts": {
+        "valid_labels": 512,
+        "distinct_label_checks": 512,
+        "packets_roundtripped": 512,
+        "typed_handoff_contradictions_rejected": 512,
+        "explicit_bindings_rejected": 40
+      },
+      "failures": [],
+      "elapsed_seconds": 2.1695077889999084,
+      "source_manifest_sha256": "700dd37dedb7905c5bc61f5457fe9fdca16b1aeadd6e7f6021cf8a4151e2805d",
+      "code_changed": false,
+      "external_model_performance_claimed": false
+    }
+  ],
+  "native_critical_source_files_verified": 46,
+  "real_data": {
+    "datasets": {
+      "iris": 38,
+      "wine": 45,
+      "digits": 450
+    },
+    "paired_cases_per_run": 533,
+    "all_three_final_native_runs_completed_real_data": true,
+    "purpose": "PRESERVE_ACTUAL_NATIVE_PREDICTIONS_AND_SCORER_NOT_PERFORMANCE_UPLIFT"
+  },
+  "reference_cli_commands": 30,
+  "reference_script_requested_tests": false,
+  "tests_executed_separately_above": true,
+  "local_installed_partner": {
+    "status": "PASS",
+    "commands": [
+      {
+        "name": "installed-mapping",
+        "argv": [
+          "mapping-check",
+          "--contract",
+          "contracts/mapping.json"
+        ],
+        "returncode": 0
+      },
+      {
+        "name": "installed-freeze",
+        "argv": [
+          "freeze",
+          "--config",
+          "config.json",
+          "--output",
+          "freeze.json"
+        ],
+        "returncode": 0
+      },
+      {
+        "name": "installed-run",
+        "argv": [
+          "run",
+          "--config",
+          "config.json",
+          "--freeze",
+          "freeze.json",
+          "--ack-freeze-sha256",
+          "99b7e30772738fea32ebffa974cc2b918eb2ec0aa45bc5a4f494fb8b34ae5baa",
+          "--output-dir",
+          "run"
+        ],
+        "returncode": 0
+      },
+      {
+        "name": "installed-verify",
+        "argv": [
+          "verify",
+          "--run-dir",
+          "run",
+          "--expected-index-sha256",
+          "39a4e1169bfb8980b59cb201ada7880b6e9bc9375488f2738aba2a65615a7c86"
+        ],
+        "returncode": 0
+      }
+    ],
+    "source_checkout_not_required": true,
+    "implementation": "UNMODIFIED_REFERENCE_CONTROLS_NOT_NATIVE_VERITAS"
+  },
+  "remote_installed_partner": "COMPLETED_AND_VERIFIED",
+  "remote_source_comparison": {
+    "status": "PASS",
+    "source_commit": "63a8fa15d79c1c6bfd72c6557bb46daeb8e621a3",
+    "source_tree": "97fb30ef5a41e4bf92cf9d050ae49cd4290d66f2",
+    "tracked_source_files": 218,
+    "archive_source_byte_differences": 0,
+    "contains_generated_build_files": false,
+    "archive_sha256": "f905aad80f53e64d5eaa16f21087d4aa9e89900bc2bb53385afe8e99083f9ca9",
+    "scope": "PACKAGING_ONLY_SOURCE_UNCHANGED_AFTER_FULL_NATIVE_RECHECK",
+    "original_verification_run": "36125797796",
+    "export_run_id": "36126394559",
+    "local_tracked_file_byte_comparison": "PASS",
+    "artifact_id": 10860380189,
+    "artifact_zip_sha256": "3e3c38f93dc83b61fd7c334e8d95dff43335825c960cdb5ea27a1c324c78f089"
+  },
+  "ci_archive_packaging_correction": {
+    "original_auxiliary_zip_contained_untracked_build_copies": 86,
+    "copies_verified_identical_to_original_source": true,
+    "committed_source_affected": false,
+    "correction": "git archive from exact verified commit; tracked source only",
+    "export_run": 36126394559,
+    "final_delivery_only_contains_tracked_source": true
+  },
+  "main_unchanged_at": "353ad9e6a17cda8874a129493fe0f8f4fe4427bc",
+  "paid_model_calls": false,
+  "provider_mode": "CONTROLLED_NATIVE_INTEGRATION_TRANSCRIPT",
+  "all_benchmark_model_task_sweeps_executed": false,
+  "bug_freedom_proven": false,
+  "remaining_observed_product_failures_in_final_checks": 0,
+  "limitations": [
+    "No general proof of bug-freedom.",
+    "New benchmark APIs still require native adapter/configuration.",
+    "Native integration transcripts do not establish frontier-model task capability.",
+    "Public structural RCC is not the undisclosed full production RCC.",
+    "Local native dependencies were staged from prior mounted packages; the GitHub environment installed dependencies from package indexes."
+  ]
+}
