@@ -2,6 +2,8 @@
 
 Audit reference: [Takeshi's complete comment](https://github.com/veritasfuji-japan/rcc-revas-veritas-benchmark/pull/590#issuecomment-6738860939).
 
+**Later status, recorded November 16:** [Follow-up to comment 6813123141](../audit-20261116/README.md) records the newly granted six-file permission within its exact PR-only scope and the sanitized identifier-origin/use findings. It supersedes the pending-permission status below only for that scope. Both identifiers' capability status beyond the inspected local path remains UNKNOWN; metadata disposition and the merge hold remain. The dated observed outputs below are historical records and have not been rewritten or rerun.
+
 **Scope:** the exact reviewed commit `4328be1d35d6494458708af6bd85a62d837aa8ca`. This follow-up preserves its `SNAPSHOT.zip`, manifest, saved results, CSVs, source snapshots and locks. It adds observed audit evidence and a minimal offline inspection procedure. It does not change RCC/REVAS, experiment/authorization conditions, historical scores, or the future Task1 G vs G+P experiment. No workflow was approved and no merge was performed.
 
 ## 1. Public archive identity and all entries

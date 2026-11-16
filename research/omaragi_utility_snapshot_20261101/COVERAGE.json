@@ -395,10 +395,35 @@
     "pure_72_to_112_optimizer_gain_established": false
   },
   "publication_gates_still_open": [
-    "maintainer confirmation of upstream material publication/reuse basis",
+    "UNKNOWN capability status for both historical identifiers beyond the inspected local research path",
     "disposition of old-commit metadata identifiers",
+    "remaining maintainer independent-verification/security checks",
     "bounded scans are not exhaustive confidentiality certification"
   ],
+  "publication_status_update": {
+    "recorded_date": "2026-11-16",
+    "source_comment": "https://github.com/veritasfuji-japan/rcc-revas-veritas-benchmark/pull/590#issuecomment-6813123141",
+    "permission_status": "NARROW_PERMISSION_GRANTED_FOR_RIGHTS_CONTROLLED_BY_TAKESHI",
+    "permitted_materials": "Five upstream benchmark modules and the #466 document identified in the existing evidence manifest",
+    "permitted_purpose": "Solely preservation and review in the existing PR #590 historical research-evidence archive",
+    "not_granted": [
+      "copyright transfer",
+      "general open-source license",
+      "unrelated reuse or redistribution",
+      "VERITAS Core or other repository rights",
+      "third-party rights"
+    ],
+    "independently_recalculated_upstream_hashes": "Maintainer-reported upstream-to-manifest check only; not ZIP verification or full independent reproduction",
+    "identifier_capability_classifications": {
+      "ID-A": "UNKNOWN",
+      "ID-B": "UNKNOWN"
+    },
+    "sanitized_findings": "audit-20261116/README.md",
+    "private_originals_or_raw_identifiers_newly_published": false,
+    "merge_hold_preserved": true,
+    "new_experiments_or_completed_archive_audit_rerun": false,
+    "history_rewrite_or_credential_revocation_rotation": false
+  },
   "raw_missing_materials_must_be_reviewed_before_publication": true,
   "original_zip_manifest_results_scores_locks_modified": false
 }

@@ -2,6 +2,8 @@
 
 **This PR's `SNAPSHOT.zip` is not a complete archive of every joint experiment.** It is a selected contributor evidence snapshot. Earlier public upstream results, contributor development iterations, incomplete attempts and future work must remain distinguishable. This index adds references and aggregate metadata; it does not enlarge or rewrite the original ZIP, evidence manifest, scores or experimental conditions.
 
+**November 16 status:** [The latest permission/metadata follow-up](audit-20261116/README.md) records narrowly scoped maintainer permission for the manifest-identified five modules and #466 document solely in this PR's historical archive. Both identifiers' capability classifications beyond inspected local use remain UNKNOWN; merge hold and final history/security review remain. This changes no coverage, raw evidence or score below.
+
 The inventory was cross-checked against the accessible joint correspondence, preserved contributor run directories, the ZIP entry list and existing public repository material. It is not a claim to have reviewed every attachment, every correspondent alias, or every historical workflow artifact. A public reference is not a bundled file, and a recorded result is not a new independent reproduction.
 
 ## Coverage vocabulary
